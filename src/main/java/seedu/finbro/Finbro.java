@@ -29,6 +29,9 @@ public class Finbro {
         while (!isExit) {
             try {
                 String input = ui.readCommand();
+                if (input == null) {
+                    break;
+                }
                 if (input.equalsIgnoreCase("exit")) {
                     storage.save(expenses.getAll());
                     ui.showGoodbye();
@@ -37,6 +40,7 @@ public class Finbro {
                     Parser.parse(input, expenses, ui);
                     storage.save(expenses.getAll());
                 }
+
             } catch (FinbroException e) {
                 ui.showError(e.getMessage());
             }

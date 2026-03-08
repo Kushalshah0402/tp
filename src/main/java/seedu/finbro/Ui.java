@@ -23,6 +23,9 @@ public class Ui {
 
     public String readCommand() {
         System.out.print("> ");
+        if (!scanner.hasNextLine()) {
+            return null;
+        }
         return scanner.nextLine();
     }
 
