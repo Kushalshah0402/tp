@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+rm -f data/finbro.txt
 # change to script directory
 cd "${0%/*}"
 
@@ -7,6 +8,7 @@ cd ..
 ./gradlew clean shadowJar
 
 cd text-ui-test
+
 
 java  -jar $(find ../build/libs/ -mindepth 1 -print -quit) < input.txt > ACTUAL.TXT
 
