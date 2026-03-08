@@ -24,9 +24,9 @@ public class Ui {
     public String readCommand() {
         System.out.print("> ");
         if (!scanner.hasNextLine()) {
-            return null;
+            return "exit";
         }
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     public void showError(String message) {

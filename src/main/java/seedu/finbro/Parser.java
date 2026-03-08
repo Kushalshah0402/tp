@@ -38,7 +38,7 @@ public class Parser {
             double amount = Double.parseDouble(parts[1]);
             String category = parts[2];
             String dateInput = parts[3];
-            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
             LocalDate parsedDate;
 

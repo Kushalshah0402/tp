@@ -1,2 +1,2 @@
 20.0 | transport | 15 June 2026
-30.0 | transport | 10 March 2026
+15.0 | food | 14 February 2026

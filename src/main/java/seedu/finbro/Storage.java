@@ -35,7 +35,6 @@ public class Storage {
         } catch (Exception e) {
             throw new FinbroException("Error loading file.");
         }
-
         return expenses;
     }
 

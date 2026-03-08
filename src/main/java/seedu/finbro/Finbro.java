@@ -29,9 +29,6 @@ public class Finbro {
         while (!isExit) {
             try {
                 String input = ui.readCommand();
-                if (input == null) {
-                    break;
-                }
                 if (input.equalsIgnoreCase("exit")) {
                     storage.save(expenses.getAll());
                     ui.showGoodbye();
