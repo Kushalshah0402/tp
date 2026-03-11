@@ -42,6 +42,14 @@ public class Ui {
         showLine();
     }
 
+    public void showExpenseRemoved(Expense e, int total) {
+        showLine();
+        System.out.println("Got it. I've removed this expense:");
+        System.out.println("  " + e);
+        System.out.println("Now you have " + total + " expenses.");
+        showLine();
+    }
+
     public void showAllExpenses(List<Expense> expenses) {
         showLine();
         if (expenses.isEmpty()) {
