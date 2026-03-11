@@ -9,6 +9,7 @@ import java.time.format.DateTimeParseException;
 public class Parser {
     private static final String COMMAND_ADD = "add";
     private static final String COMMAND_VIEW = "view";
+    private static final String COMMAND_DELETE = "delete";
     public static void parse(String input, ExpenseList expenses, Ui ui) throws FinbroException {
         input = input.trim();
 
@@ -23,6 +24,11 @@ public class Parser {
 
         if (input.startsWith(COMMAND_VIEW)) {
             handleView(input, expenses, ui);
+            return;
+        }
+
+        if (input.startsWith(COMMAND_DELETE)) {
+            handleDelete(input, expenses, ui);
             return;
         }
         throw new FinbroException("Invalid command.");
@@ -69,6 +75,24 @@ public class Parser {
                 throw new FinbroException("Current View Category only supports exact matches, or empty category.");
             }
             ui.showAllExpenses(expenses.getCategoryExpenses(category));
+        }
+    }
+
+    private static void handleDelete(String input, ExpenseList expenses, Ui ui) throws FinbroException {
+        String[] parts = input.split(" ");
+
+        if (parts.length < 3) {
+            throw new FinbroException("Usage: delete <category> #<number>");
+        }
+
+        try {
+            int number = Integer.parseInt(parts[2]);
+            String category = parts[1];
+
+            Expense expense = expenses.removeByCategoryIndex(category, number);
+            ui.showExpenseRemoved(expense, expenses.size());
+        } catch (NumberFormatException e) {
+            throw new FinbroException("Expense number must be a number.");
         }
     }
 }
