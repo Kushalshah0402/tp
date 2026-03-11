@@ -8,13 +8,9 @@ import java.time.format.DateTimeParseException;
 
 public class Parser {
     private static final String COMMAND_ADD = "add";
-    private static final String COMMAND_VIEW_ALL = "view all";
+    private static final String COMMAND_VIEW = "view";
     public static void parse(String input, ExpenseList expenses, Ui ui) throws FinbroException {
         input = input.trim();
-        if (input.equals(COMMAND_VIEW_ALL)) {
-            ui.showAllExpenses(expenses.getAll());
-            return;
-        }
 
         if (input.equals(COMMAND_ADD)) {
             throw new FinbroException("Usage: add <amount> <category> <date>");
@@ -22,6 +18,11 @@ public class Parser {
 
         if (input.startsWith(COMMAND_ADD + " ")) {
             handleAdd(input, expenses, ui);
+            return;
+        }
+
+        if (input.startsWith(COMMAND_VIEW)) {
+            handleView(input, expenses, ui);
             return;
         }
         throw new FinbroException("Invalid command.");
@@ -54,6 +55,21 @@ public class Parser {
             ui.showExpenseAdded(expense, expenses.size());
         } catch (NumberFormatException e) {
             throw new FinbroException("Amount must be a number.");
+        }
+    }
+
+    private static void handleView(String input, ExpenseList expenses, Ui ui) throws FinbroException {
+        if (input.equals(COMMAND_VIEW)) {
+            throw new FinbroException("Usage: view <category> OR view all");
+        } else if (input.equals(COMMAND_VIEW + " " + "all")) {
+            ui.showAllExpenses(expenses.getAll());
+        } else if (input.startsWith(COMMAND_VIEW + " ")) {
+            String category = input.substring((COMMAND_VIEW + " ").length());
+            System.out.println(category);
+            if (expenses.getCategoryExpenses(category).isEmpty()) {
+                throw new FinbroException("Current View Category only supports exact matches, or empty category.");
+            }
+            ui.showAllExpenses(expenses.getCategoryExpenses(category));
         }
     }
 }
