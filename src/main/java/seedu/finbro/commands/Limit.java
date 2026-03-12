@@ -19,7 +19,9 @@ public class Limit {
     }
 
     public static void initLimit(double limit) {
-        Limit.limit = limit;
+        if (limit >= 0) {
+            Limit.limit = limit;
+        }
     }
 
     public static void setLimit(double limit, Ui ui) {
