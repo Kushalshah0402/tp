@@ -139,26 +139,49 @@ public class Parser {
     }
 
     private static void handleEditLimit(Ui ui) throws FinbroException {
-        // show current/original limit
-        ui.showLimit();
+        double currentLimit = Limit.getLimit();
 
-        System.out.println("Enter the new monthly spending limit:");
+        ui.showLimitEditMenu(currentLimit);
+        String choice = ui.readCommand().trim();
 
-        String input = ui.readCommand().trim();
+        double newLimit;
 
-        int newLimit;
-
-        try {
-            newLimit = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new FinbroException("Monthly spending limit must be a number");
-        }
-
-        if (newLimit < 0) {
-            throw new FinbroException("Monthly spending limit must be at least $0");
+        switch (choice) {
+        case "1":
+            ui.showEnterAmountPrompt("increase");
+            newLimit = currentLimit + parsePositiveAmount(ui.readCommand().trim());
+            break;
+        case "2":
+            ui.showEnterAmountPrompt("decrease");
+            newLimit = currentLimit - parsePositiveAmount(ui.readCommand().trim());
+            if (newLimit < 0) {
+                throw new FinbroException("Monthly spending limit must be at least $0");
+            }
+            break;
+        case "3":
+            ui.showEnterAmountPrompt("replace");
+            newLimit = parsePositiveAmount(ui.readCommand().trim());
+            break;
+        default:
+            throw new FinbroException("Please enter 1, 2, or 3.");
         }
 
         Limit.setLimit(newLimit, ui);
         ui.showLimit();
+    }
+
+    private static double parsePositiveAmount(String input) throws FinbroException {
+        double amount;
+        try {
+            amount = Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            throw new FinbroException("Monthly spending limit must be a number");
+        }
+
+        if (amount < 0) {
+            throw new FinbroException("Monthly spending limit must be at least $0");
+        }
+
+        return amount;
     }
 }

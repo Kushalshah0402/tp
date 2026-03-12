@@ -82,6 +82,33 @@ public class Ui {
         System.out.println("Monthly budget limit was not changed");
     }
 
+    public void showLimitEditMenu(double currentLimit) {
+        showLine();
+        System.out.println("Current monthly budget limit: " + String.format("$%.2f", currentLimit));
+        System.out.println("Choose an action:");
+        System.out.println("1. Increase limit");
+        System.out.println("2. Decrease limit");
+        System.out.println("3. Replace limit");
+        showLine();
+    }
+
+    public void showEnterAmountPrompt(String action) {
+        switch (action) {
+        case "increase":
+            System.out.println("Enter the amount to increase by:");
+            break;
+        case "decrease":
+            System.out.println("Enter the amount to decrease by:");
+            break;
+        case "replace":
+            System.out.println("Enter the new monthly budget limit:");
+            break;
+        default:
+            System.out.println("Enter amount:");
+            break;
+        }
+    }
+
     private void showLine() {
         System.out.println(LINE);
     }
