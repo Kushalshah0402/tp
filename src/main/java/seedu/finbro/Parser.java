@@ -36,7 +36,7 @@ public class Parser {
         }
 
         if (input.startsWith(COMMAND_SET_LIMIT)) {
-            handleSetLimit(input, expenses, ui);
+            handleSetLimit(input, ui);
             return;
         }
 
@@ -105,7 +105,7 @@ public class Parser {
         }
     }
 
-    private static void handleSetLimit(String input, ExpenseList expenses, Ui ui) throws FinbroException {
+    private static void handleSetLimit(String input, Ui ui) throws FinbroException {
         String[] parts = input.split(" ", 2);
         if (parts.length < 2) {
             ui.showLimit();

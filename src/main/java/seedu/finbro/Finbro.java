@@ -10,7 +10,6 @@ public class Finbro {
     private Storage storage;
     private ExpenseList expenses;
     private Ui ui;
-    private Limit limit;
 
     public Finbro(String filePath) {
         ui = new Ui();

@@ -1,6 +1,7 @@
 package seedu.finbro;
 
 import seedu.finbro.commands.Expense;
+import seedu.finbro.commands.Limit;
 import seedu.finbro.exception.FinbroException;
 
 import java.io.File;
@@ -24,6 +25,9 @@ public class Storage {
         }
 
         try (Scanner scanner = new Scanner(file)) {
+
+            readLimit(scanner);
+
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split("\\|");
@@ -38,11 +42,26 @@ public class Storage {
         return expenses;
     }
 
+    private static void readLimit(Scanner scanner) {
+        if (scanner.hasNextLine()) {
+            String str_limit = scanner.nextLine();
+            double limit;
+            try {
+                limit = Double.parseDouble(str_limit);
+            }  catch (NumberFormatException e) {
+
+                limit = 0;
+            }
+            Limit.initLimit(limit);
+        }
+    }
+
     public void save(List<Expense> expenses) {
         try {
             File file = new File(filePath);
             file.getParentFile().mkdirs();
             FileWriter writer = new FileWriter(file);
+            writer.write(Limit.toFileFormat());
             for (Expense e : expenses) {
                 writer.write(e.getAmount() + " | " + e.getCategory() + " | " + e.getDate() + "\n");
             }

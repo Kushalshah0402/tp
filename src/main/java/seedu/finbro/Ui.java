@@ -74,7 +74,7 @@ public class Ui {
 
     public void showChangeLimitWarning(double limit) {
         System.out.println("Are you sure you want to change your monthly budget limit to "
-                +  String.format("$%.2f", Limit.getLimit()) + "? [yes/no]");
+                +  String.format("$%.2f", limit) + "? [yes/no]");
     }
 
     public void showCancelChangeLimitMessage() {
