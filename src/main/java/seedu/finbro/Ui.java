@@ -114,7 +114,7 @@ public class Ui {
 
     public void showBudgetReminder() {
         showLine();
-        System.out.println("Warning: You are close to your monthly spending limit!");
+        System.out.println("You are close to your monthly spending limit!");
         showLine();
     }
 
