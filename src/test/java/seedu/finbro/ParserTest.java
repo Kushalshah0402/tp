@@ -47,6 +47,40 @@ public class ParserTest {
         assertEquals(800.0, Limit.getLimit());
     }
 
+    @Test
+    public void parse_editLimit_increase_limitUpdated() throws FinbroException {
+        ExpenseList expenses = new ExpenseList();
+        TestUi ui = new TestUi();
+
+        // yes: confirm setting initial limit
+        // 1: choose increase
+        // 100: increase amount
+        // yes: confirm new limit
+        ui.setInputs("yes", "1", "100", "yes");
+
+        Limit.setLimit(500.0, ui);
+        Parser.parse("edit limit", expenses, ui);
+
+        assertEquals(600.0, Limit.getLimit());
+    }
+
+    @Test
+    public void parse_editLimit_decrease_limitUpdated() throws FinbroException {
+        ExpenseList expenses = new ExpenseList();
+        TestUi ui = new TestUi();
+
+        // yes: confirm setting initial limit
+        // 2: choose decrease
+        // 200: decrease amount
+        // yes: confirm new limit
+        ui.setInputs("yes", "2", "200", "yes");
+
+        Limit.setLimit(500.0, ui);
+        Parser.parse("edit limit", expenses, ui);
+
+        assertEquals(300.0, Limit.getLimit());
+    }
+
     private static class TestUi extends Ui {
         private String[] inputs;
         private int index = 0;
