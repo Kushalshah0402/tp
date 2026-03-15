@@ -57,12 +57,15 @@ public class Ui {
         if (expenses.isEmpty()) {
             System.out.println("No expenses recorded.");
         } else {
+            double total = 0;
             System.out.println("Here are your expenses:");
             System.out.println();
             for (int i = 0; i < expenses.size(); i++) {
+                total += expenses.get(i).getAmount();
                 System.out.println((i + 1) + ". " + expenses.get(i));
                 System.out.println();
             }
+            System.out.printf("Total expenditure: $%.2f\n", total);
         }
         showLine();
     }
@@ -107,6 +110,12 @@ public class Ui {
             System.out.println("Enter amount:");
             break;
         }
+    }
+
+    public void showBudgetReminder() {
+        showLine();
+        System.out.println("Warning: You are close to your monthly spending limit!");
+        showLine();
     }
 
     private void showLine() {

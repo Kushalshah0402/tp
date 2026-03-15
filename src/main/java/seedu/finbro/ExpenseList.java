@@ -1,6 +1,7 @@
 package seedu.finbro;
 
 import seedu.finbro.commands.Expense;
+import seedu.finbro.commands.Limit;
 import seedu.finbro.exception.FinbroException;
 
 import java.util.ArrayList;
@@ -26,6 +27,20 @@ public class ExpenseList {
 
     public List<Expense> getAll() {
         return expenses;
+    }
+
+    public double getTotalExpenditure() {
+        double total = 0;
+        for (Expense e : expenses) {
+            total += e.getAmount();
+        }
+        return total;
+    }
+
+    public double getRemainingExpenditure() {
+        double total = getTotalExpenditure();
+        double limit = Limit.getLimit();
+        return limit - total;
     }
 
     public List<Expense> getCategoryExpenses(String category) {
