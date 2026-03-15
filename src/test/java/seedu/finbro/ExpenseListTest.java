@@ -2,6 +2,7 @@ package seedu.finbro;
 
 import org.junit.jupiter.api.Test;
 import seedu.finbro.commands.Expense;
+import seedu.finbro.commands.Limit;
 import seedu.finbro.exception.FinbroException;
 import java.util.List;
 
@@ -71,5 +72,24 @@ class ExpenseListTest {
         list.add(new Expense(10, "food", "1 Jan 2026"));
         assertThrows(FinbroException.class,
                 () -> list.removeByCategoryIndex("food", 2));
+    }
+
+    @Test
+    void getTotalExpenditure_returnsTotalExpenditure() {
+        ExpenseList list = new ExpenseList();
+        list.add(new Expense(10, "food", "1 Jan 2026"));
+        list.add(new Expense(5, "transport", "2 Jan 2026"));
+        list.add(new Expense(7, "food", "3 Jan 2026"));
+
+        assertEquals(22, list.getTotalExpenditure());
+    }
+
+    @Test
+    void getRemainingExpenditure_withLimit_returnsCorrectRemaining() {
+        ExpenseList list = new ExpenseList();
+        list.add(new Expense(10, "food", "1 Jan 2026"));
+        Limit.initLimit(20);
+
+        assertEquals(10, list.getRemainingExpenditure());
     }
 }
