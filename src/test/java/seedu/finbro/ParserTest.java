@@ -31,7 +31,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_editLimit_replace_limitUpdated() throws FinbroException {
+    public void parse_editLimitReplace() throws FinbroException {
         ExpenseList expenses = new ExpenseList();
         TestUi ui = new TestUi();
 
@@ -48,7 +48,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_editLimit_increase_limitUpdated() throws FinbroException {
+    public void parse_editLimitIncrease() throws FinbroException {
         ExpenseList expenses = new ExpenseList();
         TestUi ui = new TestUi();
 
@@ -65,7 +65,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_editLimit_decrease_limitUpdated() throws FinbroException {
+    public void parse_editLimitDecrease() throws FinbroException {
         ExpenseList expenses = new ExpenseList();
         TestUi ui = new TestUi();
 
