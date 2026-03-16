@@ -18,6 +18,7 @@ public class ExpenseList {
     }
 
     public void add(Expense e) {
+        assert e != null : "Expense to add should not be null";
         expenses.add(e);
     }
 
@@ -79,6 +80,7 @@ public class ExpenseList {
         }
 
         expenses.remove(targetExpense);
+        assert !expenses.contains(targetExpense) : "Removed expense should no longer be in list";
         return targetExpense;
     }
 }

@@ -6,6 +6,8 @@ public class Expense {
     private String date;
 
     public Expense(double amount, String category, String date) {
+        assert category != null : "Category cannot be null";
+        assert date != null : "Date cannot be null";
         this.amount = amount;
         this.category = category;
         this.date = date;
