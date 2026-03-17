@@ -3,9 +3,6 @@ Hello Finbro here for you!
 Type help to see all available commands.
 --------------------------------------------------
 --------------------------------------------------
-Warning: You are close to your monthly spending limit!
---------------------------------------------------
---------------------------------------------------
 Got it. I've added this expense:
    Amount: $20.00
    Category: transport

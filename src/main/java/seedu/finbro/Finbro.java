@@ -28,7 +28,7 @@ public class Finbro {
 
         while (!isExit) {
             try {
-                if (expenses.getRemainingExpenditure() <= 20) {
+                if (expenses.getRemainingExpenditure() <= 20 && expenses.size() > 0) {
                     ui.showBudgetReminder();
                 }
                 String input = ui.readCommand();

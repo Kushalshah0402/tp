@@ -1,9 +1,11 @@
 package seedu.finbro;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import seedu.finbro.commands.Expense;
 import seedu.finbro.commands.Limit;
 import seedu.finbro.exception.FinbroException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,6 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ExpenseListTest {
+    @BeforeEach
+    void resetLimitState() {
+        Limit.initLimit(0);
+        Limit.setSpent(0);
+    }
+
     @Test
     void add_expenseAdded_sizeIncreases() {
         ExpenseList list = new ExpenseList();
@@ -85,11 +93,38 @@ class ExpenseListTest {
     }
 
     @Test
+    void expenseListFromLoadedExpenses_initializesCorrectTotalAndRemaining() {
+        List<Expense> loadedExpenses = new ArrayList<>();
+        loadedExpenses.add(new Expense(10, "food", "1 Jan 2026"));
+        loadedExpenses.add(new Expense(5, "transport", "2 Jan 2026"));
+        loadedExpenses.add(new Expense(7, "food", "3 Jan 2026"));
+        Limit.initLimit(30);
+
+        ExpenseList list = new ExpenseList(loadedExpenses);
+
+        assertEquals(22, list.getTotalExpenditure());
+        assertEquals(8, list.getRemainingExpenditure());
+    }
+
+    @Test
     void getRemainingExpenditure_withLimit_returnsCorrectRemaining() {
         ExpenseList list = new ExpenseList();
         list.add(new Expense(10, "food", "1 Jan 2026"));
         Limit.initLimit(20);
 
         assertEquals(10, list.getRemainingExpenditure());
+    }
+
+    @Test
+    void getRemainingExpenditure_deleteExpense_returnsCorrectRemaining() throws FinbroException {
+        ExpenseList list = new ExpenseList();
+        list.add(new Expense(10, "food", "1 Jan 2026"));
+        list.add(new Expense(5, "transport", "2 Jan 2026"));
+        list.add(new Expense(7, "food", "3 Jan 2026"));
+        list.add(new Expense(8, "food", "4 Jan 2026"));
+        Limit.initLimit(20);
+        list.removeByCategoryIndex("food", 2);
+
+        assertEquals(-3, list.getRemainingExpenditure());
     }
 }

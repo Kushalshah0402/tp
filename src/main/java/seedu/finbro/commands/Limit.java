@@ -14,6 +14,10 @@ public class Limit {
         return spent;
     }
 
+    public static void setSpent(double spent) {
+        Limit.spent = spent;
+    }
+
     public static String toFileFormat() {
         return String.format("%.2f", Limit.getLimit()) + "\n";
     }
