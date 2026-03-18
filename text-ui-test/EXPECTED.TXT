@@ -6,23 +6,17 @@ Type help to see all available commands.
 Got it. I've added this expense:
    Amount: $20.00
    Category: transport
-   Date: 2026-06-15
+   Date: 15 June 2026
 Now you have 1 expenses.
---------------------------------------------------
---------------------------------------------------
-Warning: You are close to your monthly spending limit!
 --------------------------------------------------
 --------------------------------------------------
 Here are your expenses:
 
 1.  Amount: $20.00
    Category: transport
-   Date: 2026-06-15
+   Date: 15 June 2026
 
 Total expenditure: $20.00
---------------------------------------------------
---------------------------------------------------
-Warning: You are close to your monthly spending limit!
 --------------------------------------------------
 --------------------------------------------------
 Bye! See you again.

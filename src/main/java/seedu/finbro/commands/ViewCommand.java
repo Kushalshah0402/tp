@@ -26,12 +26,10 @@ public class ViewCommand extends Command {
     @Override
     public String getHelpMessage() {
         return """
-                view all
                 Shows all recorded expenses.
                 Format: view all
                 Use: Displays every expense grouped by category.
                 
-                view
                 Shows expenses in a specific category.
                 Format: view <category>
                 Use: Displays only the expenses under the given category.

@@ -113,9 +113,17 @@ public class Ui {
         }
     }
 
-    public void showBudgetReminder() {
+    public void showBudgetReminder(double limit) {
         showLine();
-        System.out.println("Warning: You are close to your monthly spending limit!");
+        System.out.println("Warning: You are close to your monthly spending limit of $"
+                            + String.format("%.2f", limit) + "!");
+        showLine();
+    }
+
+    public void showBudgetExceeded(double limit) {
+        showLine();
+        System.out.println("Alert: You have exceeded your monthly spending limit of $" 
+                            + String.format("%.2f", limit) + "!");
         showLine();
     }
 

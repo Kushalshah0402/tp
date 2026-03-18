@@ -30,8 +30,8 @@ public class DeleteCommand extends Command {
     public String getHelpMessage() {
         return """
                 Deletes a specific expense from a category.
-                Format: delete <category> #<number>
+                Format: delete <category> <number>
                 Use: Permanently removes the numbered expense in that category.
-                Note: use the displayed index number, such as #2.""";
+                Note: use the displayed index number, such as 2.""";
     }
 }

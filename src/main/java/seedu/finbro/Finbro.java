@@ -7,6 +7,7 @@ import seedu.finbro.ui.Ui;
 import seedu.finbro.utils.Expense;
 import seedu.finbro.exception.FinbroException;
 import seedu.finbro.utils.ExpenseList;
+import seedu.finbro.utils.Limit;
 
 import java.util.List;
 
@@ -33,8 +34,14 @@ public class Finbro {
 
         while (!isExit) {
             try {
-                if (expenses.getRemainingExpenditure() <= 20 && expenses.size() > 0) {
-                    ui.showBudgetReminder();
+                double remaining = expenses.getRemainingExpenditure();
+                double limit = Limit.getLimit();
+                if (limit > 0 && expenses.size() > 0) {
+                    if (remaining < 0) {
+                        ui.showBudgetExceeded(limit);
+                    } else if (remaining <= 20) {
+                        ui.showBudgetReminder(limit);
+                    }
                 }
                 String input = ui.readCommand();
                 if (input.equalsIgnoreCase("exit")) {
