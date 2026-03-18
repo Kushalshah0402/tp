@@ -27,6 +27,7 @@ public class SetLimitCommand extends Command {
         if (limit < 0) {
             throw new FinbroException("Monthly spending limit must be at least $0");
         }
+        assert limit >= 0;
 
         confirmLimitChange(ui, limit);
 
@@ -37,6 +38,7 @@ public class SetLimitCommand extends Command {
         ui.showChangeLimitWarning(limit);
         String confirm = ui.readCommand();
         if (confirm.equals("yes")) {
+            assert limit >= 0;
             Limit.setLimit(limit);
         } else if (confirm.equals("no")) {
             ui.showCancelChangeLimitMessage();

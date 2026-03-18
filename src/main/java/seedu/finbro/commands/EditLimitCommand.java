@@ -36,6 +36,7 @@ public class EditLimitCommand extends Command {
         default:
             throw new FinbroException("Please enter 1, 2, or 3.");
         }
+        assert newLimit >= 0;
 
         SetLimitCommand.confirmLimitChange(ui, newLimit);
 

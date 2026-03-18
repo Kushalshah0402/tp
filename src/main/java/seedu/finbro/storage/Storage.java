@@ -51,6 +51,7 @@ public class Storage {
             }  catch (NumberFormatException e) {
                 limit = 0;
             }
+            assert limit >= 0;
             Limit.setLimit(limit);
         }
     }
