@@ -1,6 +1,9 @@
 package seedu.finbro.commands;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +23,9 @@ class SetLimitCommandTest {
         Ui ui = new Ui();
         Storage storage = new Storage("");
 
-        assertDoesNotThrow(() -> {new SetLimitCommand().execute(input, expenseList,ui,storage);});
+        assertDoesNotThrow(() -> {
+            new SetLimitCommand().execute(input, expenseList,ui,storage);
+        });
     }
 
     @Test
