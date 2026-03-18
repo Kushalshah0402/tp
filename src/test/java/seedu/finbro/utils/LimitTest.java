@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 class LimitTest {
 
-    // methodToTest_input_expectedOutput
     @Test
     void toFileFormat_twoDP_twoDP() {
         Limit.setLimit(450.00);

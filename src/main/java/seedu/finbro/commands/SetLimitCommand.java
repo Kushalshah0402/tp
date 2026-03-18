@@ -43,7 +43,7 @@ public class SetLimitCommand extends Command {
         ui.showLimit();
     }
 
-    public static void confirmLimitChange(Ui ui, double limit) {
+    static void confirmLimitChange(Ui ui, double limit) {
         ui.showChangeLimitWarning(limit);
         logger.log(Level.INFO, "Getting confirmation for limit change");
         String confirm = ui.readCommand();
