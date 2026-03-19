@@ -16,7 +16,7 @@ public final class CommandCatalog {
             new AddCommand(""),
             new DeleteCommand(""),
             new EditLimitCommand(),
-            new SetLimitCommand(),
+            new SetLimitCommand(""),
             new ViewCommand("")
     );
 

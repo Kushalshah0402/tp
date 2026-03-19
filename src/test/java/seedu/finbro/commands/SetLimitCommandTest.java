@@ -16,7 +16,7 @@ class SetLimitCommandTest {
 
     @Test
     void execute_validInput_noException() {
-        String input = "limit 500";
+        String input = "500";
 
         // dummy objects to fill input
         ExpenseList expenseList = new ExpenseList();
@@ -24,20 +24,20 @@ class SetLimitCommandTest {
         Storage storage = new Storage("");
 
         assertDoesNotThrow(() -> {
-            new SetLimitCommand().execute(input, expenseList,ui,storage);
+            new SetLimitCommand(input).execute(input, expenseList,ui,storage);
         });
     }
 
     @Test
     void execute_nonNumber_exception() {
-        String input = "limit abc";
+        String input = "abc";
 
         ExpenseList expenseList = new ExpenseList();
         Ui ui = new Ui();
         Storage storage = new Storage("");
 
         Exception e = assertThrows(FinbroException.class, () -> {
-            new SetLimitCommand().execute(input, expenseList,ui,storage);
+            new SetLimitCommand(input).execute(input, expenseList,ui,storage);
         });
 
         String expectedMessage = "Monthly spending limit must be a number";
@@ -48,14 +48,14 @@ class SetLimitCommandTest {
 
     @Test
     void execute_outOfRange_exception() {
-        String input = "limit -4";
+        String input = "-4";
 
         ExpenseList expenseList = new ExpenseList();
         Ui ui = new Ui();
         Storage storage = new Storage("");
 
         Exception e = assertThrows(FinbroException.class, () -> {
-            new SetLimitCommand().execute(input, expenseList,ui,storage);
+            new SetLimitCommand(input).execute(input, expenseList,ui,storage);
         });
 
         String expectedMessage = "Monthly spending limit must be at least $0";

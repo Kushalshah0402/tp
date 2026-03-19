@@ -12,35 +12,47 @@ import seedu.finbro.utils.Limit;
 public class SetLimitCommand extends Command {
     private static final Logger logger = Logger.getLogger(SetLimitCommand.class.getName());
 
+    private final String arg;
+
+    public SetLimitCommand(String arg) {
+        this.arg = arg;
+    }
+
     @Override
     public void execute(String input, ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
-        String[] parts = input.split(" ", 2);
-        if (parts.length < 2) {
+        if (arg.isEmpty()) {
             logger.log(Level.INFO, "Display current limit");
             ui.showLimit();
             return;
         }
 
-        logger.log(Level.INFO, "Attempting to set limit to: {0}", parts[1]);
-        double limit;
-        // check if limit is of valid type
-        try {
-            limit = Double.parseDouble(parts[1]);
-        } catch (NumberFormatException e) {
-            logger.log(Level.WARNING, "Invalid limit input (not a number): {0}", parts[1]);
-            throw new FinbroException("Monthly spending limit must be a number");
-        }
+        logger.log(Level.INFO, "Attempting to set limit to: {0}", arg);
 
-        // check if limit is a valid value
-        if (limit < 0) {
-            logger.log(Level.WARNING, "Invalid limit input (out of valid range): {0}", parts[1]);
-            throw new FinbroException("Monthly spending limit must be at least $0");
-        }
+        double limit = verifyLimitType(arg);
+        verifyLimitRange(limit);
         assert limit >= 0;
 
         confirmLimitChange(ui, limit);
 
         ui.showLimit();
+    }
+
+    private static void verifyLimitRange(double limit) throws FinbroException {
+        if (limit < 0) {
+            logger.log(Level.WARNING, "Invalid limit input (out of valid range): {0}", limit);
+            throw new FinbroException("Monthly spending limit must be at least $0");
+        }
+    }
+
+    private static double verifyLimitType(String inputLimit) throws FinbroException {
+        double limit;
+        try {
+            limit = Double.parseDouble(inputLimit);
+        } catch (NumberFormatException e) {
+            logger.log(Level.WARNING, "Invalid limit input (not a number): {0}", inputLimit);
+            throw new FinbroException("Monthly spending limit must be a number");
+        }
+        return limit;
     }
 
     static void confirmLimitChange(Ui ui, double limit) {

@@ -30,12 +30,12 @@ public class Parser {
         case COMMAND_ADD -> new AddCommand(argument);
         case COMMAND_VIEW -> new ViewCommand(argument);
         case COMMAND_DELETE -> new DeleteCommand(argument);
-        case COMMAND_SET_LIMIT -> new SetLimitCommand();
+        case COMMAND_SET_LIMIT -> new SetLimitCommand(argument);
         case COMMAND_EDIT -> new EditLimitCommand();
-//            if (argument.equals(COMMAND_SET_LIMIT)) {
-//                return
-//            }
-//            break;
+        //            if (argument.equals(COMMAND_SET_LIMIT)) {
+        //                return
+        //            }
+        //            break;
 
         default -> throw new FinbroException("Invalid command.");
         };
