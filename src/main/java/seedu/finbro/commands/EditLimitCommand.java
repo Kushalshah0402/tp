@@ -34,16 +34,23 @@ public class EditLimitCommand extends Command {
         case "1":
             logger.log(Level.INFO, "User chose to increase limit");
             ui.showEnterAmountPrompt("increase");
+
             double increase = Parser.parsePositiveAmount(ui.readCommand().trim());
+            assert increase >= 0 : "Increase amount should be non-negative";
+
             logger.log(Level.INFO, "Increase amount entered: {0}", increase);
             newLimit = currentLimit + increase;
             break;
         case "2":
             logger.log(Level.INFO, "User chose to decrease limit");
             ui.showEnterAmountPrompt("decrease");
+
             double decrease = Parser.parsePositiveAmount(ui.readCommand().trim());
+            assert decrease >= 0 : "Decrease amount should be non-negative";
+
             logger.log(Level.INFO, "Decrease amount entered: {0}", decrease);
             newLimit = currentLimit - decrease;
+
             if (newLimit < 0) {
                 logger.log(Level.WARNING, "Invalid operation: resulting limit is negative ({0})", newLimit);
                 throw new FinbroException("Monthly spending limit must be at least $0");
@@ -52,13 +59,19 @@ public class EditLimitCommand extends Command {
         case "3":
             logger.log(Level.INFO, "User chose to replace limit");
             ui.showEnterAmountPrompt("replace");
+
             newLimit = Parser.parsePositiveAmount(ui.readCommand().trim());
+            assert newLimit >= 0 : "Replacement limit should be non-negative";
+
             logger.log(Level.INFO, "Replacement amount entered: {0}", newLimit);
             break;
         default:
             logger.log(Level.WARNING, "Invalid menu choice entered: {0}", choice);
             throw new FinbroException("Please enter 1, 2, or 3.");
         }
+
+        assert newLimit >= 0 : "Final limit should never be negative";
+        
         Limit.setLimit(newLimit, ui);
         logger.log(Level.INFO, "Limit successfully updated to: {0}", newLimit);
 
