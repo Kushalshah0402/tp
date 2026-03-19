@@ -17,10 +17,15 @@ public class EditLimitCommand extends Command {
     @Override
     public void execute(String input, ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
         double currentLimit = Limit.getLimit();
+        assert currentLimit >= 0 : "Current limit should never be negative";
+
         logger.log(Level.INFO, "Starting EditLimitCommand. Current limit: {0}", currentLimit);
 
         ui.showLimitEditMenu(currentLimit);
-        String choice = ui.readCommand().trim();
+        String choice = ui.readCommand();
+        assert choice != null : "User input (choice) should not be null";
+
+        choice = choice.trim();
         logger.log(Level.INFO, "User selected option: {0}", choice);
 
         double newLimit;
