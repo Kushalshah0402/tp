@@ -27,13 +27,20 @@ public class EditLimitCommand extends Command {
 
         switch (choice) {
         case "1":
+            logger.log(Level.INFO, "User chose to increase limit");
             ui.showEnterAmountPrompt("increase");
-            newLimit = currentLimit + Parser.parsePositiveAmount(ui.readCommand().trim());
+            double increase = Parser.parsePositiveAmount(ui.readCommand().trim());
+            logger.log(Level.INFO, "Increase amount entered: " + increase);
+            newLimit = currentLimit + increase;
             break;
         case "2":
+            logger.log(Level.INFO, "User chose to decrease limit");
             ui.showEnterAmountPrompt("decrease");
-            newLimit = currentLimit - Parser.parsePositiveAmount(ui.readCommand().trim());
+            double decrease = Parser.parsePositiveAmount(ui.readCommand().trim());
+            logger.log(Level.INFO, "Decrease amount entered: " + decrease);
+            newLimit = currentLimit - decrease;
             if (newLimit < 0) {
+                logger.log(Level.WARNING, "Invalid operation: resulting limit is negative ({0})", newLimit);
                 throw new FinbroException("Monthly spending limit must be at least $0");
             }
             break;
