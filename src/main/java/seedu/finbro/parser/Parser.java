@@ -1,5 +1,6 @@
 package seedu.finbro.parser;
 
+import seedu.finbro.commands.EditCommand;
 import seedu.finbro.utils.ExpenseList;
 import seedu.finbro.storage.Storage;
 import seedu.finbro.ui.Ui;
@@ -31,11 +32,7 @@ public class Parser {
         case COMMAND_VIEW -> new ViewCommand(argument);
         case COMMAND_DELETE -> new DeleteCommand(argument);
         case COMMAND_SET_LIMIT -> new SetLimitCommand(argument);
-        case COMMAND_EDIT -> new EditLimitCommand();
-        //            if (argument.equals(COMMAND_SET_LIMIT)) {
-        //                return
-        //            }
-        //            break;
+        case COMMAND_EDIT -> new EditCommand(argument);
 
         default -> throw new FinbroException("Invalid command.");
         };
