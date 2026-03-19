@@ -17,7 +17,7 @@ public class ViewCommand extends Command {
     }
 
     @Override
-    public void execute(String input, ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
+    public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         switch (arg) {
         case EMPTY:
             throw new FinbroException("Usage: view <category> OR view all");

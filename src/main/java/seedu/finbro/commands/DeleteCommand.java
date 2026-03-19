@@ -14,7 +14,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(String input, ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
+    public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         verifyInputLength(arg);
         String category = filterCategory(arg);
         int index = verifyIndex(arg);

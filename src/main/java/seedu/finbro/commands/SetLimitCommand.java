@@ -19,7 +19,7 @@ public class SetLimitCommand extends Command {
     }
 
     @Override
-    public void execute(String input, ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
+    public void execute(ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
         if (arg.isEmpty()) {
             logger.log(Level.INFO, "Display current limit");
             ui.showLimit();

@@ -6,7 +6,7 @@ import seedu.finbro.storage.Storage;
 import seedu.finbro.ui.Ui;
 
 public abstract class Command {
-    public abstract void execute(String input, ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException;
+    public abstract void execute(ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException;
 
     public abstract String getHelpMessage();
 }

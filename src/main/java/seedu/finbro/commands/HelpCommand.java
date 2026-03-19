@@ -8,7 +8,7 @@ import seedu.finbro.exception.FinbroException;
 
 public class HelpCommand extends Command {
     @Override
-    public void execute(String input, ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
+    public void execute(ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
         for (Command command: CommandCatalog.getSupportedCommands()) {
             ui.showCommandHelpMessage(command);
         }

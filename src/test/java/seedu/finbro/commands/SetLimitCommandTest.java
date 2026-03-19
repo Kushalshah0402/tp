@@ -24,7 +24,7 @@ class SetLimitCommandTest {
         Storage storage = new Storage("");
 
         assertDoesNotThrow(() -> {
-            new SetLimitCommand(input).execute(input, expenseList,ui,storage);
+            new SetLimitCommand(input).execute(expenseList,ui,storage);
         });
     }
 
@@ -37,7 +37,7 @@ class SetLimitCommandTest {
         Storage storage = new Storage("");
 
         Exception e = assertThrows(FinbroException.class, () -> {
-            new SetLimitCommand(input).execute(input, expenseList,ui,storage);
+            new SetLimitCommand(input).execute(expenseList,ui,storage);
         });
 
         String expectedMessage = "Monthly spending limit must be a number";
@@ -55,7 +55,7 @@ class SetLimitCommandTest {
         Storage storage = new Storage("");
 
         Exception e = assertThrows(FinbroException.class, () -> {
-            new SetLimitCommand(input).execute(input, expenseList,ui,storage);
+            new SetLimitCommand(input).execute(expenseList,ui,storage);
         });
 
         String expectedMessage = "Monthly spending limit must be at least $0";

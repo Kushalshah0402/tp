@@ -51,8 +51,8 @@ public class Finbro {
                     ui.showGoodbye();
                     isExit = true;
                 } else {
-                    Command command = Parser.parse(input, expenses, ui, storage);
-                    command.execute(input, expenses, ui, storage);
+                    Command command = Parser.parse(input);
+                    command.execute(expenses, ui, storage);
                     storage.save(expenses.getAll());
                 }
 

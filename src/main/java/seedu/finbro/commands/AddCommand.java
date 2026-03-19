@@ -19,7 +19,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(String input, ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
+    public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         verifyInputLength(arg);
         double amount = verifyAmount(arg);
         String category = filterCategory(arg);

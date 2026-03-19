@@ -1,13 +1,9 @@
 package seedu.finbro.parser;
 
 import seedu.finbro.commands.EditCommand;
-import seedu.finbro.utils.ExpenseList;
-import seedu.finbro.storage.Storage;
-import seedu.finbro.ui.Ui;
 import seedu.finbro.commands.AddCommand;
 import seedu.finbro.commands.Command;
 import seedu.finbro.commands.DeleteCommand;
-import seedu.finbro.commands.EditLimitCommand;
 import seedu.finbro.commands.HelpCommand;
 import seedu.finbro.commands.SetLimitCommand;
 import seedu.finbro.commands.ViewCommand;
@@ -22,7 +18,7 @@ public class Parser {
     private static final String COMMAND_HELP = "help";
 
 
-    public static Command parse(String input, ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
+    public static Command parse(String input) throws FinbroException {
         String commandWord = filterCommand(input);
         String argument = filterArg(input);
 

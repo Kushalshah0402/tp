@@ -9,7 +9,7 @@ import seedu.finbro.utils.Limit;
 
 public class EditLimitCommand extends Command {
     @Override
-    public void execute(String input, ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
+    public void execute(ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
         double currentLimit = Limit.getLimit();
 
         ui.showLimitEditMenu(currentLimit);

@@ -19,8 +19,8 @@ public class ParserTest {
         Ui ui = new Ui();
 
         Storage storage = new Storage("./data/test-finbro.txt");
-        Command command = Parser.parse("add 12.50 food 2026-03-15", expenses, ui, storage);
-        command.execute("add 12.50 food 2026-03-15", expenses, ui, storage);
+        Command command = Parser.parse("add 12.50 food 2026-03-15");
+        command.execute(expenses, ui, storage);
         assertEquals(1, expenses.size());
     }
 
@@ -32,8 +32,8 @@ public class ParserTest {
         Storage storage = new Storage("./data/test-finbro.txt");
 
         FinbroException exception = assertThrows(FinbroException.class, () -> {
-            Command command = Parser.parse("add abc food 2026-03-15", expenses, ui, storage);
-            command.execute("add abc food 2026-03-15", expenses, ui, storage);
+            Command command = Parser.parse("add abc food 2026-03-15");
+            command.execute(expenses, ui, storage);
         });
 
         assertEquals("Amount must be a number.", exception.getMessage());
@@ -52,7 +52,7 @@ public class ParserTest {
         ui.setInputs("yes", "3", "800", "yes");
 
         Limit.setLimit(800.0);
-        Parser.parse("edit limit", expenses, ui, storage);
+        Parser.parse("edit limit");
 
         assertEquals(800.0, Limit.getLimit());
     }
@@ -70,8 +70,8 @@ public class ParserTest {
         ui.setInputs("1", "100", "yes");
 
         Limit.setLimit(500.0);
-        Command command = Parser.parse("edit limit", expenses, ui, storage);
-        command.execute("edit limit", expenses, ui, storage);
+        Command command = Parser.parse("edit limit");
+        command.execute(expenses, ui, storage);
 
         assertEquals(600.0, Limit.getLimit());
     }
@@ -89,8 +89,8 @@ public class ParserTest {
         ui.setInputs("2", "200", "yes");
 
         Limit.setLimit(500.0);
-        Command command = Parser.parse("edit limit", expenses, ui, storage);
-        command.execute("edit limit", expenses, ui, storage);
+        Command command = Parser.parse("edit limit");
+        command.execute(expenses, ui, storage);
 
         assertEquals(300.0, Limit.getLimit());
     }

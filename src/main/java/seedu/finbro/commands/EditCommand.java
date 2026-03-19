@@ -15,9 +15,9 @@ public class EditCommand extends Command{
     }
 
     @Override
-    public void execute(String input, ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
+    public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         if (arg.equals(COMMAND_SET_LIMIT)) {
-            new EditLimitCommand().execute(input, expenses, ui, storage);
+            new EditLimitCommand().execute(expenses, ui, storage);
         } else {
             throw new FinbroException("Invalid command");
         }
