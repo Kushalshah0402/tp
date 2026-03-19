@@ -17,11 +17,11 @@ public class EditLimitCommand extends Command {
     @Override
     public void execute(String input, ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
         double currentLimit = Limit.getLimit();
-        logger.log(Level.INFO, "Starting EditLimitCommand. Current limit: " + currentLimit);
+        logger.log(Level.INFO, "Starting EditLimitCommand. Current limit: {0}", currentLimit);
 
         ui.showLimitEditMenu(currentLimit);
         String choice = ui.readCommand().trim();
-        logger.log(Level.INFO, "User selected option: " + choice);
+        logger.log(Level.INFO, "User selected option: {0}", choice);
 
         double newLimit;
 
@@ -30,14 +30,14 @@ public class EditLimitCommand extends Command {
             logger.log(Level.INFO, "User chose to increase limit");
             ui.showEnterAmountPrompt("increase");
             double increase = Parser.parsePositiveAmount(ui.readCommand().trim());
-            logger.log(Level.INFO, "Increase amount entered: " + increase);
+            logger.log(Level.INFO, "Increase amount entered: {0}", increase);
             newLimit = currentLimit + increase;
             break;
         case "2":
             logger.log(Level.INFO, "User chose to decrease limit");
             ui.showEnterAmountPrompt("decrease");
             double decrease = Parser.parsePositiveAmount(ui.readCommand().trim());
-            logger.log(Level.INFO, "Decrease amount entered: " + decrease);
+            logger.log(Level.INFO, "Decrease amount entered: {0}", decrease);
             newLimit = currentLimit - decrease;
             if (newLimit < 0) {
                 logger.log(Level.WARNING, "Invalid operation: resulting limit is negative ({0})", newLimit);
@@ -45,14 +45,18 @@ public class EditLimitCommand extends Command {
             }
             break;
         case "3":
+            logger.log(Level.INFO, "User chose to replace limit");
             ui.showEnterAmountPrompt("replace");
             newLimit = Parser.parsePositiveAmount(ui.readCommand().trim());
+            logger.log(Level.INFO, "Replacement amount entered: {0}", newLimit);
             break;
         default:
+            logger.log(Level.WARNING, "Invalid menu choice entered: {0}", choice);
             throw new FinbroException("Please enter 1, 2, or 3.");
         }
-
         Limit.setLimit(newLimit, ui);
+        logger.log(Level.INFO, "Limit successfully updated to: {0}", newLimit);
+
         ui.showLimit();
     }
 
