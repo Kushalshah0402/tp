@@ -13,7 +13,7 @@ public class Limit {
     }
 
     public static String toFileFormat() {
-        return String.format("%.2f", Limit.getLimit()) + "\n";
+        return String.format("LIMIT | %.2f", Limit.getLimit()) + "\n";
     }
 
     public static void setLimit(double limit) {
