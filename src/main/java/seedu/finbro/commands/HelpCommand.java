@@ -26,7 +26,7 @@ public class HelpCommand extends Command {
             command = Parser.parse(arg);
         } catch (FinbroException e) {
             ui.showHelpMessage(getHelpMessage());
-            logger.log(Level.WARNING, "Unexpected error while displaying help", e);
+            logger.log(Level.WARNING, "Invalid command \"{0}\", showing default help message", arg);
             return;
         }
 
