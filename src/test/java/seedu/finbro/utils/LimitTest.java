@@ -9,12 +9,12 @@ class LimitTest {
     @Test
     void toFileFormat_twoDP_twoDP() {
         Limit.setLimit(450.00);
-        assertEquals("450.00\n", Limit.toFileFormat());
+        assertEquals("LIMIT | 450.00\n", Limit.toFileFormat());
     }
 
     @Test
     void toFileFormat_twoDP_roundedTwoDP() {
         Limit.setLimit(450.019);
-        assertEquals("450.02\n",  Limit.toFileFormat());
+        assertEquals("LIMIT | 450.02\n",  Limit.toFileFormat());
     }
 }
