@@ -11,7 +11,6 @@ public class ExpenseList {
 
     public ExpenseList() {
         expenses = new ArrayList<>();
-        Limit.setSpent(total);
     }
 
     public ExpenseList(List<Expense> expenses) {
@@ -19,14 +18,12 @@ public class ExpenseList {
         for (Expense expense : expenses) {
             total += expense.getAmount();
         }
-        Limit.setSpent(total);
     }
 
     public void add(Expense e) {
         assert e != null : "Expense to add should not be null";
         expenses.add(e);
         total += e.getAmount();
-        Limit.setSpent(total);
     }
 
     public int size() {
@@ -81,7 +78,6 @@ public class ExpenseList {
         }
 
         total -= targetExpense.getAmount();
-        Limit.setSpent(total);
         expenses.remove(targetExpense);
         assert !expenses.contains(targetExpense) : "Removed expense should no longer be in list";
         return targetExpense;

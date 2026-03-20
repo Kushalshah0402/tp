@@ -15,7 +15,6 @@ class ExpenseListTest {
     @BeforeEach
     void resetLimitState() {
         Limit.setLimit(0);
-        Limit.setSpent(0);
     }
 
     @Test
