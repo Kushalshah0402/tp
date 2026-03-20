@@ -1,7 +1,6 @@
 package seedu.finbro.commands;
 
 import seedu.finbro.utils.ExpenseList;
-import seedu.finbro.parser.Parser;
 import seedu.finbro.storage.Storage;
 import seedu.finbro.ui.Ui;
 import seedu.finbro.exception.FinbroException;
@@ -20,18 +19,18 @@ public class EditLimitCommand extends Command {
         switch (choice) {
         case "1":
             ui.showEnterAmountPrompt("increase");
-            newLimit = currentLimit + Parser.parsePositiveAmount(ui.readCommand().trim());
+            newLimit = currentLimit + parsePositiveAmount(ui.readCommand().trim());
             break;
         case "2":
             ui.showEnterAmountPrompt("decrease");
-            newLimit = currentLimit - Parser.parsePositiveAmount(ui.readCommand().trim());
+            newLimit = currentLimit - parsePositiveAmount(ui.readCommand().trim());
             if (newLimit < 0) {
                 throw new FinbroException("Monthly spending limit must be at least $0");
             }
             break;
         case "3":
             ui.showEnterAmountPrompt("replace");
-            newLimit = Parser.parsePositiveAmount(ui.readCommand().trim());
+            newLimit = parsePositiveAmount(ui.readCommand().trim());
             break;
         default:
             throw new FinbroException("Please enter 1, 2, or 3.");
@@ -41,6 +40,21 @@ public class EditLimitCommand extends Command {
         SetLimitCommand.confirmLimitChange(ui, newLimit);
 
         ui.showLimit();
+    }
+
+    public static double parsePositiveAmount(String input) throws FinbroException {
+        double amount;
+        try {
+            amount = Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            throw new FinbroException("Monthly spending limit must be a number");
+        }
+
+        if (amount < 0) {
+            throw new FinbroException("Monthly spending limit must be at least $0");
+        }
+
+        return amount;
     }
 
     @Override

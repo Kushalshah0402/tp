@@ -49,19 +49,4 @@ public class Parser {
         // argument is case-insensitive
         return words[1].strip().toLowerCase();
     }
-
-    public static double parsePositiveAmount(String input) throws FinbroException {
-        double amount;
-        try {
-            amount = Double.parseDouble(input);
-        } catch (NumberFormatException e) {
-            throw new FinbroException("Monthly spending limit must be a number");
-        }
-
-        if (amount < 0) {
-            throw new FinbroException("Monthly spending limit must be at least $0");
-        }
-
-        return amount;
-    }
 }
