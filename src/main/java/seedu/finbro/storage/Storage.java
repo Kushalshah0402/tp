@@ -15,8 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Storage {
-    private static final Logger logger =  Logger.getLogger(Storage.class.getName());
+    private static final Logger logger = Logger.getLogger(Storage.class.getName());
     private final String filePath;
+
     public Storage(String filePath) {
         this.filePath = filePath;
     }
@@ -49,7 +50,7 @@ public class Storage {
 
         if (parts.length != 3) {
             // corrupt expense
-            logger.log(Level.WARNING, "Invalid expense format, skipping line: {0}",  line);
+            logger.log(Level.WARNING, "Invalid expense format, skipping line: {0}", line);
             return;
         }
 
