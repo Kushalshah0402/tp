@@ -6,7 +6,11 @@ import seedu.finbro.storage.Storage;
 import seedu.finbro.ui.Ui;
 import seedu.finbro.exception.FinbroException;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class HelpCommand extends Command {
+    private static final Logger logger = Logger.getLogger(HelpCommand.class.getName());
     private final String arg;
 
     public HelpCommand(String arg) {
@@ -15,14 +19,18 @@ public class HelpCommand extends Command {
 
     @Override
     public void execute(ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
+        logger.log(Level.INFO, "Help command invoked");
+
         Command command;
         try {
             command = Parser.parse(arg);
         } catch (FinbroException e) {
             ui.showHelpMessage(getHelpMessage());
+            logger.log(Level.WARNING, "Unexpected error while displaying help", e);
             return;
         }
 
+        logger.log(Level.INFO, "Displayed help for {0} commands", command.getClass().getSimpleName());
         ui.showCommandHelpMessage(command);
     }
 

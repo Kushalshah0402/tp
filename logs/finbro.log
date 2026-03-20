@@ -1,2 +1,6 @@
 2026-03-19 00:00:33 [INFO] seedu.finbro.utils.Limit - Setting limit to 500
 2026-03-19 00:00:33 [INFO] seedu.finbro.utils.Limit - Setting spent to 0
+2026-03-20 08:48:45 [INFO] seedu.finbro.utils.Limit - Setting limit to 100
+2026-03-20 08:48:45 [INFO] seedu.finbro.utils.Limit - Setting spent to 30
+2026-03-20 08:48:53 [INFO] seedu.finbro.commands.HelpCommand - Help command invoked
+2026-03-20 08:48:53 [INFO] seedu.finbro.commands.HelpCommand - Displayed help for 6 commands
