@@ -16,9 +16,8 @@ public class Finbro {
     private Storage storage;
     private ExpenseList expenses;
     private Ui ui;
-    /**
-     * @author Kushalshah0402
-     */
+
+    //@@author Kushalshah0402
     public Finbro(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -31,9 +30,7 @@ public class Finbro {
             expenses = new ExpenseList();
         }
     }
-    /**
-     * @author Kushalshah0402 natmloclam AK47ofCode
-     */
+    //@@author Kushalshah0402 natmloclam AK47ofCode
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -65,9 +62,7 @@ public class Finbro {
             }
         }
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     public static void main(String[] args) {
         new Finbro("./data/finbro.txt").run();
     }

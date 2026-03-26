@@ -12,9 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ParserTest {
-    /**
-     * @author WangZX2001
-     */
+    //@@author WangZX2001
     @Test
     public void parse_addValidExpense_expenseAdded() throws FinbroException {
         ExpenseList expenses = new ExpenseList();
@@ -25,9 +23,7 @@ public class ParserTest {
         command.execute(expenses, ui, storage);
         assertEquals(1, expenses.size());
     }
-    /**
-     * @author WangZX2001
-     */
+    //@@author WangZX2001
     @Test
     public void parse_addInvalidAmount_exceptionThrown() {
         ExpenseList expenses = new ExpenseList();
@@ -42,9 +38,7 @@ public class ParserTest {
 
         assertEquals("Amount must be a number.", exception.getMessage());
     }
-    /**
-     * @author WangZX2001
-     */
+    //@@author WangZX2001
     @Test
     public void parse_editLimitReplace() throws FinbroException {
         TestUi ui = new TestUi();
@@ -60,9 +54,7 @@ public class ParserTest {
 
         assertEquals(800.0, Limit.getLimit());
     }
-    /**
-     * @author WangZX2001
-     */
+    //@@author WangZX2001
     @Test
     public void parse_editLimitIncrease() throws FinbroException {
         ExpenseList expenses = new ExpenseList();
@@ -81,9 +73,7 @@ public class ParserTest {
 
         assertEquals(600.0, Limit.getLimit());
     }
-    /**
-     * @author WangZX2001
-     */
+    //@@author WangZX2001
     @Test
     public void parse_editLimitDecrease() throws FinbroException {
         ExpenseList expenses = new ExpenseList();
@@ -102,9 +92,7 @@ public class ParserTest {
 
         assertEquals(300.0, Limit.getLimit());
     }
-    /**
-     * @author WangZX2001
-     */
+    //@@author WangZX2001
     private static class TestUi extends Ui {
         private String[] inputs;
         private int index = 0;

@@ -14,9 +14,7 @@ public class EditCommand extends Command{
         this.arg = arg;
     }
 
-    /**
-     * @author natmloclam
-     */
+    //@@author natmloclam
     @Override
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         if (arg.equals(COMMAND_SET_LIMIT)) {
@@ -25,9 +23,7 @@ public class EditCommand extends Command{
             throw new FinbroException("Invalid command");
         }
     }
-    /**
-     * @author natmloclam
-     */
+    //@@author natmloclam
     @Override
     public String getHelpMessage() {
         return """

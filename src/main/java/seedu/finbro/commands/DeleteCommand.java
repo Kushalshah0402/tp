@@ -17,9 +17,7 @@ public class DeleteCommand extends Command {
         this.arg = arg;
     }
 
-    /**
-     * @author zihaoalt
-     */
+    //@@author zihaoalt
     @Override
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         verifyInputLength(arg);
@@ -37,9 +35,7 @@ public class DeleteCommand extends Command {
         logger.log(Level.INFO, "Successfully deleted expense in category " + category + " #" + index);
         ui.showExpenseRemoved(expense, expenses.size());
     }
-    /**
-     * @author zihaoalt
-     */
+    //@@author zihaoalt
     private void verifyInputLength(String input) throws FinbroException {
         String [] parts = input.split(" ");
         if (parts.length < 2) {
@@ -47,9 +43,7 @@ public class DeleteCommand extends Command {
             throw new FinbroException("Usage: delete <category> #<number>");
         }
     }
-    /**
-     * @author zihaoalt
-     */
+    //@@author zihaoalt
     private int verifyIndex(String input) throws FinbroException {
         String[] parts = input.split(" ");
         logger.log(Level.INFO, "Attempting to delete expense in category " + parts[0] + " #" + parts[1]);
@@ -63,16 +57,12 @@ public class DeleteCommand extends Command {
         }
         return index;
     }
-    /**
-     * @author zihaoalt
-     */
+    //@@author zihaoalt
     private String filterCategory(String input) throws FinbroException {
         String[] parts = input.split(" ");
         return parts[0];
     }
-    /**
-     * @author zihaoalt
-     */
+    //@@author zihaoalt
     @Override
     public String getHelpMessage() {
         return """

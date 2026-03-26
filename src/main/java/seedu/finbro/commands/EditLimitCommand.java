@@ -13,9 +13,7 @@ public class EditLimitCommand extends Command {
 
     private static final Logger logger = Logger.getLogger(EditLimitCommand.class.getName());
 
-    /**
-     * @author WangZX2001
-     */
+    //@@author WangZX2001
     @Override
     public void execute(ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
         double currentLimit = Limit.getLimit();
@@ -82,9 +80,7 @@ public class EditLimitCommand extends Command {
 
         ui.showLimit();
     }
-    /**
-     * @author WangZX2001
-     */
+    //@@author WangZX2001
     public static double parsePositiveAmount(String input) throws FinbroException {
         double amount;
         try {
@@ -99,9 +95,7 @@ public class EditLimitCommand extends Command {
 
         return amount;
     }
-    /**
-     * @author WangZX2001
-     */
+    //@@author WangZX2001
     @Override
     public String getHelpMessage() {
         return """

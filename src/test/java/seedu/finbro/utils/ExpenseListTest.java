@@ -17,18 +17,14 @@ class ExpenseListTest {
         Limit.setLimit(0);
     }
 
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     @Test
     void add_expenseAdded_sizeIncreases() {
         ExpenseList list = new ExpenseList();
         list.add(new Expense(10, "food", "2026-01-01"));
         assertEquals(1, list.size());
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     @Test
     void getAll_returnsAllExpenses() {
         ExpenseList list = new ExpenseList();
@@ -38,9 +34,7 @@ class ExpenseListTest {
         assertEquals(1, all.size());
         assertTrue(all.contains(e));
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     @Test
     void getCategoryExpenses_correctCategory_returnsOnlyMatching() {
         ExpenseList list = new ExpenseList();
@@ -50,9 +44,7 @@ class ExpenseListTest {
         List<Expense> foodExpenses = list.getCategoryExpenses("food");
         assertEquals(2, foodExpenses.size());
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     @Test
     void removeByCategoryIndex_valid_removesCorrectExpense() throws Exception {
         ExpenseList list = new ExpenseList();
@@ -64,9 +56,7 @@ class ExpenseListTest {
         assertEquals(e2, removed);
         assertEquals(1, list.size());
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     @Test
     void removeByCategoryIndex_invalidNumber_throwsException() {
         ExpenseList list = new ExpenseList();
@@ -74,9 +64,7 @@ class ExpenseListTest {
         assertThrows(FinbroException.class,
                 () -> list.removeByCategoryIndex("food", 0));
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     @Test
     void removeByCategoryIndex_categoryNotFound_throwsException() {
         ExpenseList list = new ExpenseList();
@@ -84,9 +72,7 @@ class ExpenseListTest {
         assertThrows(FinbroException.class,
                 () -> list.removeByCategoryIndex("transport", 1));
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     @Test
     void removeByCategoryIndex_outOfBounds_throwsException() {
         ExpenseList list = new ExpenseList();
@@ -94,9 +80,7 @@ class ExpenseListTest {
         assertThrows(FinbroException.class,
                 () -> list.removeByCategoryIndex("food", 2));
     }
-    /**
-     * @author AK47ofCode
-     */
+    //@@author AK47ofCode
     @Test
     void getTotalExpenditure_returnsTotalExpenditure() {
         ExpenseList list = new ExpenseList();
@@ -106,9 +90,7 @@ class ExpenseListTest {
 
         assertEquals(22, list.getTotalExpenditure());
     }
-    /**
-     * @author AK47ofCode
-     */
+    //@@author AK47ofCode
     @Test
     void expenseListFromLoadedExpenses_initializesCorrectTotalAndRemaining() {
         List<Expense> loadedExpenses = new ArrayList<>();
@@ -122,9 +104,7 @@ class ExpenseListTest {
         assertEquals(22, list.getTotalExpenditure());
         assertEquals(8, list.getRemainingExpenditure());
     }
-    /**
-     * @author AK47ofCode
-     */
+    //@@author AK47ofCode
     @Test
     void getRemainingExpenditure_withLimit_returnsCorrectRemaining() {
         ExpenseList list = new ExpenseList();
@@ -133,9 +113,7 @@ class ExpenseListTest {
 
         assertEquals(10, list.getRemainingExpenditure());
     }
-    /**
-     * @author AK47ofCode
-     */
+    //@@author AK47ofCode
     @Test
     void getRemainingExpenditure_deleteExpense_returnsCorrectRemaining() throws FinbroException {
         ExpenseList list = new ExpenseList();

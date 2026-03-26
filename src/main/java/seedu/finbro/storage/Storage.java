@@ -22,9 +22,7 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     public List<Expense> load() throws FinbroException {
         List<Expense> expenses = new ArrayList<>();
         File file = new File(filePath);
@@ -47,9 +45,7 @@ public class Storage {
         }
         return expenses;
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     private void processExpenseLine(String line, List<Expense> expenses) {
         String[] parts = line.split("\\|");
 
@@ -70,9 +66,7 @@ public class Storage {
 
         expenses.add(new Expense(amount, category, date));
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     private void readLimit(Scanner scanner, List<Expense> expenses) {
         if (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -95,9 +89,8 @@ public class Storage {
             }
         }
     }
-    /**
-     * @author natmloclam
-     */
+
+    //@@author natmloclam
     private double parseAmount(String input) {
         double limit;
         try {
@@ -109,9 +102,8 @@ public class Storage {
 
         return limit;
     }
-    /**
-     * @author Kushalshah0402
-     */
+
+    //@@author Kushalshah0402
     public void save(List<Expense> expenses) {
         try {
             File file = new File(filePath);

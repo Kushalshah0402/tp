@@ -13,9 +13,8 @@ import seedu.finbro.ui.Ui;
 import seedu.finbro.utils.ExpenseList;
 
 class SetLimitCommandTest {
-    /**
-     * @author natmloclam
-     */
+
+    //@@author natmloclam
     @Test
     void execute_validInput_noException() {
         String input = "500";
@@ -29,9 +28,8 @@ class SetLimitCommandTest {
             new SetLimitCommand(input).execute(expenseList,ui,storage);
         });
     }
-    /**
-     * @author natmloclam
-     */
+
+    //@@author natmloclam
     @Test
     void execute_nonNumber_exception() {
         String input = "abc";
@@ -49,9 +47,8 @@ class SetLimitCommandTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-    /**
-     * @author natmloclam
-     */
+
+    //@@author natmloclam
     @Test
     void execute_outOfRange_exception() {
         String input = "-4";

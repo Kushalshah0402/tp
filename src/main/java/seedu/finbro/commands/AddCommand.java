@@ -17,17 +17,12 @@ public class AddCommand extends Command {
     private static final Logger logger = Logger.getLogger(AddCommand.class.getName());
     private final String arg;
 
-    /**
-     * @author natmloclam
-     *
-     */
+    //@@author natmloclam
     public AddCommand(String arg) {
         this.arg = arg;
     }
 
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     @Override
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         verifyInputLength(arg);
@@ -45,9 +40,7 @@ public class AddCommand extends Command {
         ui.showExpenseAdded(expense, expenses.size());
     }
 
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     private void verifyInputLength(String input) throws FinbroException {
         String [] parts = input.split(" ");
         if (parts.length != 3) {
@@ -55,9 +48,8 @@ public class AddCommand extends Command {
             throw new FinbroException("Usage: add <amount> <category> <date>");
         }
     }
-    /**
-     * @author Kushalshah0402
-     */
+
+    //@@author Kushalshah0402
     private double verifyAmount(String input) throws FinbroException {
         String[] parts =  input.split(" ");
         double amount = 0;
@@ -73,16 +65,12 @@ public class AddCommand extends Command {
         }
         return amount;
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     private String filterCategory(String input) {
         String[] parts = input.split(" ");
         return parts[1];
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     private String verifyDate(String input) throws FinbroException {
         String[] parts = input.split(" ");
         String inputDate = parts[2];
@@ -100,9 +88,7 @@ public class AddCommand extends Command {
 
         return parsedDate.format(outputFormatter);
     }
-    /**
-     * @author Kushalshah0402
-     */
+    //@@author Kushalshah0402
     @Override
     public String getHelpMessage() {
         return """
