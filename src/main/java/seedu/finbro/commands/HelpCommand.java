@@ -17,6 +17,9 @@ public class HelpCommand extends Command {
         this.arg = arg;
     }
 
+    /**
+     * @author zihaoalt natmloclam
+     */
     @Override
     public void execute(ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
         logger.log(Level.INFO, "Help command invoked");
@@ -33,7 +36,9 @@ public class HelpCommand extends Command {
         logger.log(Level.INFO, "Displayed help for {0} commands", command.getClass().getSimpleName());
         ui.showCommandHelpMessage(command);
     }
-
+    /**
+     * @author zihaoalt natmloclam
+     */
     @Override
     public String getHelpMessage() {
         return """

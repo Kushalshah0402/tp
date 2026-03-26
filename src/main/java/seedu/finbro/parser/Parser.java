@@ -17,7 +17,9 @@ public class Parser {
     private static final String COMMAND_EDIT = "edit";
     private static final String COMMAND_HELP = "help";
 
-
+    /**
+     * @author zihaoalt natmloclam
+     */
     public static Command parse(String input) throws FinbroException {
         String commandWord = filterCommand(input);
         String argument = filterArg(input);
@@ -33,13 +35,17 @@ public class Parser {
         default -> throw new FinbroException("Invalid command.");
         };
     }
-
+    /**
+     * @author zihaoalt natmloclam
+     */
     public static String filterCommand(String input) {
         String[] words = input.split(" ", 2);
         // command is case-insensitive
         return words[0].strip().toLowerCase();
     }
-
+    /**
+     * @author zihaoalt natmloclam
+     */
     public static String filterArg(String input) {
         String[] splitSentence = input.split(" ");
         if (splitSentence.length < 2) {

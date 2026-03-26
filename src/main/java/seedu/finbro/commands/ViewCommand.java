@@ -19,6 +19,9 @@ public class ViewCommand extends Command {
         this.arg = arg;
     }
 
+    /**
+     * @author Kushalshah0402 zihaoalt
+     */
     @Override
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         switch (arg) {
@@ -38,7 +41,9 @@ public class ViewCommand extends Command {
             ui.showAllExpenses(expenses.getCategoryExpenses(arg));
         }
     }
-
+    /**
+     * @author Kushalshah0402 zihaoalt
+     */
     @Override
     public String getHelpMessage() {
         return """

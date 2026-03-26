@@ -14,7 +14,9 @@ class FinbroTest {
     public void sampleTest() {
         assertTrue(true);
     }
-
+    /**
+     * @author AK47ofCode
+     */
     @Test
     void run_remainingBudgetAboveLimit_showsOverspendingWarning() {
         ExpenseList list = new ExpenseList();
@@ -23,7 +25,9 @@ class FinbroTest {
 
         assertTrue(list.getRemainingExpenditure() <= 20);
     }
-
+    /**
+     * @author AK47ofCode
+     */
     @Test
     void run_remainingBudgetBelowLimit_doesNotShowOverspendingWarning() {
         ExpenseList list = new ExpenseList();
