@@ -18,6 +18,9 @@ public class SetLimitCommand extends Command {
         this.arg = arg;
     }
 
+    /**
+     * @author natmloclam
+     */
     @Override
     public void execute(ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
         if (arg.isEmpty()) {
@@ -36,14 +39,18 @@ public class SetLimitCommand extends Command {
 
         ui.showLimit();
     }
-
+    /**
+     * @author natmloclam
+     */
     private static void verifyLimitRange(double limit) throws FinbroException {
         if (limit < 0) {
             logger.log(Level.WARNING, "Invalid limit input (out of valid range): {0}", limit);
             throw new FinbroException("Monthly spending limit must be at least $0");
         }
     }
-
+    /**
+     * @author natmloclam
+     */
     private static double verifyLimitType(String inputLimit) throws FinbroException {
         double limit;
         try {
@@ -54,7 +61,9 @@ public class SetLimitCommand extends Command {
         }
         return limit;
     }
-
+    /**
+     * @author natmloclam
+     */
     static void confirmLimitChange(Ui ui, double limit) {
         ui.showChangeLimitWarning(limit);
         logger.log(Level.INFO, "Getting confirmation for limit change");
@@ -71,7 +80,9 @@ public class SetLimitCommand extends Command {
             ui.showCancelChangeLimitMessage();
         }
     }
-
+    /**
+     * @author natmloclam
+     */
     @Override
     public String getHelpMessage() {
         return """

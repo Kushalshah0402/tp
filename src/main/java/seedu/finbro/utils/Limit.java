@@ -8,14 +8,21 @@ public class Limit {
 
     private static final Logger logger = Logger.getLogger(Limit.class.getName());
 
+    /**
+     * @author natmloclam
+     */
     public static double getLimit() {
         return limit;
     }
-
+    /**
+     * @author natmloclam
+     */
     public static String toFileFormat() {
         return String.format("LIMIT | %.2f", Limit.getLimit()) + "\n";
     }
-
+    /**
+     * @author natmloclam
+     */
     public static void setLimit(double limit) {
         if (limit >= 0) {
             logger.log(Level.INFO, "Setting limit to {0}", limit);

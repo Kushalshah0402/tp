@@ -6,42 +6,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenseList {
-    private List<Expense> expenses;
+    private final List<Expense> expenses;
     private double total = 0;
 
     public ExpenseList() {
         expenses = new ArrayList<>();
     }
 
+    /**
+     * @author Kushalshah0402 AK47ofCode
+     */
     public ExpenseList(List<Expense> expenses) {
         this.expenses = expenses;
         for (Expense expense : expenses) {
             total += expense.getAmount();
         }
     }
-
+    /**
+     * @author Kushalshah0402 AK47ofCode
+     */
     public void add(Expense e) {
         assert e != null : "Expense to add should not be null";
         expenses.add(e);
         total += e.getAmount();
     }
-
+    /**
+     * @author Kushalshah0402
+     */
     public int size() {
         return expenses.size();
     }
-
+    /**
+     * @author Kushalshah0402
+     */
     public List<Expense> getAll() {
         return expenses;
     }
-
+    /**
+     * @author AK47ofCode
+     */
     public double getTotalExpenditure() {
         return total;
     }
-
+    /**
+     * @author AK47ofCode
+     */
     public double getRemainingExpenditure() {
         return Limit.getLimit() - total;
     }
-
+    /**
+     * @author zihaoalt
+     */
     public List<Expense> getCategoryExpenses(String category) {
         List<Expense> results = new ArrayList<>();
         for (Expense e : expenses) {
@@ -51,7 +66,9 @@ public class ExpenseList {
         }
         return results;
     }
-
+    /**
+     * @author zihaoalt
+     */
     public Expense removeByCategoryIndex(String category, int number) throws FinbroException {
         if (number <= 0) {
             throw new FinbroException("Expense number must be positive");

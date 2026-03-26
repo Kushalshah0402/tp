@@ -17,7 +17,9 @@ public class LogFormatter extends Formatter {
 
     private static final DateTimeFormatter dtf =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
+    /**
+     * @author natmloclam
+     */
     @Override
     public String format(LogRecord record) {
         String time = LocalDateTime.now().format(dtf);
@@ -28,7 +30,9 @@ public class LogFormatter extends Formatter {
         return String.format("%s [%s] %s - %s%n",
                 time, level, loggerName, message);
     }
-
+    /**
+     * @author natmloclam
+     */
     public static void initLogger() throws FinbroException {
         createFile();
         try {
@@ -37,7 +41,9 @@ public class LogFormatter extends Formatter {
             throw new FinbroException("Unable to read configuration file: " + LOG_CONFIG);
         }
     }
-
+    /**
+     * @author natmloclam
+     */
     private static void createFile() throws FinbroException {
         // create logs folder if it doesn't exist
         File logsFolder = new File(LOGS_DIR);
