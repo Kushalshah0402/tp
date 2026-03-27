@@ -17,14 +17,14 @@ public class ExpenseList {
     public ExpenseList(List<Expense> expenses) {
         this.expenses = expenses;
         for (Expense expense : expenses) {
-            total += expense.getAmount();
+            total += expense.amount();
         }
     }
     //@@author Kushalshah0402 AK47ofCode
     public void add(Expense e) {
         assert e != null : "Expense to add should not be null";
         expenses.add(e);
-        total += e.getAmount();
+        total += e.amount();
     }
     //@@author Kushalshah0402
     public int size() {
@@ -46,7 +46,7 @@ public class ExpenseList {
     public List<Expense> getCategoryExpenses(String category) {
         List<Expense> results = new ArrayList<>();
         for (Expense e : expenses) {
-            if (e.getCategory().equals(category)) {
+            if (e.category().equals(category)) {
                 results.add(e);
             }
         }
@@ -62,7 +62,7 @@ public class ExpenseList {
         int count = 0;
         Expense targetExpense = null;
         for (Expense expense : expenses) {
-            if (expense.getCategory().equals(category)) {
+            if (expense.category().equals(category)) {
                 count++;
             }
             if (count == number) {
@@ -79,7 +79,7 @@ public class ExpenseList {
             throw new FinbroException("Expense number under the category is out of bounds");
         }
 
-        total -= targetExpense.getAmount();
+        total -= targetExpense.amount();
         expenses.remove(targetExpense);
         assert !expenses.contains(targetExpense) : "Removed expense should no longer be in list";
         return targetExpense;

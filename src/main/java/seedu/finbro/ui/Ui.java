@@ -112,7 +112,7 @@ public class Ui {
             System.out.println("Here are your expenses:");
             System.out.println();
             for (int i = 0; i < expenses.size(); i++) {
-                total += expenses.get(i).getAmount();
+                total += expenses.get(i).amount();
                 System.out.println((i + 1) + ". " + expenses.get(i));
                 System.out.println();
             }

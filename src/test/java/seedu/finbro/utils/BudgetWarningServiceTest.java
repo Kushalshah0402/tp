@@ -11,11 +11,13 @@ class BudgetWarningServiceTest {
 
     private final BudgetWarningService service = new BudgetWarningService();
 
+    //@@author AK47ofCode
     @BeforeEach
     void resetLimit() {
         Limit.setLimit(0);
     }
 
+    //@@author AK47ofCode
     @Test
     void checkAndShowWarnings_limitExceeded_showsExceededWarning() {
         ExpenseList expenses = new ExpenseList();
@@ -29,6 +31,7 @@ class BudgetWarningServiceTest {
         assertFalse(ui.wasReminderShown);
     }
 
+    //@@author AK47ofCode
     @Test
     void checkAndShowWarnings_closeToLimit_showsReminderWarning() {
         ExpenseList expenses = new ExpenseList();
@@ -42,6 +45,7 @@ class BudgetWarningServiceTest {
         assertTrue(ui.wasReminderShown);
     }
 
+    //@@author AK47ofCode
     @Test
     void checkAndShowWarnings_limitNotClose_showsNoWarning() {
         ExpenseList expenses = new ExpenseList();
@@ -55,6 +59,7 @@ class BudgetWarningServiceTest {
         assertFalse(ui.wasReminderShown);
     }
 
+    //@@author AK47ofCode
     @Test
     void checkAndShowWarnings_noExpenses_showsNoWarning() {
         ExpenseList expenses = new ExpenseList();
@@ -71,11 +76,13 @@ class BudgetWarningServiceTest {
         private boolean wasReminderShown;
         private boolean wasExceededShown;
 
+        //@@author AK47ofCode
         @Override
         public void showBudgetReminder(double limit) {
             wasReminderShown = true;
         }
 
+        //@@author AK47ofCode
         @Override
         public void showBudgetExceeded(double limit) {
             wasExceededShown = true;

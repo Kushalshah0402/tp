@@ -111,7 +111,7 @@ public class Storage {
             FileWriter writer = new FileWriter(file);
             writer.write(Limit.toFileFormat());
             for (Expense e : expenses) {
-                writer.write(e.getAmount() + " | " + e.getCategory() + " | " + e.getDate() + "\n");
+                writer.write(e.amount() + " | " + e.category() + " | " + e.date() + "\n");
             }
             writer.close();
         } catch (IOException e) {
