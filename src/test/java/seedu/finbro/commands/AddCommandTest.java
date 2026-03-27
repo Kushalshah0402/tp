@@ -14,7 +14,7 @@ import seedu.finbro.utils.ExpenseList;
 public class AddCommandTest {
     //@@author Kushalshah0402
     @Test
-    void execute_walkthrough_validInput_expenseAdded() throws Exception {
+    void execute_walkthroughValidInput_expenseAdded() throws Exception {
 
         // Simulated user inputs(each line = Enter key)
         String simulatedInput =
@@ -34,7 +34,7 @@ public class AddCommandTest {
 
     //@@author Kushalshah0402
     @Test
-    void execute_walkthrough_userCancels_noExpenseAdded() throws Exception {
+    void execute_walkthroughUserCancels_noExpenseAdded() throws Exception {
         String input =
                 "20\n" +
                 "food\n" +
@@ -51,7 +51,7 @@ public class AddCommandTest {
 
     //@@author Kushalshah0402
     @Test
-    void execute_strictMode_validInput_expenseAdded() throws Exception {
+    void execute_strictModeValidInput_expenseAdded() throws Exception {
         ExpenseList list = new ExpenseList();
         Ui ui = new Ui();
         Storage storage = null;
@@ -62,7 +62,7 @@ public class AddCommandTest {
 
     //@@author Kushalshah0402
     @Test
-    void execute_strictMode_missingField_throwsException() {
+    void execute_strictModeMissingField_throwsException() {
         ExpenseList list = new ExpenseList();
         Ui ui = new Ui();
         Storage storage = null;
