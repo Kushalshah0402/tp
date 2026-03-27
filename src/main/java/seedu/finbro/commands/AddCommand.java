@@ -25,19 +25,91 @@ public class AddCommand extends Command {
     //@@author Kushalshah0402
     @Override
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
+
+        //Walkthrough mode
+        if (arg.isBlank()) {
+            runWalkthrough(expenses, ui);
+            return;
+        }
+
+        //Strict mode (existing behavior)
         verifyInputLength(arg);
         double amount = verifyAmount(arg);
         String category = filterCategory(arg);
         String formattedDate = verifyDate(arg);
-
         logger.log(Level.INFO,
                 "Attempting to add expense amount {0}, category {1}, date {2}",
                 new Object[]{amount, category, formattedDate});
 
         Expense expense = new Expense(amount, category, formattedDate);
         expenses.add(expense);
-        logger.log(Level.INFO, "Successfully added expense in category " + category + " $" + amount);
+        logger.log(Level.INFO,
+                "Successfully added expense in category " + category + " $" + amount);
         ui.showExpenseAdded(expense, expenses.size());
+    }
+
+    //@@author Kushalshah0402
+    private void runWalkthrough(ExpenseList expenses, Ui ui) {
+        double amount;
+        String category;
+        String formattedDate;
+
+        // AMOUNT LOOP
+        while (true) {
+            ui.showEnterAmountPrompt();
+            String input = ui.readCommand();
+            try {
+                amount = Double.parseDouble(input);
+                if (amount <= 0) {
+                    ui.showInlineError("Amount must be a positive number.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                ui.showInlineError("Please enter numbers only.");
+            }
+        }
+
+        // CATEGORY LOOP
+        while (true) {
+            ui.showEnterCategoryPrompt();
+            category = ui.readCommand();
+
+            if (category.isBlank()) {
+                ui.showInlineError("Category cannot be empty.");
+                continue;
+            }
+
+            // Disallow numbers
+            if (!category.matches("[a-zA-Z]+")) {
+                ui.showInlineError("Category must contain letters only.");
+                continue;
+            }
+            break;
+        }
+
+        // DATE LOOP
+        while (true) {
+            ui.showEnterDatePrompt();
+            String dateInput = ui.readCommand();
+            try {
+                formattedDate = verifyDate("0 0 " + dateInput);
+                break;
+            } catch (FinbroException e) {
+                ui.showInlineError(e.getMessage());
+            }
+        }
+
+        // CONFIRMATION
+        Expense expense = new Expense(amount, category, formattedDate);
+        ui.showConfirmExpense(expense);
+        String confirm = ui.readCommand();
+        if (confirm.equalsIgnoreCase("yes")) {
+            expenses.add(expense);
+            ui.showExpenseAdded(expense, expenses.size());
+        } else {
+            ui.showCancelAddMessage();
+        }
     }
 
     //@@author Kushalshah0402
