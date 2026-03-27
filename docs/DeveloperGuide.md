@@ -21,7 +21,7 @@
 
 - improves separation of concerns
 
-`EditLimitCommand.java`:
+`EditLimitCommand.java`: handles the interactive process of modifying an existing monthly spending limit\
 
 #### Setting the limit
 
@@ -42,6 +42,11 @@ How the `Limit` component sets a limit
 
 
 #### Editing the limit
+
+The sequence diagram below illustrates the interaction within the `Limit` component, with an input of `edit limit`
+from the user.
+
+![Edit Limit Sequence Diagram](/docs/UML_diagrams/images/EditLimit.png)
 
 How the `Limit` component edits a limit
 
