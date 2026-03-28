@@ -4,6 +4,7 @@ import seedu.finbro.commands.Command;
 import seedu.finbro.utils.Expense;
 import seedu.finbro.utils.Limit;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -47,7 +48,29 @@ public class Ui {
         showLine();
         System.out.println("What is your expense amount?");
     }
-
+    //@@author zihaoalt
+    public void showEnterIndexPrompt() {
+        showLine();
+        System.out.println("Enter the expense index to delete, or type -l to list expenses in this category.");
+    }
+    //@@author zihaoalt
+    public void showAllCategoryNames(List<String> categoryNames) {
+        showLine();
+        for (String categoryName : categoryNames) {
+            System.out.println("Category Name : " + categoryName);
+        }
+        showLine();
+    }
+    //@@author zihaoalt
+    public void showCategoryExpenses(String category, List<Expense> expenses) {
+        for (int i = 0; i < expenses.size(); i++) {
+            Expense expense = expenses.get(i);
+            String toPrint = "Expense " + (i + 1) + " :" + expense.toString();
+            showLine();
+            System.out.println(toPrint);
+            showLine();
+        }
+    }
     //@@author WangZX2001
     public void showEnterAmountPrompt(String action) {
         switch (action) {
@@ -70,7 +93,10 @@ public class Ui {
     public void showEnterCategoryPrompt() {
         System.out.println("Enter the category:");
     }
-
+    //@@author zihaoalt
+    public void showEnterCategoryOptionPrompt() {
+        System.out.println("Enter the category, or type -l to list all categories.");
+    }
     //@@author Kushalshah0402
     public void showEnterDatePrompt() {
         System.out.println("Enter the date (yyyy-MM-dd):");
@@ -90,7 +116,12 @@ public class Ui {
         System.out.println("Expense not added.");
         showLine();
     }
-
+    //@@author zihaoalt
+    public void showCancelDeleteMessage() {
+        showLine();
+        System.out.println("Expense not deleted.");
+        showLine();
+    }
     //@@author Kushalshah0402
     public void showInlineError(String message) {
         System.out.println("⚠️ " + message);

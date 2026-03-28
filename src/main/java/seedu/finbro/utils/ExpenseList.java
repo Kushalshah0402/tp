@@ -92,4 +92,28 @@ public class ExpenseList {
         assert !expenses.contains(targetExpense) : "Removed expense should no longer be in list";
         return targetExpense;
     }
+
+    //@@author zihaoalt
+    public List<String> getAllCategoryNames() {
+        List<String> expenseNames = new ArrayList<>();
+        for (Expense expense : expenses) {
+            String category = expense.category();
+            if (!expenseNames.contains(category)) {
+                expenseNames.add(category);
+            }
+        }
+        return expenseNames;
+    }
+
+    //@@author zihaoalt
+    public Expense getExpenseByCategoryIndex(List<Expense> categoryList, int number) throws FinbroException {
+        if (number <= 0) {
+            throw new FinbroException("Expense number must be positive");
+        }
+        if (number > categoryList.size()) {
+            throw new FinbroException("Expense number is out of bounds");
+        }
+        return categoryList.get(number - 1);
+    }
+
 }
