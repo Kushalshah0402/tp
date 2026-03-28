@@ -56,6 +56,10 @@ public class VisualCommand extends Command {
     }
 
     public void createRow(String label, String bar, double amount) throws FinbroException {
+        if (label == null || bar == null) {
+            throw new FinbroException("Error: label or bar is null");
+        }
+
         if (!output.isBlank()) {
             output += "\n";
         }
