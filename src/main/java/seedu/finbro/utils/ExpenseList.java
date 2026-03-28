@@ -10,8 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExpenseList {
+    private static final Logger logger = Logger.getLogger(ExpenseList.class.getName());
+
     private final List<Expense> expenses;
     private double total = 0;
 
@@ -100,18 +104,24 @@ public class ExpenseList {
     }
 
     public Map<YearMonth, Double> getMonthlyExpenses() throws FinbroException {
+        logger.log(Level.INFO, "Sorting expenses by month...");
+
         Map<YearMonth, Double> monthlyTotals =  new HashMap<>();
         for (Expense expense : expenses) {
             try {
+                logger.log(Level.INFO, "Expense: {0} | {1} | {2}", new Object[]{expense.category(), expense.date(), expense.amount()});
                 YearMonth month =  parseYearMonth(expense);
                 monthlyTotals.put(month, monthlyTotals.getOrDefault(month, 0.0) + expense.amount());
             } catch (ClassCastException | NullPointerException |
                      IllegalArgumentException | UnsupportedOperationException e) {
+                logger.log(Level.SEVERE, "Error: Unable to sort expense: " +
+                        "{0} | {1} | {2}", new Object[]{expense.category(), expense.date(), expense.amount()});
                 throw new FinbroException("Unable to add to Map");
             } catch (FinbroException e) {
-                continue;
+                logger.log(Level.SEVERE, "Expense data corrupted, invalid date: {0}",  expense.date());
             }
         }
+        logger.log(Level.INFO, "Expenses successfully sorted by month.");
         return monthlyTotals;
     }
 
@@ -128,6 +138,7 @@ public class ExpenseList {
         }
         return yearMonth;
     }
+
     //@@author zihaoalt
     public List<String> getAllCategoryNames() {
         List<String> expenseNames = new ArrayList<>();

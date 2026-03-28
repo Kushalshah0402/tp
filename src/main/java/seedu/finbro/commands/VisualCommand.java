@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.IllegalFormatException;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import seedu.finbro.exception.FinbroException;
 import seedu.finbro.storage.Storage;
@@ -12,6 +14,8 @@ import seedu.finbro.ui.Ui;
 import seedu.finbro.utils.ExpenseList;
 
 public class VisualCommand extends Command {
+    private static final Logger logger = Logger.getLogger(VisualCommand.class.getName());
+
     public static final int MAX_BAR_LENGTH = 20;
 
     String arg;
@@ -23,10 +27,13 @@ public class VisualCommand extends Command {
 
     @Override
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
+        logger.log(Level.INFO, "Attempting to create visualisation");
+
         // TreeMap sorts by key (YearMonth)
         Map<YearMonth, Double> monthlyTotals = new TreeMap<>(expenses.getMonthlyExpenses());
 
         if (monthlyTotals.isEmpty()) {
+            logger.log(Level.WARNING, "Visualisation cancelled: no monthly expenses found");
             throw new  FinbroException("Error: No expenses found");
         }
 
@@ -41,6 +48,7 @@ public class VisualCommand extends Command {
             createRow(label, bar, amount);
         }
 
+        logger.log(Level.INFO, "Visualisation created");
         ui.showVisual(output);
     }
 
@@ -60,6 +68,7 @@ public class VisualCommand extends Command {
 
     public void createRow(String label, String bar, double amount) throws FinbroException {
         if (label == null || bar == null) {
+            logger.log(Level.SEVERE, "Invalid row label/bar strings");
             throw new FinbroException("Error: label or bar is null");
         }
 
@@ -70,6 +79,7 @@ public class VisualCommand extends Command {
         try {
             output += String.format("%-8s | %-20s $%.2f", label, bar, amount);
         } catch (IllegalFormatException e) {
+            logger.log(Level.SEVERE, "String formatting error");
             throw new FinbroException(e.getMessage());
         }
     }
