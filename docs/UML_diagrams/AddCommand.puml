@@ -1,0 +1,64 @@
+@startuml AddCommand
+'https://plantuml.com/sequence-diagram
+actor User
+
+
+box "AddCommand" #LightBlue
+participant ":Ui"
+participant ":Finbro"
+participant ":Parser"
+participant "c:AddCommand"
+participant ":ExpenseList"
+participant ":Storage"
+end box
+
+User -> ":Ui" : add <amt><cat><date>
+activate ":Ui"
+
+":Ui" -> ":Finbro" : input = "add...""
+activate ":Finbro"
+
+":Finbro" -> ":Parser" : parse(input)
+activate ":Parser"
+
+create "c:AddCommand"
+":Parser" -> "c:AddCommand" : new AddCommand(argument)
+activate "c:AddCommand"
+return c
+return c
+
+":Finbro" -> "c:AddCommand" : execute(...)
+activate "c:AddCommand"
+
+alt [walkthrough mode]
+    loop for each field (amount,categoty,date)
+        "c:AddCommand" -> ":Ui" : showPrompt(...)
+        ":Ui" -> User : prompt
+        User -> ":Ui" : input field
+        ":Ui" -> "c:AddCommand" : return field
+    end
+    "c:AddCommand" -> ":Ui" : showConfirmExpense(...)
+    ":Ui" -> User : confirm prompt
+    User -> ":Ui" : confirm response
+    ":Ui" -> "c:AddCommand" : readCommand()
+else [direct mode]
+    "c:AddCommand" -> "c:AddCommand" : parseArguments(argument)
+    activate "c:AddCommand"
+end
+
+"c:AddCommand" -> ":ExpenseList" : add(expense)
+activate ":ExpenseList"
+":ExpenseList" -> ":ExpenseList" : updateTotals()
+activate ":ExpenseList"
+return
+return
+
+":ExpenseList" -> ":Ui" : showExpenseAdded(...)
+":Finbro" -> ":Storage" : save()
+activate ":Storage"
+":Storage" -> ":ExpenseList" : toFileFormat()
+activate ":ExpenseList"
+return
+return
+
+

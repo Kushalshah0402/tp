@@ -1,5 +1,6 @@
 package seedu.finbro.parser;
 
+import seedu.finbro.commands.CurrencyCommand;
 import seedu.finbro.commands.EditCommand;
 import seedu.finbro.commands.AddCommand;
 import seedu.finbro.commands.Command;
@@ -18,6 +19,7 @@ public class Parser {
     private static final String COMMAND_EDIT = "edit";
     private static final String COMMAND_HELP = "help";
     private static final String COMMAND_VISUAL = "visual";
+    private static final String COMMAND_CURRENCY = "currency";
 
     //@@author zihaoalt natmloclam
     public static Command parse(String input) throws FinbroException {
@@ -32,6 +34,7 @@ public class Parser {
         case COMMAND_SET_LIMIT -> new SetLimitCommand(argument);
         case COMMAND_EDIT -> new EditCommand(argument);
         case COMMAND_VISUAL -> new VisualCommand(argument);
+        case COMMAND_CURRENCY -> new CurrencyCommand();
 
         default -> throw new FinbroException("Invalid command.");
         };

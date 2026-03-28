@@ -32,6 +32,14 @@ public class ExpenseList {
         expenses.add(e);
         total += e.amount();
     }
+    //@@author WangZX2001
+    public boolean isEmpty() {
+        return expenses.isEmpty();
+    }
+    //@@author WangZX2001
+    public Expense get(int index) {
+        return expenses.get(index);
+    }
     //@@author Kushalshah0402
     public int size() {
         return expenses.size();

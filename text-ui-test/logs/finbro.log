@@ -1,5 +1,5 @@
-2026-03-26 14:22:04 [INFO] seedu.finbro.storage.Storage - Loading expenses...
-2026-03-26 14:22:04 [INFO] seedu.finbro.storage.Storage - data/finbro.txt does not exist, creating new file
-2026-03-26 14:22:04 [INFO] seedu.finbro.commands.AddCommand - Attempting to add expense amount 20, category transport, date 15 June 2026
-2026-03-26 14:22:04 [INFO] seedu.finbro.commands.AddCommand - Successfully added expense in category transport $20.0
-2026-03-26 14:22:04 [INFO] seedu.finbro.commands.ViewCommand - Displaying all expenses
+2026-03-26 14:--:04 [INFO] seedu.finbro.storage.Storage - Loading expenses...
+2026-03-26 14:--:04 [INFO] seedu.finbro.storage.Storage - data/finbro.txt does not exist, creating new file
+2026-03-26 14:--:04 [INFO] seedu.finbro.commands.AddCommand - Attempting to add expense amount 20, category transport, date 15 June 2026
+2026-03-26 14:--:04 [INFO] seedu.finbro.commands.AddCommand - Successfully added expense in category transport $20.0
+2026-03-26 14:--:04 [INFO] seedu.finbro.commands.ViewCommand - Displaying all expenses

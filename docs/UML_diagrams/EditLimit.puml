@@ -1,0 +1,47 @@
+@startuml
+hide footbox
+
+->":Ui"++: "edit limit"
+":Ui" -> ":Finbro"++: input
+
+":Finbro" -> ":Parser"++: parse(input)
+create "c:EditLimitCommand"
+":Parser" -> "c:EditLimitCommand": new EditLimitCommand()
+return
+
+":Finbro" -> "c:EditLimitCommand"++: execute()
+
+"c:EditLimitCommand" -> ":Limit": getLimit()
+
+"c:EditLimitCommand" -> ":Ui": show edit menu
+":Ui" -> "c:EditLimitCommand": choice
+
+alt increase
+    "c:EditLimitCommand" -> ":Ui": prompt increase amount
+    ":Ui" -> "c:EditLimitCommand": amount
+    "c:EditLimitCommand" -> "c:EditLimitCommand": newLimit = current + amount
+
+else decrease
+    "c:EditLimitCommand" -> ":Ui": prompt decrease amount
+    ":Ui" -> "c:EditLimitCommand": amount
+    "c:EditLimitCommand" -> "c:EditLimitCommand": newLimit = current - amount
+
+else replace
+    "c:EditLimitCommand" -> ":Ui": prompt new limit
+    ":Ui" -> "c:EditLimitCommand": amount
+    "c:EditLimitCommand" -> "c:EditLimitCommand": newLimit = amount
+end
+
+"c:EditLimitCommand" -> ":Ui": request confirmation
+":Ui" -> "c:EditLimitCommand": yes / no
+
+alt confirmed
+    "c:EditLimitCommand" -> ":Limit": setLimit(newLimit)
+end
+
+"c:EditLimitCommand" -> ":Ui": showLimit()
+
+":Finbro" -> "storage:Storage"++: save()
+return
+
+@enduml

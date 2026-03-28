@@ -34,7 +34,7 @@ public class HelpCommand extends Command {
         logger.log(Level.INFO, "Displayed help for {0} commands", command.getClass().getSimpleName());
         ui.showCommandHelpMessage(command);
     }
-    //@@author zihaoalt natmloclam
+    //@@author zihaoalt natmloclam WangZX2001
     @Override
     public String getHelpMessage() {
         return """
@@ -44,6 +44,7 @@ public class HelpCommand extends Command {
                view - View your expenses
                limit - Set/view your monthly spending limit
                edit limit - Edit your monthly spending limit
+               currency - Convert expense currency
                
                Enter "help <command>" for a more detailed explanation on how to use each command""";
     }
