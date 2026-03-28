@@ -16,7 +16,7 @@ import seedu.finbro.utils.ExpenseList;
 public class CurrencyCommandTest {
 
     private static final String TEST_FILE_PATH = "./data/test-finbro.txt";
-
+    //@@author WangZX2001
     @Test
     void execute_validInput_success() {
         TestUi ui = new TestUi();
@@ -29,7 +29,7 @@ public class CurrencyCommandTest {
 
         assertDoesNotThrow(() -> command.execute(list, ui, new Storage(TEST_FILE_PATH)));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_sameCurrency_success() {
         TestUi ui = new TestUi();
@@ -42,7 +42,7 @@ public class CurrencyCommandTest {
 
         assertDoesNotThrow(() -> command.execute(list, ui, new Storage(TEST_FILE_PATH)));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_lowercaseCurrency_success() {
         TestUi ui = new TestUi();
@@ -55,7 +55,7 @@ public class CurrencyCommandTest {
 
         assertDoesNotThrow(() -> command.execute(list, ui, new Storage(TEST_FILE_PATH)));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_unsupportedSourceCurrency_throwsException() {
         TestUi ui = new TestUi();
@@ -71,7 +71,7 @@ public class CurrencyCommandTest {
 
         assertTrue(e.getMessage().contains("Unsupported currency"));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_unsupportedTargetCurrency_throwsException() {
         TestUi ui = new TestUi();
@@ -87,7 +87,7 @@ public class CurrencyCommandTest {
 
         assertTrue(e.getMessage().contains("Unsupported currency"));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_nonNumericEntry_throwsException() {
         TestUi ui = new TestUi();
@@ -103,7 +103,7 @@ public class CurrencyCommandTest {
 
         assertEquals("Invalid entry number.", e.getMessage());
     }
-
+    //@@author WangZX2001
     @Test
     void execute_entryOutOfRange_throwsException() {
         TestUi ui = new TestUi();
@@ -119,13 +119,13 @@ public class CurrencyCommandTest {
 
         assertEquals("Entry out of range.", e.getMessage());
     }
-
+    //@@author WangZX2001
     @Test
     void getHelpMessage_containsCurrencyKeyword() {
         CurrencyCommand command = new CurrencyCommand();
         assertTrue(command.getHelpMessage().toLowerCase().contains("currency"));
     }
-
+    //@@author WangZX2001
     private static class TestUi extends Ui {
         private String[] inputs;
         private int index = 0;
