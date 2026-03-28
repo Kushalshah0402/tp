@@ -22,8 +22,8 @@ public class CurrencyCommand extends Command {
         ui.showEnterTargetCurrencyPrompt();
         String toCurrency = ui.readLine().trim().toUpperCase();
 
-        if (CurrencyRateTable.isSupportedCurrency(fromCurrency)
-                || CurrencyRateTable.isSupportedCurrency(toCurrency)) {
+        if (CurrencyRateTable.isUnsupportedCurrency(fromCurrency)
+                || CurrencyRateTable.isUnsupportedCurrency(toCurrency)) {
             throw new FinbroException("Unsupported currency. Supported currencies: "
                     + CurrencyRateTable.getSupportedCurrencies());
         }
@@ -57,15 +57,16 @@ public class CurrencyCommand extends Command {
         ui.showCurrencyConversionResult(index, expense.amount(),
                 fromCurrency, toCurrency, convertedAmount);
     }
+
     //@@author WangZX2001
     @Override
     public String getHelpMessage() {
         return """
-        Converts an existing expense into another currency.
-        Format: currency
-        Use: Prompts you to enter the source and target currencies,
-             then select an expense entry to convert.
-        Note: Only supported currencies are allowed (e.g. SGD, USD, EUR, MYR).
-              Uses locally stored exchange rates (no internet required).""";
+                Converts an existing expense into another currency.
+                Format: currency
+                Use: Prompts you to enter the source and target currencies,
+                     then select an expense entry to convert.
+                Note: Only supported currencies are allowed (e.g. SGD, USD, EUR, MYR).
+                      Uses locally stored exchange rates (no internet required).""";
     }
 }

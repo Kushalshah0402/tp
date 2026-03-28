@@ -3,6 +3,7 @@ package seedu.finbro.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+//@@author WangZX2001
 public class CurrencyRateTable {
     private static final String BASE_CURRENCY = "SGD";
     private static final Map<String, Double> sgdToRate = new HashMap<>();
@@ -16,18 +17,15 @@ public class CurrencyRateTable {
         sgdToRate.put("CNY", 5.36);
     }
 
-    public static boolean isSupportedCurrency(String currency) {
+    public static boolean isUnsupportedCurrency(String currency) {
         String code = currency.toUpperCase();
+
         return !code.equals(BASE_CURRENCY) && !sgdToRate.containsKey(code);
     }
 
     public static double convert(double amount, String fromCurrency, String toCurrency) {
         String from = fromCurrency.toUpperCase();
         String to = toCurrency.toUpperCase();
-
-        if (isSupportedCurrency(from) || isSupportedCurrency(to)) {
-            throw new IllegalArgumentException("Unsupported currency.");
-        }
 
         if (from.equals(to)) {
             return amount;
