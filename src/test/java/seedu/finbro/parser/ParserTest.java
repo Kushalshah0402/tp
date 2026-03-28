@@ -41,16 +41,15 @@ public class ParserTest {
     //@@author WangZX2001
     @Test
     public void parse_editLimitReplace() throws FinbroException {
+        ExpenseList expenses = new ExpenseList();
         TestUi ui = new TestUi();
+        Storage storage = new Storage("./data/test-finbro.txt");
 
-        // yes: confirm setting initial limit to 500
-        // 3: choose replace
-        // 800: new limit
-        // yes: confirm changing limit to 800
-        ui.setInputs("yes", "3", "800", "yes");
+        ui.setInputs("3", "800", "yes");
 
-        Limit.setLimit(800.0);
-        Parser.parse("edit limit");
+        Limit.setLimit(500.0);
+        Command command = Parser.parse("edit limit");
+        command.execute(expenses, ui, storage);
 
         assertEquals(800.0, Limit.getLimit());
     }
@@ -92,6 +91,14 @@ public class ParserTest {
 
         assertEquals(300.0, Limit.getLimit());
     }
+    //@author WangZX2001
+    @Test
+    public void parse_invalidCommand_exceptionThrown() {
+        FinbroException exception = assertThrows(FinbroException.class, () -> Parser.parse("unknown"));
+
+        assertEquals("Invalid command.", exception.getMessage());
+    }
+
     //@@author WangZX2001
     private static class TestUi extends Ui {
         private String[] inputs;

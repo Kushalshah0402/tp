@@ -17,10 +17,10 @@ public class CurrencyCommand extends Command {
         }
 
         ui.showEnterSourceCurrencyPrompt();
-        String fromCurrency = ui.readLine().trim().toUpperCase();
+        String fromCurrency = ui.readCommand().trim().toUpperCase();
 
         ui.showEnterTargetCurrencyPrompt();
-        String toCurrency = ui.readLine().trim().toUpperCase();
+        String toCurrency = ui.readCommand().trim().toUpperCase();
 
         if (CurrencyRateTable.isUnsupportedCurrency(fromCurrency)
                 || CurrencyRateTable.isUnsupportedCurrency(toCurrency)) {
@@ -31,7 +31,7 @@ public class CurrencyCommand extends Command {
         ui.showAllExpenses(expenseList.getAll());
 
         ui.showChooseExpenseEntryPrompt();
-        String input = ui.readLine().trim();
+        String input = ui.readCommand().trim();
 
         int index;
         try {

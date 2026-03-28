@@ -229,11 +229,6 @@ public class Ui {
     }
 
     //@@author WangZX2001
-    public String readLine() {
-        return scanner.nextLine().trim();
-    }
-
-    //@@author WangZX2001
     public void showCurrencyConversionResult(int index, double originalAmount,
                                              String fromCurrency, String toCurrency,
                                              double convertedAmount) {
