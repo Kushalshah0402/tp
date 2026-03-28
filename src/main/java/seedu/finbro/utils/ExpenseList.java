@@ -109,7 +109,8 @@ public class ExpenseList {
         Map<YearMonth, Double> monthlyTotals =  new HashMap<>();
         for (Expense expense : expenses) {
             try {
-                logger.log(Level.INFO, "Expense: {0} | {1} | {2}", new Object[]{expense.category(), expense.date(), expense.amount()});
+                logger.log(Level.INFO, "Expense: {0} | {1} | {2}",
+                        new Object[]{expense.category(), expense.date(), expense.amount()});
                 YearMonth month =  parseYearMonth(expense);
                 monthlyTotals.put(month, monthlyTotals.getOrDefault(month, 0.0) + expense.amount());
             } catch (ClassCastException | NullPointerException |

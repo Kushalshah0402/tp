@@ -14,9 +14,9 @@ import seedu.finbro.ui.Ui;
 import seedu.finbro.utils.ExpenseList;
 
 public class VisualCommand extends Command {
-    private static final Logger logger = Logger.getLogger(VisualCommand.class.getName());
-
     public static final int MAX_BAR_LENGTH = 20;
+
+    private static final Logger logger = Logger.getLogger(VisualCommand.class.getName());
 
     String arg;
     String output = "";
