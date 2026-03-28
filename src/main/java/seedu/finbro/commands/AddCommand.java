@@ -61,11 +61,14 @@ public class AddCommand extends Command {
             try {
                 amount = Double.parseDouble(input);
                 if (amount <= 0) {
+                    logger.log(Level.WARNING, "Invalid amount entered: non-positive");
                     ui.showInlineError("Amount must be a positive number.");
                     continue;
                 }
+                logger.log(Level.INFO, "Valid amount entered: " + amount);
                 break;
             } catch (NumberFormatException e) {
+                logger.log(Level.WARNING, "Invalid amount entered: not a number");
                 ui.showInlineError("Please enter numbers only.");
             }
         }
@@ -76,15 +79,18 @@ public class AddCommand extends Command {
             category = ui.readCommand();
 
             if (category.isBlank()) {
+                logger.log(Level.WARNING, "Empty category entered");
                 ui.showInlineError("Category cannot be empty.");
                 continue;
             }
 
             // Disallow numbers
             if (!category.matches("[a-zA-Z]+")) {
+                logger.log(Level.WARNING, "Invalid category entered: " + category);
                 ui.showInlineError("Category must contain letters only.");
                 continue;
             }
+            logger.log(Level.INFO, "Valid category entered: " + category);
             break;
         }
 
@@ -94,8 +100,10 @@ public class AddCommand extends Command {
             String dateInput = ui.readCommand();
             try {
                 formattedDate = verifyDate("0 0 " + dateInput);
+                logger.log(Level.INFO, "Valid date entered: " + formattedDate);
                 break;
             } catch (FinbroException e) {
+                logger.log(Level.WARNING, "Invalid date entered: " + dateInput);
                 ui.showInlineError(e.getMessage());
             }
         }
@@ -106,8 +114,10 @@ public class AddCommand extends Command {
         String confirm = ui.readCommand();
         if (confirm.equalsIgnoreCase("yes")) {
             expenses.add(expense);
+            logger.log(Level.INFO, "Expense confirmed and added: " + expense);
             ui.showExpenseAdded(expense, expenses.size());
         } else {
+            logger.log(Level.INFO, "Expense addition cancelled by user");
             ui.showCancelAddMessage();
         }
     }
@@ -165,7 +175,7 @@ public class AddCommand extends Command {
     public String getHelpMessage() {
         return """
                 Adds a new expense entry.
-                Format: add <amount> <category> <date>
+                Format: add <amount> <category> <date> or 'add' for us to walk you through the process step-by-step.
                 Use: Records an expense under the given category on the given date.
                 Note: amount must be positive and date must be in yyyy-mm-dd format.""";
     }
