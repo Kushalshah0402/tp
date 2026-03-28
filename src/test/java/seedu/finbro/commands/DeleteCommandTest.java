@@ -42,7 +42,7 @@ public class DeleteCommandTest {
             command.execute(expenses, ui, storage);
         });
 
-        assertEquals("Usage: delete <category> #<number>", exception.getMessage());
+        assertEquals("Usage: delete <category> <number>", exception.getMessage());
     }
     //@@author zihaoalt
     @Test

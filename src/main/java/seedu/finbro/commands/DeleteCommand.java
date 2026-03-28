@@ -51,7 +51,7 @@ public class DeleteCommand extends Command {
         String [] parts = input.split(" ");
         if (parts.length < 2) {
             logger.log(Level.WARNING, "Invalid command format");
-            throw new FinbroException("Usage: delete <category> #<number>");
+            throw new FinbroException("Usage: delete <category> <number>");
         }
     }
     //@@author zihaoalt
