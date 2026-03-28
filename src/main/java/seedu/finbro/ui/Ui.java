@@ -123,7 +123,7 @@ public class Ui {
     }
     //@@author Kushalshah0402
     public void showInlineError(String message) {
-        System.out.println("⚠️ " + message);
+        System.out.println("Warning: " + message);
     }
 
     //@@author Kushalshah0402
