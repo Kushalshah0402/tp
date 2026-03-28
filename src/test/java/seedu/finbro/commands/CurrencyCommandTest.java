@@ -30,7 +30,7 @@ public class CurrencyCommandTest {
     void restoreSystemIn() {
         System.setIn(originalIn);
     }
-
+    //@@author WangZX2001
     @Test
     void execute_validInput_success() {
         String simulatedInput =
@@ -50,7 +50,7 @@ public class CurrencyCommandTest {
 
         assertDoesNotThrow(() -> command.execute(list, ui, null));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_sameCurrency_success() {
         String simulatedInput =
@@ -70,7 +70,7 @@ public class CurrencyCommandTest {
 
         assertDoesNotThrow(() -> command.execute(list, ui, null));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_lowercaseCurrency_success() {
         String simulatedInput =
@@ -90,7 +90,7 @@ public class CurrencyCommandTest {
 
         assertDoesNotThrow(() -> command.execute(list, ui, null));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_unsupportedSourceCurrency_throwsException() {
         String simulatedInput =
@@ -113,7 +113,7 @@ public class CurrencyCommandTest {
 
         assertTrue(e.getMessage().contains("Unsupported currency"));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_unsupportedTargetCurrency_throwsException() {
         String simulatedInput =
@@ -136,7 +136,7 @@ public class CurrencyCommandTest {
 
         assertTrue(e.getMessage().contains("Unsupported currency"));
     }
-
+    //@@author WangZX2001
     @Test
     void execute_nonNumericEntry_throwsException() {
         String simulatedInput =
@@ -159,7 +159,7 @@ public class CurrencyCommandTest {
 
         assertEquals("Invalid entry number.", e.getMessage());
     }
-
+    //@@author WangZX2001
     @Test
     void execute_zeroEntry_throwsException() {
         String simulatedInput =
@@ -182,7 +182,7 @@ public class CurrencyCommandTest {
 
         assertEquals("Entry out of range.", e.getMessage());
     }
-
+    //@@author WangZX2001
     @Test
     void execute_negativeEntry_throwsException() {
         String simulatedInput =
@@ -205,7 +205,7 @@ public class CurrencyCommandTest {
 
         assertEquals("Entry out of range.", e.getMessage());
     }
-
+    //@@author WangZX2001
     @Test
     void execute_entryOutOfRange_throwsException() {
         String simulatedInput =
@@ -228,7 +228,7 @@ public class CurrencyCommandTest {
 
         assertEquals("Entry out of range.", e.getMessage());
     }
-
+    //@@author WangZX2001
     @Test
     void execute_emptyExpenseList_throwsException() {
         String simulatedInput =
@@ -250,7 +250,7 @@ public class CurrencyCommandTest {
 
         assertEquals("No expenses available.", e.getMessage());
     }
-
+    //@@author WangZX2001
     @Test
     void getHelpMessage_containsCurrencyKeyword() {
         CurrencyCommand command = new CurrencyCommand();
