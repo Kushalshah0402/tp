@@ -20,12 +20,14 @@ public class Ui {
         System.out.println("Type help to see all available commands.");
         showLine();
     }
+
     //@@author Kushalshah0402
     public void showGoodbye() {
         showLine();
         System.out.println("Bye! See you again.");
         showLine();
     }
+
     //@@author Kushalshah0402
     public String readCommand() {
         if (!scanner.hasNextLine()) {
@@ -33,12 +35,14 @@ public class Ui {
         }
         return scanner.nextLine().trim();
     }
+
     //@@author Kushalshah0402
     public void showError(String message) {
         showLine();
         System.out.println("Error: " + message);
         showLine();
     }
+
     //@@author Kushalshah0402
     public void showEnterAmountPrompt() {
         showLine();
@@ -84,6 +88,7 @@ public class Ui {
             break;
         }
     }
+
     //@@author Kushalshah0402
     public void showEnterCategoryPrompt() {
         System.out.println("Enter the category:");
@@ -96,6 +101,7 @@ public class Ui {
     public void showEnterDatePrompt() {
         System.out.println("Enter the date (yyyy-MM-dd):");
     }
+
     //@@author Kushalshah0402
     public void showConfirmExpense(Expense e) {
         showLine();
@@ -103,6 +109,7 @@ public class Ui {
         System.out.println("  " + e);
         System.out.println("Confirm? [yes/no]");
     }
+
     //@@author Kushalshah0402
     public void showCancelAddMessage() {
         showLine();
@@ -128,6 +135,7 @@ public class Ui {
         System.out.println("Now you have " + total + " expenses.");
         showLine();
     }
+
     //@@author zihaoalt
     public void showExpenseRemoved(Expense e, int total) {
         showLine();
@@ -136,6 +144,7 @@ public class Ui {
         System.out.println("Now you have " + total + " expenses.");
         showLine();
     }
+
     //@@author Kushalshah0402
     public void showAllExpenses(List<Expense> expenses) {
         showLine();
@@ -154,21 +163,25 @@ public class Ui {
         }
         showLine();
     }
+
     //@@author natmloclam
     public void showLimit() {
         showLine();
         System.out.println("Monthly budget limit: " + String.format("$%.2f", Limit.getLimit()));
         showLine();
     }
+
     //@@author natmloclam
     public void showChangeLimitWarning(double limit) {
         System.out.println("Are you sure you want to change your monthly budget limit to "
                 + String.format("$%.2f", limit) + "? [yes/no]");
     }
+
     //@@author natmloclam
     public void showCancelChangeLimitMessage() {
         System.out.println("Monthly budget limit was not changed");
     }
+
     //@@author WangZX2001
     public void showLimitEditMenu(double currentLimit) {
         showLine();
@@ -179,37 +192,42 @@ public class Ui {
         System.out.println("3. Replace limit");
         showLine();
     }
-    
+
     //@@author Kushalshah0402
     public void showBudgetReminder(double limit) {
         showLine();
         System.out.println("Warning: You are close to your monthly spending limit of $"
-                            + String.format("%.2f", limit) + "!");
+                + String.format("%.2f", limit) + "!");
         showLine();
     }
+
     //@@author Kushalshah0402
     public void showBudgetExceeded(double limit) {
         showLine();
         System.out.println("Warning: You have exceeded your monthly spending limit of $"
-                            + String.format("%.2f", limit) + "!");
+                + String.format("%.2f", limit) + "!");
         showLine();
     }
+
     //@@author Kushalshah0402
-    private void showLine() {
+    public void showLine() {
         System.out.println(LINE);
     }
+
     //@@author zihaoalt
     public void showCommandHelpMessage(Command command) {
         showLine();
         System.out.println(command.getHelpMessage());
         showLine();
     }
+
     //@@author natmloclam
     public void showHelpMessage(String message) {
         showLine();
         System.out.println(message);
         showLine();
     }
+
     //@@author AK47ofCode
     public void showLogo() {
         System.out.println("""
@@ -223,5 +241,32 @@ public class Ui {
                 | $$      | $$| $$  | $$| $$    $$| $$       \\$$    $$
                  \\$$       \\$$ \\$$   \\$$ \\$$$$$$$  \\$$        \\$$$$$$
                 """);
+    }
+
+    //@@author WangZX2OO1
+    public void showEnterSourceCurrencyPrompt() {
+        showLine();
+        System.out.println("Enter source currency:");
+    }
+
+    //@@author WangZX2001
+    public void showEnterTargetCurrencyPrompt() {
+        System.out.println("Enter target currency:");
+    }
+
+    //@@author WangZX2001
+    public void showChooseExpenseEntryPrompt() {
+        System.out.println("Which expense entry would you like to convert?");
+    }
+
+    //@@author WangZX2001
+    public void showCurrencyConversionResult(int index, double originalAmount,
+                                             String fromCurrency, String toCurrency,
+                                             double convertedAmount) {
+        showLine();
+        System.out.println("Expense #" + index);
+        System.out.printf("%.2f %s = %.2f %s%n",
+                originalAmount, fromCurrency, convertedAmount, toCurrency);
+        showLine();
     }
 }

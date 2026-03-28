@@ -47,3 +47,11 @@
 2026-03-27 12:57:43 [INFO] seedu.finbro.storage.Storage - Attempting to set limit to  129.00
 2026-03-27 12:57:43 [INFO] seedu.finbro.utils.Limit - Setting limit to 129
 2026-03-27 12:57:50 [INFO] seedu.finbro.commands.ViewCommand - Displaying all expenses
+2026-03-28 19:09:49 [INFO] seedu.finbro.storage.Storage - Loading expenses...
+2026-03-28 19:09:49 [INFO] seedu.finbro.storage.Storage - Attempting to set limit to  129.00
+2026-03-28 19:09:49 [INFO] seedu.finbro.utils.Limit - Setting limit to 129
+2026-03-28 19:09:54 [INFO] seedu.finbro.commands.ViewCommand - Displaying all expenses
+2026-03-28 19:10:19 [INFO] seedu.finbro.commands.AddCommand - Attempting to add expense amount 5, category food, date 10 October 2026
+2026-03-28 19:10:19 [INFO] seedu.finbro.commands.AddCommand - Successfully added expense in category food $5.0
+2026-03-28 19:10:31 [INFO] seedu.finbro.commands.ViewCommand - Displaying expenses in category food
+2026-03-28 19:10:36 [INFO] seedu.finbro.commands.ViewCommand - Displaying expenses in category food
