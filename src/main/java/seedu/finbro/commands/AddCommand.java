@@ -28,7 +28,6 @@ public class AddCommand extends Command {
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         assert expenses != null : "ExpenseList should not be null";
         assert ui != null : "Ui should not be null";
-        assert storage != null : "Storage should not be null";
 
         //Walkthrough mode
         if (arg.isBlank()) {
