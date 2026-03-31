@@ -12,15 +12,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ParserTest {
+
     //@@author WangZX2001
     @Test
     public void parse_addValidExpense_expenseAdded() throws FinbroException {
         ExpenseList expenses = new ExpenseList();
-        Ui ui = new Ui();
-
+        TestUi ui = new TestUi();
+        ui.setInputs("yes");
         Storage storage = new Storage("./data/test-finbro.txt");
+
         Command command = Parser.parse("add 12.50 food 2026-03-15");
         command.execute(expenses, ui, storage);
+
         assertEquals(1, expenses.size());
     }
     //@@author WangZX2001
