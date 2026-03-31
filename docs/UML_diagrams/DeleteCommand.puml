@@ -1,0 +1,119 @@
+@startuml DeleteCommand
+'https://plantuml.com/sequence-diagram
+actor User
+
+box "DeleteCommand" #LightBlue
+participant ":Finbro"
+participant ":Ui"
+participant ":Parser"
+participant "c:DeleteCommand"
+participant ":ExpenseList"
+participant ":Storage"
+end box
+
+":Finbro" -> ":Ui" : readCommand()
+activate ":Ui"
+User -> ":Ui" : type "delete ..."
+":Ui" --> ":Finbro" : input
+deactivate ":Ui"
+
+activate ":Finbro"
+":Finbro" -> ":Parser" : parse(input)
+activate ":Parser"
+
+create "c:DeleteCommand"
+":Parser" -> "c:DeleteCommand" : new DeleteCommand(argument)
+activate "c:DeleteCommand"
+"c:DeleteCommand" --> ":Parser" : c
+deactivate "c:DeleteCommand"
+
+":Parser" --> ":Finbro" : c
+deactivate ":Parser"
+
+":Finbro" -> "c:DeleteCommand" : execute(expenses, ui, storage)
+activate "c:DeleteCommand"
+
+alt arg.isBlank()
+
+    "c:DeleteCommand" -> ":Ui" : showEnterCategoryOptionPrompt()
+    activate ":Ui"
+    deactivate ":Ui"
+
+    "c:DeleteCommand" -> ":Ui" : readCommand()
+    activate ":Ui"
+    User -> ":Ui" : enter category
+    ":Ui" --> "c:DeleteCommand" : category
+    deactivate ":Ui"
+
+    "c:DeleteCommand" -> ":ExpenseList" : getCategoryExpenses(category)
+    activate ":ExpenseList"
+    ":ExpenseList" --> "c:DeleteCommand" : categoryList
+    deactivate ":ExpenseList"
+
+    "c:DeleteCommand" -> ":Ui" : showEnterIndexPrompt()
+    activate ":Ui"
+    deactivate ":Ui"
+
+    "c:DeleteCommand" -> ":Ui" : readCommand()
+    activate ":Ui"
+    User -> ":Ui" : enter index
+    ":Ui" --> "c:DeleteCommand" : index
+    deactivate ":Ui"
+
+    "c:DeleteCommand" -> ":ExpenseList" : getExpenseByCategoryIndex(categoryList, index)
+    activate ":ExpenseList"
+    ":ExpenseList" --> "c:DeleteCommand" : expense
+    deactivate ":ExpenseList"
+
+    "c:DeleteCommand" -> ":Ui" : showConfirmExpense(expense)
+    activate ":Ui"
+    deactivate ":Ui"
+
+    "c:DeleteCommand" -> ":Ui" : readCommand()
+    activate ":Ui"
+    User -> ":Ui" : yes / no
+    ":Ui" --> "c:DeleteCommand" : confirm
+    deactivate ":Ui"
+
+    alt confirmed
+        "c:DeleteCommand" -> ":ExpenseList" : removeByCategoryIndex(category, index)
+        activate ":ExpenseList"
+        ":ExpenseList" --> "c:DeleteCommand" : removedExpense
+        deactivate ":ExpenseList"
+
+        "c:DeleteCommand" -> ":Ui" : showExpenseRemoved(removedExpense, expenses.size())
+        activate ":Ui"
+        deactivate ":Ui"
+    else cancelled
+        "c:DeleteCommand" -> ":Ui" : showCancelDeleteMessage()
+        activate ":Ui"
+        deactivate ":Ui"
+    end
+
+else strict mode
+
+    "c:DeleteCommand" -> "c:DeleteCommand" : verifyInputLength(arg)
+    "c:DeleteCommand" -> "c:DeleteCommand" : filterCategory(arg)
+    "c:DeleteCommand" --> "c:DeleteCommand" : category
+    "c:DeleteCommand" -> "c:DeleteCommand" : verifyIndex(arg)
+    "c:DeleteCommand" --> "c:DeleteCommand" : index
+
+    "c:DeleteCommand" -> ":ExpenseList" : removeByCategoryIndex(category, index)
+    activate ":ExpenseList"
+    ":ExpenseList" --> "c:DeleteCommand" : removedExpense
+    deactivate ":ExpenseList"
+
+    "c:DeleteCommand" -> ":Ui" : showExpenseRemoved(removedExpense, expenses.size())
+    activate ":Ui"
+    deactivate ":Ui"
+end
+
+deactivate "c:DeleteCommand"
+
+":Finbro" -> ":Storage" : save(expenses.getAll())
+activate ":Storage"
+":Storage" --> ":Finbro"
+deactivate ":Storage"
+deactivate ":Finbro"
+
+@enduml
