@@ -2,7 +2,6 @@ package seedu.finbro.commands;
 
 import org.junit.jupiter.api.Test;
 import seedu.finbro.exception.FinbroException;
-import seedu.finbro.parser.Parser;
 import seedu.finbro.storage.Storage;
 import seedu.finbro.ui.Ui;
 import seedu.finbro.utils.Expense;
@@ -60,7 +59,7 @@ public class DeleteCommandTest {
     }
     //@@author zihaoalt
     @Test
-    public void execute_strictModeExpenseDoesNotExist_exceptionThrown() throws FinbroException {
+    public void execute_strictModeExpenseDoesNotExist_exceptionThrown() {
         ExpenseList expenses = new ExpenseList();
         Ui ui = new Ui();
         Storage storage = new Storage("./data/test-delete-finbro.txt");
@@ -136,14 +135,14 @@ public class DeleteCommandTest {
     }
     //@@author zihaoalt
     @Test
-    public void execute_walkthroughUnknownCategoryThenNullIndexInput_exceptionThrown() throws FinbroException {
+    public void execute_walkthroughUnknownCategoryThenNullIndexInput_exceptionThrown() {
         ExpenseList expenses = new ExpenseList();
         TestUi ui = new TestUi();
         Storage storage = new Storage("./data/test-delete-finbro.txt");
 
         expenses.add(new Expense(12.50, "food", "2026-03-28"));
 
-        ui.setInputs("travel", "food", (String) null);
+        ui.setInputs("travel", "food", null);
 
         FinbroException exception = assertThrows(FinbroException.class, () -> {
             DeleteCommand command = new DeleteCommand("");
@@ -156,13 +155,13 @@ public class DeleteCommandTest {
     }
     //@@author zihaoalt
     @Test
-    public void execute_walkthroughNullConfirmationInput_exceptionThrown() throws FinbroException {
+    public void execute_walkthroughNullConfirmationInput_exceptionThrown() {
         ExpenseList expenses = new ExpenseList();
         TestUi ui = new TestUi();
         Storage storage = new Storage("./data/test-delete-finbro.txt");
         expenses.add(new Expense(12.50, "food", "2026-03-15"));
 
-        ui.setInputs("food", "1", (String) null);
+        ui.setInputs("food", "1", null);
 
         FinbroException exception = assertThrows(FinbroException.class, () -> {
             DeleteCommand command = new DeleteCommand("");
