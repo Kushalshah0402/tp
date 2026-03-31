@@ -19,7 +19,111 @@ for better financial awareness.
 
 ## Features
 
-### Editing the spending limit: `edit limit`
+## Add Expense Command
+
+The `add` command lets you record a new expense. Whether you're in a hurry or want to take your time, we've got you covered.
+
+
+### Direct Mode
+
+**Use this when you know exactly what you want to enter:**
+
+```
+add <amount> <category> <date>
+```
+
+**Required Information:**
+
+| Field | Format | Example |
+|-------|--------|---------|
+| **Amount** | Positive number | `50.00` or `25` |
+| **Category** | Text (no spaces) | `Groceries` |
+| **Date** | YYYY-MM-DD | `2024-01-20` or `today, last week, 2 days ago, last monday` |
+
+**Example:**
+```
+add 50.00 Groceries 2024-01-20
+```
+- Type `yes` to confirm or `no` to cancel
+---
+
+### Walkthrough Mode
+
+**Use this when you want the system to guide you:**
+
+Simply type:
+```
+add
+```
+
+The system will ask you for:
+
+1. **Expense Amount**
+   - Enter how much you spent
+   - Must be a positive number
+   - Example: `50.00` or `25`
+
+2. **Expense Category**
+   - What did you spend on?
+   - Examples: `Food`, `Transport`, `Entertainment`, `Shopping`
+
+3. **Expense Date**
+   - When did you spend this?
+   - Use format: Date format shown above
+
+4. **Confirmation**
+   - Review your entry
+   - Type `yes` to confirm or `no` to cancel
+
+---
+
+### Examples
+
+**Example 1: Adding groceries in direct mode**
+```
+add 45.50 Groceries 2024-01-22
+```
+
+**Example 2: Adding a transport expense in walkthrough mode**
+```
+add
+> Enter amount: 15.00
+> Enter category: Transport
+> Enter the date (yyyy-MM-dd or today): 3 days ago
+> Confirm entry? (yes/no): yes
+```
+
+**Example 3: Quick coffee purchase**
+```
+add 5.00 Food yesterday
+```
+
+---
+
+### Common Issues
+
+**❌ Error: "Amount must be a positive number"**
+- Make sure you entered a valid number
+- Negative numbers are not allowed
+- Decimal numbers are okay (e.g., `12.50`)
+
+**❌ Error: "Invalid date format"**
+- Use the format: `YYYY-MM-DD`
+- Examples: `2024-01-20`, `2024-12-31`
+- Make sure the date is valid
+
+**❌ Error: "Category cannot be empty"**
+- Enter a category name (no numbers or special characters)
+- Examples: `Food`, `Transport`, `Rent`, `Entertainment`
+
+**❌ "I made a mistake"**
+- In walkthrough mode, type `no` when asked to confirm
+- You can delete the expense and add a new one
+- Or use the `delete` command to remove the incorrect entry
+
+---
+
+## Editing the spending limit: `edit limit`
 
 Allows you to modify your current monthly spending limit by increasing, decreasing, or replacing it.
 
