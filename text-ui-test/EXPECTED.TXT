@@ -13,20 +13,13 @@ Hello Finbro here for you!
 Type help to see all available commands.
 --------------------------------------------------
 --------------------------------------------------
-Got it. I've added this expense:
+You entered:
    Amount: $20.00
    Category: transport
    Date: 15 June 2026
-Now you have 1 expenses.
+Confirm? [yes/no]
 --------------------------------------------------
---------------------------------------------------
-Here are your expenses:
-
-1.  Amount: $20.00
-   Category: transport
-   Date: 15 June 2026
-
-Total expenditure: $20.00
+Expense not added.
 --------------------------------------------------
 --------------------------------------------------
 Bye! See you again.
