@@ -6,6 +6,7 @@
 - [Design & Implementation](#design--implementation)
   - [Limit Component](#limit-component)
   - [Add Expense Feature](#add-expense-feature)
+  - [Delete Expense Feature](#delete-expense-feature)
 - [Product Scope](#product-scope)
   - [Target User Profile](#target-user-profile)
   - [Value Proposition](#value-proposition)
@@ -174,6 +175,106 @@ The following diagram illustrates the interaction between system components when
 | Direct mode requires users to remember the exact command format | Potential for input errors if users don't recall the format |
 
 ---
+### Delete Expense Feature
+
+The `delete` command removes an existing expense from the system. It supports two modes of operation:
+
+1. **Direct Mode** — The category and expense number are provided in a single command
+2. **Walkthrough Mode** — The system interactively prompts the user for the required input
+
+This dual behavior improves usability by supporting both experienced users (fast deletion) and new users (guided deletion).
+
+---
+
+#### Command Format
+
+**Direct Mode:**
+```
+delete <category> <number>
+```
+
+**Walkthrough Mode:**
+```
+delete
+```
+
+---
+
+#### Implementation Overview
+
+The `DeleteCommand` class handles both modes. When executed, the command checks whether arguments were supplied:
+
+- **Arguments present** → Direct mode is executed
+- **Arguments absent** → Walkthrough mode is triggered
+
+In direct mode, the target expense is validated and removed immediately. In walkthrough mode, the system first guides the user through selecting an expense, then removes it only if the user confirms the deletion. After a successful deletion, the user interface displays a confirmation message and the updated number of expenses.
+
+---
+
+#### Direct Mode
+
+In direct mode, the system parses and validates the input parameters:
+
+| Validation Rule | Requirement |
+|-----------------|-------------|
+| **Category** | Must refer to an existing expense category |
+| **Expense Number** | Must be a valid positive integer |
+| **Command Format** | Must follow `delete <category> <number>` |
+
+**If validation succeeds:**
+
+1. The category is extracted from the command
+2. The expense number is parsed and validated
+3. The corresponding expense is removed from the `ExpenseList`
+4. A confirmation message is displayed
+
+---
+
+#### Walkthrough Mode
+
+If the command is issued without parameters, the system enters an interactive mode. The user is sequentially prompted for:
+
+1. Expense category
+2. Expense number within that category
+3. Deletion confirmation
+
+Each input is validated before proceeding. Invalid input results in an error message and a repeated prompt until valid data is provided.
+
+**After collecting all inputs:**
+
+- If the user confirms, the expense is deleted
+- Otherwise, the operation is canceled
+
+---
+
+#### Sequence of Operations
+
+The following diagram illustrates the interaction between system components when executing the `delete` command in both direct and walkthrough modes.
+
+![Delete Expense Sequence Diagram](UML_diagrams/images/DeleteCommand.png)
+
+---
+
+#### Design Considerations
+
+| Principle | Benefits |
+|-----------|----------|
+| **Single command supporting two modes** | Improves usability by accommodating different user preferences. Avoids duplicating logic across multiple commands. Keeps the command interface simple. |
+| **Confirmation in walkthrough mode** | Reduces the risk of accidental deletion. Gives users a final chance to verify the selected expense before removal. |
+| **Separation of concerns** | `Ui` handles user interaction. `Parser` interprets input. `DeleteCommand` performs deletion logic. `ExpenseList` manages stored expenses. |
+
+---
+
+#### Limitations
+
+| Limitation | Impact |
+|-----------|--------|
+| Walkthrough mode requires multiple user inputs | May be slower for experienced users |
+| Direct mode requires users to know the correct category and expense number | Potential for input errors if users do not remember the exact item to remove |
+| Direct mode does not include a confirmation step | Incorrect input may lead to immediate deletion |
+
+---
+
 
 ## Product Scope
 

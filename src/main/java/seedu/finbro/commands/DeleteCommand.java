@@ -31,6 +31,7 @@ public class DeleteCommand extends Command {
         }
 
         //Strict mode (existing behavior)
+        logger.log(Level.INFO, "Entering delete strict mode");
         verifyInputLength(arg);
         String category = filterCategory(arg);
         int index = verifyIndex(arg);
