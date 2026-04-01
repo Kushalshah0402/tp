@@ -18,6 +18,32 @@ for better financial awareness.
 5. Start entering commands to manage your expenses.
 
 ## Features
+## Help Command
+
+The `help` command displays usage information for available commands in Finbro.  
+You can use it either to see the general command list or to view detailed help for a specific command.
+
+### General Help
+
+**Use this when you want to see all available commands:**
+
+```
+help
+```
+### Command-Specific Help
+Use this when you want more detailed help for a specific command:
+```
+help <command>
+```
+Supported examples:
+
+ - help add
+ - help delete
+ - help view
+ - help limit
+ - help edit limit
+ - help currency
+ - help visual
 
 ## Add Expense Command
 
@@ -120,6 +146,100 @@ add 5.00 Food yesterday
 - In walkthrough mode, type `no` when asked to confirm
 - You can delete the expense and add a new one
 - Or use the `delete` command to remove the incorrect entry
+
+---
+## Delete Expense Command
+
+The `delete` command lets you remove an existing expense. Similar to the `add` command, it supports both direct mode and walkthrough mode.
+
+
+### Direct Mode
+
+**Use this when you know exactly what you want to remove:**
+
+```
+delete <category> <index>
+```
+
+**Required Information:**
+
+| Field        | Format           | Example                                                     |
+|--------------|------------------|-------------------------------------------------------------|
+| **category** | Text (no spaces) | `Groceries`                                                 |
+| **Index**    | Positive Number  | 1                                                           |
+
+
+**Example:**
+```
+delete food 1
+```
+---
+
+### Walkthrough Mode
+
+**Use this when you want the system to guide you:**
+
+Simply type:
+```
+delete
+```
+
+The system will guide you through the deletion process step by step:
+
+1. **Category**
+    - Enter the category of the expense you want to delete
+    - The category must already exist
+    - Type `-l` to display all existing category names
+
+2. **Expense Number**
+    - Enter the index number of the expense in that category
+    - The number must be a positive integer within the valid range
+    - Type `-l` to display all expenses under the selected category
+
+3. **Confirmation**
+    - Review the expense to be deleted
+    - Type `yes` or `y` to confirm deletion
+    - Any other input cancels the deletion
+
+---
+
+### Examples
+
+**Example 1: Deleting an expense in direct mode**
+```
+delete food 1
+```
+
+**Example 2: Deleting an expense in walkthrough mode**
+```
+delete
+> Enter category name, or -l to list all categories:
+Food
+> Enter the expense index to delete, or type -l to list expenses in this category.
+2
+> Confirm delete? (yes/no):
+yes
+```
+
+**Example 3: Listing categories and expenses in walkthrough mode**
+```
+delete
+> Enter category name, or -l to list all categories:
+-l
+> Food
+> Transport
+> Shopping
+> Enter category name, or -l to list all categories:
+Food
+> What is the index of the expense you want to delete?
+-l
+> 1. $5.00 | 2026-03-10
+> 2. $12.50 | 2026-03-12
+> What is the index of the expense you want to delete?
+1
+> Confirm delete? (yes/no):
+y
+```
 
 ---
 ## View Expenses
@@ -266,9 +386,10 @@ current limit unchanged.
 | Add        | `add <amount> <category> <date>` | Adds a new expense (direct input) |
 | Add        | `add`                            | Adds a new expense (guided input) |
 | View       | `view`                           | Displays all expenses             |
-| Delete     | `delete <index>`                 | Deletes an expense (direct input) |
+| Delete     | `delete <category> <index>`      | Deletes an expense (direct input) |
 | Delete     | `delete`                         | Deletes an expense (guided input) |
 | Set Limit  | `limit`                          | Sets a monthly spending limit     |
 | Edit Limit | `edit limit`                     | Edits the current spending limit  |
 | Currency   | `currency`                       | Converts expense currency         |
 | Help       | `help`                           | Shows help information            |
+| Help       | `help <command>`                 | Shows detailed help for a specific command            |
