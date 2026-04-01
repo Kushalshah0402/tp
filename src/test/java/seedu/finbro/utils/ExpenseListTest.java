@@ -131,6 +131,7 @@ class ExpenseListTest {
         assertEquals(-3, list.getRemainingExpenditure());
     }
 
+    //@@author natmloclam
     @Test
     void parseMonth_validDateFormat_correctYearYearMonth() throws FinbroException {
         ExpenseList list = new ExpenseList();
@@ -139,6 +140,7 @@ class ExpenseListTest {
         assertEquals(YearMonth.of(2026, 3), list.parseYearMonth(list.get(0)));
     }
 
+    //@@author natmloclam
     @Test
     void parseYearMonth_invalidDateFormat_throwsException() {
         ExpenseList list = new ExpenseList();
@@ -152,6 +154,7 @@ class ExpenseListTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    //@@author natmloclam
     @Test
     void getMonthlyExpenses_validExpenses_correctMap() throws FinbroException {
         ExpenseList list = new ExpenseList();
@@ -166,6 +169,7 @@ class ExpenseListTest {
         assertEquals(correctOutput, list.getMonthlyExpenses());
     }
 
+    //@@author natmloclam
     @Test
     void getMonthlyExpenses_invalidDate_ignoreExpense() throws FinbroException {
         ExpenseList list = new ExpenseList();

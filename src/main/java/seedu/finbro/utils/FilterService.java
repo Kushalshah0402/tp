@@ -2,10 +2,7 @@ package seedu.finbro.utils;
 
 import seedu.finbro.exception.FinbroException;
 
-import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -107,17 +104,7 @@ public class FilterService {
      * @throws FinbroException if the date format is invalid.
      */
     private static YearMonth parseYearMonth(Expense expense) throws FinbroException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
-
-        LocalDate parsedDate;
-        YearMonth yearMonth;
-        try {
-            parsedDate = LocalDate.parse(expense.date(), formatter);
-            yearMonth = YearMonth.from(parsedDate);
-        } catch (DateTimeParseException ex) {
-            throw new FinbroException("Corrupted expense: Invalid date format");
-        }
-        return yearMonth;
+        return ExpenseList.getYearMonth(expense);
     }
 
     //@@author AK47ofCode
