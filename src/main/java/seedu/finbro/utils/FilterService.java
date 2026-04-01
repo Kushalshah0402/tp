@@ -4,69 +4,74 @@ import seedu.finbro.exception.FinbroException;
 import seedu.finbro.finances.Expense;
 import seedu.finbro.finances.ExpenseList;
 
-import java.time.YearMonth;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 //@@author AK47ofCode
 /**
- * Service class to handle filtering and sorting of expenses.
+ * Service class to filter expenses.
  */
 public class FilterService {
-    private static final Logger logger = Logger.getLogger(FilterService.class.getName());
-    private static final String FILTER_MONTH = "month";
-    private static final String FILTER_CATEGORY = "category";
-    private static final String FILTER_AMOUNT = "amount";
+	private static final Logger logger = Logger.getLogger(FilterService.class.getName());
 
-    //@@author AK47ofCode
-    /**
-     * Filters and sorts a list of expenses based on the specified filter type.
-     *
-     * @param expenses The list of expenses to filter.
-     * @param filterType The type of filter to apply (month, category, or amount).
-     * @return A sorted list of expenses.
-     * @throws FinbroException if the filter type is invalid.
-     */
-    public static List<Expense> filterExpenses(List<Expense> expenses, String filterType) throws FinbroException {
-        logger.log(Level.INFO, "Filtering expenses by: {0}", filterType);
+	//@@author AK47ofCode
+	/**
+	 * Filters expenses to only those that fall in the given month.
+	 * The month value is case-insensitive and must be a full month name.
+	 *
+	 * @param expenses the expenses to filter.
+	 * @param monthText the month name to match, e.g. "January".
+	 * @return a new list containing only matching expenses.
+	 * @throws FinbroException if the month text is invalid or an expense date is malformed.
+	 */
+	public static List<Expense> filterExpensesByMonth(List<Expense> expenses, String monthText)
+			throws FinbroException {
+		logger.log(Level.INFO, "Filtering expenses by month: {0}", monthText);
 
-        return switch (filterType.toLowerCase()) {
-        case FILTER_MONTH -> sortByMonth(expenses);
-        case FILTER_CATEGORY -> sortByCategory(expenses);
-        case FILTER_AMOUNT -> sortByAmount(expenses);
-        default -> throw new FinbroException("Invalid filter type. Supported filters: month, category, amount");
-        };
-    }
+		Month targetMonth = parseMonthFilter(monthText);
+		DateTimeFormatter expenseFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
+		List<Expense> filtered = new ArrayList<>();
 
-    //@@author AK47ofCode
-    /**
-     * Sorts expenses by month in chronological order.
-     *
-     * @param expenses The list of expenses to sort.
-     * @return A list of expenses sorted by month.
-     */
-    private static List<Expense> sortByMonth(List<Expense> expenses) throws FinbroException {
-        logger.log(Level.INFO, "Sorting expenses by month");
-        List<Expense> sorted = new ArrayList<>(expenses);
+		for (Expense expense : expenses) {
+			try {
+				LocalDate date = LocalDate.parse(expense.date(), expenseFormatter);
+				if (date.getMonth() == targetMonth) {
+					filtered.add(expense);
+				}
+			} catch (DateTimeParseException e) {
+				logger.log(Level.WARNING, "Unable to parse date for expense: {0}", expense.date());
+				throw new FinbroException("Corrupted expense: Invalid date format");
+			}
+		}
 
-        sorted.sort((expense1, expense2) -> {
-            try {
-                YearMonth month1 = parseYearMonth(expense1);
-                YearMonth month2 = parseYearMonth(expense2);
-                return month1.compareTo(month2);
-            } catch (FinbroException e) {
-                logger.log(Level.WARNING, "Unable to parse date for expense: {0}", expense1.date());
-                return 0;
-            }
-        });
+		return filtered;
+	}
 
-        logger.log(Level.INFO, "Expenses successfully sorted by month");
-        return sorted;
-    }
+	//@@author AK47ofCode
+	/**
+	 * Parses a month name into a Month enum value.
+	 */
+	private static Month parseMonthFilter(String monthText) throws FinbroException {
+		DateTimeFormatter monthFormatter = new DateTimeFormatterBuilder()
+				.parseCaseInsensitive()
+				.appendPattern("MMMM")
+				.toFormatter(Locale.ENGLISH);
 
+		try {
+			return Month.from(monthFormatter.parse(monthText));
+		} catch (DateTimeParseException e) {
+			throw new FinbroException("Invalid month for -filter: " + monthText
+					+ "\nUse full month name, e.g. January.");
+		}
+	}
     //@@author AK47ofCode
     /**
      * Sorts expenses by category in alphabetical order.

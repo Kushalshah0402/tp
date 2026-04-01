@@ -1,11 +1,17 @@
 package seedu.finbro.commands;
 
+import seedu.finbro.exception.FinbroException;
 import seedu.finbro.finances.ExpenseList;
 import seedu.finbro.utils.FilterService;
 import seedu.finbro.storage.Storage;
 import seedu.finbro.ui.Ui;
-import seedu.finbro.exception.FinbroException;
+import seedu.finbro.utils.Expense;
+import seedu.finbro.utils.ExpenseList;
+import seedu.finbro.utils.FilterService;
+import seedu.finbro.utils.SortService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,7 +19,10 @@ public class ViewCommand extends Command {
     private static final String EMPTY = "";
     private static final String ALL = "all";
     private static final String CATEGORY = "category";
+    private static final String SORT_FLAG = "-sort";
     private static final String FILTER_FLAG = "-filter";
+    private static final String VIEW_USAGE = "Usage: view all [-sort <month|category|amount>] OR "
+            + "view <category> [-filter <month>] [-sort <month|amount>]";
 
     private static final Logger logger = Logger.getLogger(ViewCommand.class.getName());
     private final String arg;
@@ -26,82 +35,71 @@ public class ViewCommand extends Command {
     /**
      * Executes the view command to display expenses based on the provided argument.
      * The argument can specify either "all" to view all expenses, a specific category to view expenses under that
-     * category, or include a filter to sort the expenses by month, category, or amount.
+     * category, or include a sort option to sort the expenses by month, category, or amount.
      * The method validates the argument format and handles different cases accordingly,
      * throwing exceptions for invalid formats or categories.
      *
      * @param expenses The expense list to view.
      * @param ui The UI instance to display the expenses.
      * @param storage The storage instance (not used in this command but required by the interface).
-     * @throws FinbroException if the command format, the category name or the filter type is invalid.
+     * @throws FinbroException if the command format, the category name or the sort type is invalid.
      */
     @Override
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
         ParsedViewArgument parsedArg = parseViewArgument(arg);
 
-        if (parsedArg.filterType() != null) {
-            handleFilteredView(expenses, ui, parsedArg.target(), parsedArg.filterType());
-            return;
-        }
-
-        switch (parsedArg.target()) {
-        case EMPTY -> {
+        if (EMPTY.equals(parsedArg.target())) {
             logger.log(Level.WARNING, "Invalid command format");
-            throw new FinbroException("Usage: view all [-filter <month|category|amount>] OR "
-                    + "view <category> [-filter <month|amount>]");
+            throw new FinbroException(VIEW_USAGE);
         }
-        case ALL -> {
-            logger.log(Level.INFO, "Displaying all expenses");
-            ui.showAllExpenses(expenses.getAll());
+
+        if (parsedArg.sortType() != null && !SortService.isValidSortType(parsedArg.sortType())) {
+            throw new FinbroException("Invalid sort type: " + parsedArg.sortType()
+                    + "\nSupported sorts: month, category, amount");
         }
-        default -> {
-            if (expenses.getCategoryExpenses(parsedArg.target()).isEmpty()) {
-                logger.log(Level.WARNING, "Invalid category name");
-                throw new FinbroException("Current View Category only supports exact matches, or empty category.");
+
+        if (ALL.equals(parsedArg.target())) {
+            if (parsedArg.filterMonth() != null) {
+                throw new FinbroException("Month filter is only supported with \"view <category>\".");
             }
-            logger.log(Level.INFO, "Displaying expenses in category " + parsedArg.target());
-            ui.showAllExpenses(expenses.getCategoryExpenses(parsedArg.target()));
-        }
-        }
-    }
 
-    //@@author AK47ofCode
-    /**
-     * Handles filtered view of expenses.
-     *
-     * @param expenses The expense list.
-     * @param ui The UI instance.
-     * @throws FinbroException if filter type is invalid or no expenses exist.
-     */
-    private void handleFilteredView(ExpenseList expenses, Ui ui,
-                                    String target, String filterType) throws FinbroException {
-        logger.log(Level.INFO, "Handling filtered view: target={0}, filter={1}", new Object[]{target, filterType});
-
-        if (!FilterService.isValidFilterType(filterType)) {
-            throw new FinbroException("Invalid filter type: " + filterType +
-                    "\nSupported filters: month, category, amount");
-        }
-
-        if (ALL.equals(target)) {
-            ui.showAllExpenses(FilterService.filterExpenses(expenses.getAll(), filterType));
+            logger.log(Level.INFO, "Displaying all expenses");
+            if (parsedArg.sortType() != null) {
+                ui.showAllExpenses(SortService.sortExpenses(expenses.getAll(), parsedArg.sortType()));
+            } else {
+                ui.showAllExpenses(expenses.getAll());
+            }
             return;
         }
 
-        if (CATEGORY.equals(filterType)) {
-            throw new FinbroException("Category filter is only supported with \"view all\".");
-        }
-
-        if (expenses.getCategoryExpenses(target).isEmpty()) {
+        List<Expense> categoryExpenses = expenses.getCategoryExpenses(parsedArg.target());
+        if (categoryExpenses.isEmpty()) {
             logger.log(Level.WARNING, "Invalid category name");
             throw new FinbroException("Current View Category only supports exact matches, or empty category.");
         }
 
-        ui.showAllExpenses(FilterService.filterExpenses(expenses.getCategoryExpenses(target), filterType));
+        logger.log(Level.INFO, "Displaying expenses in category " + parsedArg.target());
+
+        List<Expense> displayedExpenses = categoryExpenses;
+        if (parsedArg.filterMonth() != null) {
+            displayedExpenses = FilterService.filterExpensesByMonth(categoryExpenses, parsedArg.filterMonth());
+        }
+
+        if (parsedArg.sortType() != null) {
+            if (CATEGORY.equals(parsedArg.sortType())) {
+                throw new FinbroException("Category sort is only supported with \"view all\".");
+            }
+            displayedExpenses = SortService.sortExpenses(displayedExpenses, parsedArg.sortType());
+        }
+
+        ui.showAllExpenses(displayedExpenses);
     }
+
 
     //@@author AK47ofCode
     /**
-     * Parses the raw argument string for the view command and extracts the target and filter type if present.
+     * Parses the raw argument string for the view command and extracts target, optional sort type,
+     * and optional month filter.
      *
      * @param rawArg The raw argument string from the user input.
      * @return A ParsedViewArgument record containing the target.
@@ -110,42 +108,64 @@ public class ViewCommand extends Command {
     private ParsedViewArgument parseViewArgument(String rawArg) throws FinbroException {
         String trimmedArg = rawArg.trim();
         if (trimmedArg.isEmpty()) {
-            return new ParsedViewArgument(EMPTY, null);
+            return new ParsedViewArgument(EMPTY, null, null);
         }
 
         String[] tokens = trimmedArg.split("\\s+");
-        int filterIndex = -1;
-        for (int i = 0; i < tokens.length; i++) {
-            if (FILTER_FLAG.equals(tokens[i])) {
-                if (filterIndex != -1) {
+        List<String> targetTokens = new ArrayList<>();
+        int index = 0;
+        while (index < tokens.length && !SORT_FLAG.equals(tokens[index]) && !FILTER_FLAG.equals(tokens[index])) {
+            targetTokens.add(tokens[index]);
+            index++;
+        }
+
+        if (targetTokens.isEmpty()) {
+            throw new FinbroException(VIEW_USAGE);
+        }
+
+        String sortType = null;
+        String filterMonth = null;
+        while (index < tokens.length) {
+            String flag = tokens[index];
+            if (index == tokens.length - 1) {
+                throw new FinbroException(VIEW_USAGE);
+            }
+
+            String value = tokens[index + 1];
+            if (value.startsWith("-")) {
+                throw new FinbroException(VIEW_USAGE);
+            }
+
+            if (SORT_FLAG.equals(flag)) {
+                if (sortType != null) {
+                    throw new FinbroException("Invalid format: use at most one -sort tag.");
+                }
+                sortType = value;
+            } else if (FILTER_FLAG.equals(flag)) {
+                if (filterMonth != null) {
                     throw new FinbroException("Invalid format: use at most one -filter tag.");
                 }
-                filterIndex = i;
+                filterMonth = value;
+            } else {
+                throw new FinbroException(VIEW_USAGE);
             }
+
+            index += 2;
         }
 
-        if (filterIndex == -1) {
-            return new ParsedViewArgument(trimmedArg, null);
-        }
-
-        if (filterIndex == 0 || filterIndex != tokens.length - 2) {
-            throw new FinbroException("Usage: view all -filter <month|category|amount> OR "
-                    + "view <category> -filter <month|amount>");
-        }
-
-        String target = String.join(" ", java.util.Arrays.copyOfRange(tokens, 0, filterIndex));
-        String filterType = tokens[tokens.length - 1];
-        return new ParsedViewArgument(target, filterType);
+        String target = String.join(" ", targetTokens);
+        return new ParsedViewArgument(target, sortType, filterMonth);
     }
 
     //@@author AK47ofCode
     /**
-     * A record to hold the parsed arguments for the view command that has the target category and optional filter type.
+     * A record to hold the parsed arguments for the view command.
      *
      * @param target The target category or "all" to view all expenses.
-     * @param filterType The type of filter to apply, or null if no filter is specified.
+     * @param sortType The type of sort to apply, or null if no sort is specified.
+     * @param filterMonth The month name for filtering category expenses, or null if not specified.
      */
-    private record ParsedViewArgument(String target, String filterType) { }
+    private record ParsedViewArgument(String target, String sortType, String filterMonth) { }
 
     //@@author Kushalshah0402 zihaoalt
     /**
@@ -166,18 +186,18 @@ public class ViewCommand extends Command {
                 Use: Displays only the expenses under the given category.
                 Note: category names are case-insensitive.
                 
-                Shows all expenses filtered and sorted by a specific criterion.
-                Format: view all -filter <type>
+                Shows all expenses sorted by a specific criterion.
+                Format: view all -sort <type>
                 Types:
                   month - Sort by month in chronological order
                   category - Sort by category in alphabetical order
                   amount - Sort by amount spent (highest to lowest)
 
-                Shows one category filtered and sorted.
-                Format: view <category> -filter <type>
+                Shows one category filtered by month and optionally sorted.
+                Format: view <category> [-filter <month>] [-sort <type>]
                 Types:
                   month - Sort by month in chronological order
                   amount - Sort by amount spent (highest to lowest)
-                Example: view transport -filter amount""";
+                Example: view transport -filter january -sort amount""";
     }
 }

@@ -44,7 +44,7 @@ public class HelpCommand extends Command {
                view - View your expenses
                limit - Set/view your monthly spending limit
                edit limit - Edit your monthly spending limit
-               currency - Convert expense currency 
+               currency - Convert expense currency
                visual - View a visualisation of your monthly expenses
                
                Enter "help <command>" for a more detailed explanation on how to use each command""";
