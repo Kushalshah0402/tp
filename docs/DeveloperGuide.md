@@ -3,12 +3,14 @@
 ## Table of Contents
 
 - [Acknowledgements](#acknowledgements)
-- [Design and Implementation](#design-and-implementation)
-    - [Limit Component](#limit-component)
+- [Design and Implementation](#design-and-implementation) 
+    - [Architecture](#architecture)
+    - [Limit Feature](#limit-feature)
     - [Add Expense Feature](#add-expense-feature)
     - [View Expense Feature](#view-expense-feature)
     - [Delete Expense Feature](#delete-expense-feature)
     - [Currency Exchange Feature](#currency-exchange-feature)
+    - [Visualisation Feature](#visualisation-feature)
 - [Product Scope](#product-scope)
     - [Target User Profile](#target-user-profile)
     - [Value Proposition](#value-proposition)
@@ -27,7 +29,7 @@
 
 ## Design and Implementation
 
-### Architecture 
+### Architecture
 
 ![Architecture](UML_diagrams/images/MainArchitecture.png)
 
@@ -45,7 +47,7 @@
 
 ---
 
-### Limit Component
+### Limit Feature
 
 #### Overview
 
