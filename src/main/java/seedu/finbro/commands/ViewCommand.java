@@ -1,19 +1,15 @@
 package seedu.finbro.commands;
 
-import seedu.finbro.utils.ExpenseList;
-import seedu.finbro.utils.SortService;
+import seedu.finbro.exception.FinbroException;
 import seedu.finbro.storage.Storage;
 import seedu.finbro.ui.Ui;
-import seedu.finbro.exception.FinbroException;
+import seedu.finbro.utils.Expense;
+import seedu.finbro.utils.ExpenseList;
+import seedu.finbro.utils.FilterService;
+import seedu.finbro.utils.SortService;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,7 +70,7 @@ public class ViewCommand extends Command {
             return;
         }
 
-        List<seedu.finbro.utils.Expense> categoryExpenses = expenses.getCategoryExpenses(parsedArg.target());
+        List<Expense> categoryExpenses = expenses.getCategoryExpenses(parsedArg.target());
         if (categoryExpenses.isEmpty()) {
             logger.log(Level.WARNING, "Invalid category name");
             throw new FinbroException("Current View Category only supports exact matches, or empty category.");
@@ -82,9 +78,9 @@ public class ViewCommand extends Command {
 
         logger.log(Level.INFO, "Displaying expenses in category " + parsedArg.target());
 
-        List<seedu.finbro.utils.Expense> displayedExpenses = categoryExpenses;
+        List<Expense> displayedExpenses = categoryExpenses;
         if (parsedArg.filterMonth() != null) {
-            displayedExpenses = filterByMonth(categoryExpenses, parsedArg.filterMonth());
+            displayedExpenses = FilterService.filterExpensesByMonth(categoryExpenses, parsedArg.filterMonth());
         }
 
         if (parsedArg.sortType() != null) {
@@ -92,47 +88,11 @@ public class ViewCommand extends Command {
                 throw new FinbroException("Category sort is only supported with \"view all\".");
             }
             displayedExpenses = SortService.sortExpenses(displayedExpenses, parsedArg.sortType());
-    }
+        }
 
         ui.showAllExpenses(displayedExpenses);
     }
 
-    //@@author AK47ofCode
-    /**
-     * Filters expenses by month name.
-     */
-    private List<seedu.finbro.utils.Expense> filterByMonth(List<seedu.finbro.utils.Expense> expenses,
-                                                           String monthText) throws FinbroException {
-        Month targetMonth = parseMonthFilter(monthText);
-        DateTimeFormatter expenseFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
-
-        List<seedu.finbro.utils.Expense> filtered = new ArrayList<>();
-        for (seedu.finbro.utils.Expense expense : expenses) {
-            try {
-                LocalDate date = LocalDate.parse(expense.date(), expenseFormatter);
-                if (date.getMonth() == targetMonth) {
-                    filtered.add(expense);
-                }
-            } catch (DateTimeParseException e) {
-                throw new FinbroException("Corrupted expense: Invalid date format");
-            }
-        }
-        return filtered;
-    }
-
-    private Month parseMonthFilter(String monthText) throws FinbroException {
-        DateTimeFormatter monthFormatter = new DateTimeFormatterBuilder()
-                .parseCaseInsensitive()
-                .appendPattern("MMMM")
-                .toFormatter(Locale.ENGLISH);
-
-        try {
-            return Month.from(monthFormatter.parse(monthText));
-        } catch (DateTimeParseException e) {
-            throw new FinbroException("Invalid month for -filter: " + monthText
-                    + "\nUse full month name, e.g. January.");
-        }
-    }
 
     //@@author AK47ofCode
     /**
