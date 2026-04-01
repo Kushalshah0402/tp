@@ -1,6 +1,6 @@
 ---
 layout: page
-title: [Kushal]'s Project Portfolio Page
+title: Kushal's Project Portfolio Page
 ---
 
 ### Project: FinBro
@@ -49,11 +49,11 @@ Given below are my contributions to the project.
 
 * **Documentation**:
   * User Guide:
-    * Added documentation for the `view` command (Pull request #93)
-    * Added documentation for the `add` command (Pull request #64)
+    * Added documentation for the `view` command (Pull request [#93](https://github.com/AY2526S2-CS2113-T10-4/tp/pull/93))
+    * Added documentation for the `add` command (Pull request [#64](https://github.com/AY2526S2-CS2113-T10-4/tp/pull/64))
   * Developer Guide:
-    * Added implementation details for the `view` command including the UML sequence diagram (Pull request #94)
-    * Added implementation details for the `add` command including the UML sequence diagram (Pull request #92)
+    * Added implementation details for the `view` command including the UML sequence diagram (Pull request [#94](https://github.com/AY2526S2-CS2113-T10-4/tp/pull/94))
+    * Added implementation details for the `add` command including the UML sequence diagram (Pull request [#92](https://github.com/AY2526S2-CS2113-T10-4/tp/pull/92))
 
 * **Contributions to team-based tasks**:
   * Set up the GitHub team organisation and repository — forked the repo 

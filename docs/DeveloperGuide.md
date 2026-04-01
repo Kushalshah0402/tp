@@ -331,6 +331,52 @@ The following diagram illustrates the interaction between system components when
 
 ---
 
+## Storage Component
+
+The `Storage` class is responsible for persisting expense data and the budget limit across sessions. It reads from and writes to a local `.txt` file.
+
+#### Load Operation
+
+When the application starts, `Storage.load()` is called:
+
+1. If the file does not exist, an empty list is returned and a new file will be created on the next save
+2. The first line is passed to `readLimit()` which checks for the `LIMIT | <value>` format and sets the budget limit via `Limit.setLimit()`
+3. If the first line is not a limit entry, it is treated as an expense line instead
+`. Each subsequent line is passed to `processExpenseLine()` which splits by `|` and validates the format and amount before adding to the list
+5. Corrupted or malformed lines are logged and skipped without crashing the application
+
+#### Save Operation
+
+After every command, `Storage.save()` is called:
+
+1. The budget limit is written first in the format `LIMIT | <value>`
+2. Each expense is written in the format `amount | category | date`
+3. The file and its parent directories are created automatically if they do not exist
+
+#### File Format
+
+The `finbro.txt` file follows this structure:
+
+LIMIT | 1000.00
+50.00 | food | 2026-03-01
+20.00 | transport | 2026-03-02
+
+#### Design Considerations
+
+Corruption handling
+- Malformed lines are skipped rather than throwing an exception
+- Ensures a single corrupted entry does not affect the rest of the data
+- All skipped lines are logged at WARNING or SEVERE level for debugging
+
+Limit stored as first line
+- Separating the limit from expense entries allows it to be read and applied before any expenses are processed
+- Falls back gracefully if no limit line is found
+
+Flat file over a database
+- Keeps the application lightweight with no external dependencies
+- Sufficient for the scale of data this application handles
+
+---
 #### Design Considerations
 
 | Principle | Benefits |
@@ -389,7 +435,7 @@ This application helps users keep track of their spending and provides frequent 
 - **Performance** — The application should respond to user commands within 1 second under normal load
 - **Reliability** — Data should be persisted reliably without loss between sessions
 - **Usability** — Commands should be intuitive for users familiar with CLI applications
-- **Portability** — The application should run on any platform with Java 11 or higher installed
+- **Portability** — The application should run on any platform with Java #### or higher installed
 - **Maintainability** — Code should follow clean architecture principles for easy maintenance and extension
 
 ---
@@ -410,9 +456,9 @@ This application helps users keep track of their spending and provides frequent 
 1. Launch the application
 2. Use the `add` command to create sample expenses:
    ```
-   add 50.00 Food 202`-01-15
-   add 120.00 Transport 202`-01-16
-   add 30.50 Entertainment 202`-01-17
+   add 50.00 Food 2026-01-15
+   add 120.00 Transport 2026-01-16
+   add 30.50 Entertainment 2026-01-17
    ```
 3. Set a spending limit:
    ```
@@ -422,7 +468,7 @@ This application helps users keep track of their spending and provides frequent 
 ### Testing Core Features
 
 **Adding Expenses:**
-- Test direct mode: `add 25.00 Groceries 202`-01-20`
+- Test direct mode: `add 25.00 Groceries 2026-01-20`
 - Test walkthrough mode: `add` (then follow prompts)
 - Test invalid inputs (negative amounts, invalid dates)
 
