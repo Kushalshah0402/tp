@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User as user
+participant ":Ui" as ui
+participant ":Finbro" as finbro
+participant ":Parser" as parser
+
+user -> ui: input
+
+ui -> finbro++: input
+finbro -> parser++: parse(input)
+create "c:Command" as command
+parser -> command++: new Command(input)
+return c
+return c
+
+
+participant Finances as finances
+participant "storage:Storage" as storage
+
+finbro -> command++: execute(...)
+command -> finances: public methods
+command -> ui: public methods
+return
+
+finbro -> storage++: save()
+storage -> finances++: toFileFormat()
+return
+return
+
+@enduml
