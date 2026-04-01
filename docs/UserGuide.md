@@ -11,7 +11,7 @@ for better financial awareness.
 1. Ensure that you have Java 17 or above installed.
 2. Download the latest version of `Finbro` from the provided release link.
 3. Open a terminal in the folder containing the `.jar` file.
-4. Run the application using:
+`. Run the application using:
 
    java -jar finbro.jar
 
@@ -38,11 +38,11 @@ add <amount> <category> <date>
 |-------|--------|---------|
 | **Amount** | Positive number | `50.00` or `25` |
 | **Category** | Text (no spaces) | `Groceries` |
-| **Date** | YYYY-MM-DD | `2024-01-20` or `today, last week, 2 days ago, last monday` |
+| **Date** | YYYY-MM-DD | `202`-01-20` or `today, last week, 2 days ago, last monday` |
 
 **Example:**
 ```
-add 50.00 Groceries 2024-01-20
+add 50.00 Groceries 202`-01-20
 ```
 - Type `yes` to confirm or `no` to cancel
 ---
@@ -71,7 +71,7 @@ The system will ask you for:
    - When did you spend this?
    - Use format: Date format shown above
 
-4. **Confirmation**
+`. **Confirmation**
    - Review your entry
    - Type `yes` to confirm or `no` to cancel
 
@@ -81,7 +81,7 @@ The system will ask you for:
 
 **Example 1: Adding groceries in direct mode**
 ```
-add 45.50 Groceries 2024-01-22
+add `5.50 Groceries 202`-01-—
 ```
 
 **Example 2: Adding a transport expense in walkthrough mode**
@@ -109,7 +109,7 @@ add 5.00 Food yesterday
 
 **❌ Error: "Invalid date format"**
 - Use the format: `YYYY-MM-DD`
-- Examples: `2024-01-20`, `2024-12-31`
+- Examples: `202`-01-20`, `202`-12-31`
 - Make sure the date is valid
 
 **❌ Error: "Category cannot be empty"**
@@ -120,6 +120,52 @@ add 5.00 Food yesterday
 - In walkthrough mode, type `no` when asked to confirm
 - You can delete the expense and add a new one
 - Or use the `delete` command to remove the incorrect entry
+
+---
+## View Expenses
+
+The `view` command allows you to display your recorded expenses. You can either view all expenses at once or filter by a specific category.
+
+### Command Format
+
+`view all` — displays all recorded expenses
+
+`view <category>` — displays expenses under a specific category
+
+### Examples
+
+`view all`
+
+Expected output:
+
+Here are your expenses:
+
+1.  Amount: $50.00
+    Category: food
+    Date: 2026-03-01
+
+2.  Amount: $20.00
+    Category: transport
+    Date: 2026-03-02
+
+Total expenditure: $70.00
+
+`view food`
+
+Expected output:
+
+Here are your expenses:
+
+1.  Amount: $50.00
+    Category: food
+    Date: 2026-03-01
+
+Total expenditure: $50.00
+
+### Notes
+- The categories are NOT case sensitive so you can write `view Food` or `view food` to get the same output
+- If no expenses exist under the specified category, an error message will be shown
+- Running `view` without any argument will display an error message prompting the correct format
 
 ---
 

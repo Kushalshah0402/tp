@@ -192,6 +192,7 @@ This dual behaviour allows users to either get a full overview or focus on speci
 #### Command Format
 
 View all expenses: `view all`
+
 View by category: `view <category>`
 
 #### Implementation Overview
@@ -244,7 +245,6 @@ Separation of concerns
 - `ExpenseList` manages data retrieval
 
 #### Limitations
-- Category matching is case-sensitive and requires exact input
 - There is no partial or fuzzy search support
 - Users must remember the exact category name used when adding the expense
 
