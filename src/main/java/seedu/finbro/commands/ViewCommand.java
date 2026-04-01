@@ -25,15 +25,16 @@ public class ViewCommand extends Command {
     //@@author Kushalshah0402 zihaoalt AK47ofCode
     /**
      * Executes the view command to display expenses based on the provided argument.
-     * The argument can specify either "all" to view all expenses, a specific category to view expenses under that category,
-     * or include a filter to sort the expenses by month, category, or amount.
+     * The argument can specify either "all" to view all expenses, a specific category to view expenses under that
+     * category, or include a filter to sort the expenses by month, category, or amount.
      * The method validates the argument format and handles different cases accordingly,
      * throwing exceptions for invalid formats or categories.
      *
      * @param expenses The expense list to view.
      * @param ui The UI instance to display the expenses.
      * @param storage The storage instance (not used in this command but required by the interface).
-     * @throws FinbroException if the command format is invalid, the category name is invalid, or the filter type is invalid.
+     * @throws FinbroException if the command format is invalid, the category name is invalid,
+     * or the filter type is invalid.
      */
     @Override
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {
@@ -103,11 +104,9 @@ public class ViewCommand extends Command {
     /**
      * Parses the raw argument string for the view command and extracts the target and filter type if present.
      *
-     * @param rawArg The raw argument string from the user input (e.g., "all -filter month" or "transport -filter amount").
-     * @return A ParsedViewArgument record containing the target (e.g., "all" or "transport") and the filter type
-     * (e.g., "month" or "amount"), or null if no filter is specified.
-     * @throws FinbroException if the argument format is invalid (e.g., multiple -filter tags, missing filter type,
-     * or incorrect usage of -filter).
+     * @param rawArg The raw argument string from the user input.
+     * @return A ParsedViewArgument record containing the target.
+     * @throws FinbroException if the argument format is invalid.
      */
     private ParsedViewArgument parseViewArgument(String rawArg) throws FinbroException {
         String trimmedArg = rawArg.trim();
@@ -142,17 +141,18 @@ public class ViewCommand extends Command {
 
     //@@author AK47ofCode
     /**
-     * A record to hold the parsed arguments for the view command, including the target category and optional filter type.
+     * A record to hold the parsed arguments for the view command that has the target category and optional filter type.
      *
      * @param target The target category or "all" to view all expenses.
-     * @param filterType The type of filter to apply (e.g., "month", "category", "amount"), or null if no filter is specified.
+     * @param filterType The type of filter to apply, or null if no filter is specified.
      */
     private record ParsedViewArgument(String target, String filterType) { }
 
     //@@author Kushalshah0402 zihaoalt
     /**
-     * Provides a help message describing the usage of the view command, including how to view all expenses, view expenses by category,
-     * and how to apply filters for sorting expenses by month, category, or amount. The message also includes examples of valid command formats.
+     * Provides a help message describing the usage of the view command, including how to view all expenses,
+     * view expenses by category, and how to apply filters for sorting expenses by month, category, or amount.
+     * The message also includes examples of valid command formats.
      * @return A help message describing the usage of the view command.
      */
     @Override

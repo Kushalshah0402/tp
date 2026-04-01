@@ -86,7 +86,7 @@ class FilterServiceTest {
 
     //@@author AK47ofCode
     @Test
-    void isValidFilterType_knownTypes_trueUnknown_false() {
+    void isValidFilterType_knownTypesTrue_UnknownFalse() {
         assertTrue(FilterService.isValidFilterType("month"));
         assertTrue(FilterService.isValidFilterType("category"));
         assertTrue(FilterService.isValidFilterType("amount"));
