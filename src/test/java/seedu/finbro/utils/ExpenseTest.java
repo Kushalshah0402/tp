@@ -44,10 +44,11 @@ class ExpenseTest {
     @Test
     void toString_differentValues_returnsCorrectFormat() {
         Expense e = new Expense(5.5, "food", "2026-02-02");
-        String expected =
-                " Amount: $5.50\n" +
-                "   Category: food\n" +
-                "   Date: 2026-02-02";
+        String expected = """
+                         Amount: $5.50
+                           Category: food
+                           Date: 2026-02-02\
+                        """;
         assertEquals(expected, e.toString());
     }
 
