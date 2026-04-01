@@ -3,14 +3,15 @@
 ## Table of Contents
 
 - [Acknowledgements](#acknowledgements)
-- [Design & Implementation](#design--implementation)
-  - [Limit Component](#limit-component)
-  - [Add Expense Feature](#add-expense-feature)
-  - [View Expense Features](#view-expense-feature)
-  - [Delete Expense Feature](#delete-expense-feature)
+- [Design and Implementation](#design-and-implementation)
+    - [Limit Component](#limit-component)
+    - [Add Expense Feature](#add-expense-feature)
+    - [View Expense Feature](#view-expense-feature)
+    - [Delete Expense Feature](#delete-expense-feature)
+    - [Currency Exchange Feature](#currency-exchange-feature)
 - [Product Scope](#product-scope)
-  - [Target User Profile](#target-user-profile)
-  - [Value Proposition](#value-proposition)
+    - [Target User Profile](#target-user-profile)
+    - [Value Proposition](#value-proposition)
 - [User Stories](#user-stories)
 - [Non-Functional Requirements](#non-functional-requirements)
 - [Glossary](#glossary)
@@ -24,18 +25,17 @@
 
 ---
 
-## Design & Implementation
----
----
+## Design and Implementation
+
 ## Limit Component
 
 #### Overview
 
-| Component | Responsibility |
-|-----------|-----------------|
-| **`Limit.java`** | Stores the limit as a static variable accessible across the application. Using a static variable prevents inconsistent limit values and eliminates the need to pass a `Limit` object across class methods. |
-| **`SetLimitCommand.java`** | Handles validation and user confirmation logic, improving separation of concerns. |
-| **`EditLimitCommand.java`** | Handles the interactive process of modifying an existing monthly spending limit. |
+| Component                   | Responsibility                                                                                                                                                                                             |
+|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`Limit.java`**            | Stores the limit as a static variable accessible across the application. Using a static variable prevents inconsistent limit values and eliminates the need to pass a `Limit` object across class methods. |
+| **`SetLimitCommand.java`**  | Handles validation and user confirmation logic, improving separation of concerns.                                                                                                                          |
+| **`EditLimitCommand.java`** | Handles the interactive process of modifying an existing monthly spending limit.                                                                                                                           |
 
 ---
 
@@ -47,13 +47,13 @@ The sequence diagram below illustrates the interaction within the `Limit` compon
 
 **Flow:**
 
-| Step | Action |
-|------|--------|
-| 1 | **User Input** — The `Ui` receives the input and passes it to `Finbro` |
-| 2 | **Parsing** — `Finbro` passes the input to `Parser`, which creates a `SetLimitCommand` object |
-| 3 | **Validation & Confirmation** — The command object verifies the user's input limit: If valid, the system requests confirmation from the user. If the user inputs `"yes"`, the limit is updated; otherwise, it remains unchanged |
-| ` | **Display** — `Ui` shows the updated limit |
-| 5 | **Persistence** — `Finbro` updates the limit in the `Storage` file |
+| Step | Action                                                                                                                                                                                                                          |
+|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1    | **User Input** — The `Ui` receives the input and passes it to `Finbro`                                                                                                                                                          |
+| 2    | **Parsing** — `Finbro` passes the input to `Parser`, which creates a `SetLimitCommand` object                                                                                                                                   |
+| 3    | **Validation & Confirmation** — The command object verifies the user's input limit: If valid, the system requests confirmation from the user. If the user inputs `"yes"`, the limit is updated; otherwise, it remains unchanged |
+| `    | **Display** — `Ui` shows the updated limit                                                                                                                                                                                      |
+| 5    | **Persistence** — `Finbro` updates the limit in the `Storage` file                                                                                                                                                              |
 
 ---
 
@@ -65,17 +65,17 @@ The sequence diagram below illustrates the interaction within the `Limit` compon
 
 **Flow:**
 
-| Step | Action |
-|------|--------|
-| 1 | **User Input** — The `Ui` receives the input and passes it to `Finbro` |
-| 2 | **Parsing** — `Finbro` passes the input to `Parser`, which creates an `EditLimitCommand` object |
-| 3 | **Retrieve Current Limit** — The command object retrieves the current limit from `Limit` |
-| ` | **Edit Menu** — `Ui` displays an edit menu with three options: Increase, Decrease, or Replace the limit |
-| 5 | **Amount Entry** — The user enters the corresponding amount |
-| 6 | **Validation** — `EditLimitCommand` validates: Must be a valid number, not negative, and if decreasing, must not result in below `$0` |
-| 7 | **Confirmation** — If valid, `EditLimitCommand` computes the new limit and calls confirmation logic. If the user inputs `"yes"`, the limit is updated; otherwise, it remains unchanged |
-| 8 | **Display** — `Ui` shows the updated limit |
-| 9 | **Persistence** — `Finbro` updates the limit in the `Storage` file |
+| Step | Action                                                                                                                                                                                 |
+|------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1    | **User Input** — The `Ui` receives the input and passes it to `Finbro`                                                                                                                 |
+| 2    | **Parsing** — `Finbro` passes the input to `Parser`, which creates an `EditLimitCommand` object                                                                                        |
+| 3    | **Retrieve Current Limit** — The command object retrieves the current limit from `Limit`                                                                                               |
+| `    | **Edit Menu** — `Ui` displays an edit menu with three options: Increase, Decrease, or Replace the limit                                                                                |
+| 5    | **Amount Entry** — The user enters the corresponding amount                                                                                                                            |
+| 6    | **Validation** — `EditLimitCommand` validates: Must be a valid number, not negative, and if decreasing, must not result in below `$0`                                                  |
+| 7    | **Confirmation** — If valid, `EditLimitCommand` computes the new limit and calls confirmation logic. If the user inputs `"yes"`, the limit is updated; otherwise, it remains unchanged |
+| 8    | **Display** — `Ui` shows the updated limit                                                                                                                                             |
+| 9    | **Persistence** — `Finbro` updates the limit in the `Storage` file                                                                                                                     |
 
 ---
 ---
@@ -94,11 +94,13 @@ This dual behavior improves usability by supporting both experienced users (fast
 #### Command Format
 
 **Direct Mode:**
+
 ```
 add <amount> <category> <date in yyyy-mm-dd>
 ```
 
 **Walkthrough Mode:**
+
 ```
 add
 ```
@@ -112,7 +114,8 @@ The `AddCommand` class handles both modes. When executed, the command checks whe
 - **Arguments present** → Direct mode is executed
 - **Arguments absent** → Walkthrough mode is triggered
 
-In both cases, a valid `Expense` object is created and added to the `ExpenseList`. After insertion, the user interface displays a confirmation message and the updated number of expenses.
+In both cases, a valid `Expense` object is created and added to the `ExpenseList`. After insertion, the user interface
+displays a confirmation message and the updated number of expenses.
 
 ---
 
@@ -120,30 +123,32 @@ In both cases, a valid `Expense` object is created and added to the `ExpenseList
 
 In direct mode, the system parses and validates the input parameters:
 
-| Validation Rule | Requirement |
-|-----------------|-------------|
-| **Amount** | Must be a positive number |
-| **Category** | Must be a non-empty string |
-| **Date** | Must follow the required format (`yyyy-mm-dd`) |
+| Validation Rule | Requirement                                    |
+|-----------------|------------------------------------------------|
+| **Amount**      | Must be a positive number                      |
+| **Category**    | Must be a non-empty string                     |
+| **Date**        | Must follow the required format (`yyyy-mm-dd`) |
 
 **If validation succeeds:**
 
 1. An `Expense` object is created
 2. The expense is added to the `ExpenseList`
 3. The budget status is updated via the `Limit` component
-`. A confirmation message is displayed
+   `. A confirmation message is displayed
 
 ---
 
 #### Walkthrough Mode
 
-If the command is issued without parameters, the system enters an interactive mode. The user is sequentially prompted for:
+If the command is issued without parameters, the system enters an interactive mode. The user is sequentially prompted
+for:
 
 1. Expense amount
 2. Expense category
 3. Expense date
 
-Each input is validated immediately. Invalid input results in an error message and a repeated prompt until valid data is provided.
+Each input is validated immediately. Invalid input results in an error message and a repeated prompt until valid data is
+provided.
 
 **After collecting all inputs:**
 
@@ -154,7 +159,8 @@ Each input is validated immediately. Invalid input results in an error message a
 
 #### Sequence of Operations
 
-The following diagram illustrates the interaction between system components when executing the `add` command in both direct and walkthrough modes.
+The following diagram illustrates the interaction between system components when executing the `add` command in both
+direct and walkthrough modes.
 
 ![Add Expense Sequence Diagram](UML_diagrams/images/AddCommand.png)
 
@@ -162,19 +168,19 @@ The following diagram illustrates the interaction between system components when
 
 #### Design Considerations
 
-| Principle | Benefits |
-|-----------|----------|
-| **Single command supporting two modes** | Improves usability by accommodating different user preferences. Avoids duplicating logic across multiple commands. Keeps the command interface simple. |
-| **Interactive validation in walkthrough mode** | Ensures invalid data is handled immediately. Reduces the likelihood of user errors. Provides a guided experience for new users. |
-| **Separation of concerns** | `Ui` handles user interaction. `Parser` interprets input. `AddCommand` performs application logic. `ExpenseList` manages stored expenses. |
+| Principle                                      | Benefits                                                                                                                                               |
+|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Single command supporting two modes**        | Improves usability by accommodating different user preferences. Avoids duplicating logic across multiple commands. Keeps the command interface simple. |
+| **Interactive validation in walkthrough mode** | Ensures invalid data is handled immediately. Reduces the likelihood of user errors. Provides a guided experience for new users.                        |
+| **Separation of concerns**                     | `Ui` handles user interaction. `Parser` interprets input. `AddCommand` performs application logic. `ExpenseList` manages stored expenses.              |
 
 ---
 
 #### Limitations
 
-| Limitation | Impact |
-|-----------|--------|
-| Walkthrough mode requires multiple user inputs | May be slower for experienced users |
+| Limitation                                                      | Impact                                                      |
+|-----------------------------------------------------------------|-------------------------------------------------------------|
+| Walkthrough mode requires multiple user inputs                  | May be slower for experienced users                         |
 | Direct mode requires users to remember the exact command format | Potential for input errors if users don't recall the format |
 
 ---
@@ -187,7 +193,7 @@ The `view` command retrieves and displays expenses from the system. It supports 
 1. View all expenses — displays every recorded expense
 2. View by category — displays only expenses matching the specified category
 
-This dual behaviour allows users to either get a full overview or focus on specific spending categories.
+This dual behavior allows users to either get a full overview or focus on specific spending categories.
 
 #### Command Format
 
@@ -198,11 +204,13 @@ View by category: `view <category>`
 #### Implementation Overview
 
 The `ViewCommand` class is responsible for handling both modes. When executed, the command checks the argument supplied:
+
 - If argument is `all` — all expenses are retrieved and displayed
 - If argument is a category name — only matching expenses are retrieved and displayed
 - If argument is empty — an error is thrown
 
-In both valid cases, a `List<Expense>` is retrieved and passed to `Ui` for display. The total expenditure is calculated and shown at the end.
+In both valid cases, a `List<Expense>` is retrieved and passed to `Ui` for display. The total expenditure is calculated
+and shown at the end.
 
 #### Sequence of Operations
 
@@ -229,22 +237,26 @@ When the user runs `view <category>`, the system filters expenses:
 #### Design Considerations
 
 Single command supporting two view modes
+
 - Avoids the need for separate commands for full and filtered views
 - Keeps the command interface simple and intuitive
 - Reuses the same `showAllExpenses()` method for both modes
 
-Category matching behaviour
+Category matching behavior
+
 - Uses exact string matching via `equals()`
 - Ensures predictable and consistent results
 - Partial matches are not supported to avoid ambiguous results
 
 Separation of concerns
+
 - `Ui` handles display logic
 - `Parser` interprets the input
 - `ViewCommand` contains the branching logic
 - `ExpenseList` manages data retrieval
 
 #### Limitations
+
 - There is no partial or fuzzy search support
 - Users must remember the exact category name used when adding the expense
 
@@ -258,18 +270,21 @@ The `delete` command removes an existing expense from the system. It supports tw
 1. **Direct Mode** — The category and expense number are provided in a single command
 2. **Walkthrough Mode** — The system interactively prompts the user for the required input
 
-This dual behavior improves usability by supporting both experienced users (fast deletion) and new users (guided deletion).
+This dual behavior improves usability by supporting both experienced users (fast deletion) and new users (guided
+deletion).
 
 ---
 
 #### Command Format
 
 **Direct Mode:**
+
 ```
 delete <category> <number>
 ```
 
 **Walkthrough Mode:**
+
 ```
 delete
 ```
@@ -283,7 +298,9 @@ The `DeleteCommand` class handles both modes. When executed, the command checks 
 - **Arguments present** → Direct mode is executed
 - **Arguments absent** → Walkthrough mode is triggered
 
-In direct mode, the target expense is validated and removed immediately. In walkthrough mode, the system first guides the user through selecting an expense, then removes it only if the user confirms the deletion. After a successful deletion, the user interface displays a confirmation message and the updated number of expenses.
+In direct mode, the target expense is validated and removed immediately. In walkthrough mode, the system first guides
+the user through selecting an expense, then removes it only if the user confirms the deletion. After a successful
+deletion, the user interface displays a confirmation message and the updated number of expenses.
 
 ---
 
@@ -291,30 +308,32 @@ In direct mode, the target expense is validated and removed immediately. In walk
 
 In direct mode, the system parses and validates the input parameters:
 
-| Validation Rule | Requirement |
-|-----------------|-------------|
-| **Category** | Must refer to an existing expense category |
-| **Expense Number** | Must be a valid positive integer |
-| **Command Format** | Must follow `delete <category> <number>` |
+| Validation Rule    | Requirement                                |
+|--------------------|--------------------------------------------|
+| **Category**       | Must refer to an existing expense category |
+| **Expense Number** | Must be a valid positive integer           |
+| **Command Format** | Must follow `delete <category> <number>`   |
 
 **If validation succeeds:**
 
 1. The category is extracted from the command
 2. The expense number is parsed and validated
 3. The corresponding expense is removed from the `ExpenseList`
-`. A confirmation message is displayed
+   `. A confirmation message is displayed
 
 ---
 
 #### Walkthrough Mode
 
-If the command is issued without parameters, the system enters an interactive mode. The user is sequentially prompted for:
+If the command is issued without parameters, the system enters an interactive mode. The user is sequentially prompted
+for:
 
 1. Expense category
 2. Expense number within that category
 3. Deletion confirmation
 
-Each input is validated before proceeding. Invalid input results in an error message and a repeated prompt until valid data is provided.
+Each input is validated before proceeding. Invalid input results in an error message and a repeated prompt until valid
+data is provided.
 
 **After collecting all inputs:**
 
@@ -325,7 +344,8 @@ Each input is validated before proceeding. Invalid input results in an error mes
 
 #### Sequence of Operations
 
-The following diagram illustrates the interaction between system components when executing the `delete` command in both direct and walkthrough modes.
+The following diagram illustrates the interaction between system components when executing the `delete` command in both
+direct and walkthrough modes.
 
 ![Delete Expense Sequence Diagram](UML_diagrams/images/DeleteCommand.png)
 
@@ -333,37 +353,40 @@ The following diagram illustrates the interaction between system components when
 
 #### Design Considerations
 
-| Principle | Benefits |
-|-----------|----------|
+| Principle                               | Benefits                                                                                                                                               |
+|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Single command supporting two modes** | Improves usability by accommodating different user preferences. Avoids duplicating logic across multiple commands. Keeps the command interface simple. |
-| **Confirmation in walkthrough mode** | Reduces the risk of accidental deletion. Gives users a final chance to verify the selected expense before removal. |
-| **Separation of concerns** | `Ui` handles user interaction. `Parser` interprets input. `DeleteCommand` performs deletion logic. `ExpenseList` manages stored expenses. |
+| **Confirmation in walkthrough mode**    | Reduces the risk of accidental deletion. Gives users a final chance to verify the selected expense before removal.                                     |
+| **Separation of concerns**              | `Ui` handles user interaction. `Parser` interprets input. `DeleteCommand` performs deletion logic. `ExpenseList` manages stored expenses.              |
 
 ---
 
 #### Limitations
 
-| Limitation | Impact |
-|-----------|--------|
-| Walkthrough mode requires multiple user inputs | May be slower for experienced users |
+| Limitation                                                                 | Impact                                                                       |
+|----------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| Walkthrough mode requires multiple user inputs                             | May be slower for experienced users                                          |
 | Direct mode requires users to know the correct category and expense number | Potential for input errors if users do not remember the exact item to remove |
-| Direct mode does not include a confirmation step | Incorrect input may lead to immediate deletion |
+| Direct mode does not include a confirmation step                           | Incorrect input may lead to immediate deletion                               |
 
 ---
 
 ## Storage Component
 
-The `Storage` class is responsible for persisting expense data and the budget limit across sessions. It reads from and writes to a local `.txt` file.
+The `Storage` class is responsible for persisting expense data and the budget limit across sessions. It reads from and
+writes to a local `.txt` file.
 
 #### Load Operation
 
 When the application starts, `Storage.load()` is called:
 
 1. If the file does not exist, an empty list is returned and a new file will be created on the next save
-2. The first line is passed to `readLimit()` which checks for the `LIMIT | <value>` format and sets the budget limit via `Limit.setLimit()`
+2. The first line is passed to `readLimit()` which checks for the `LIMIT | <value>` format and sets the budget limit via
+   `Limit.setLimit()`
 3. If the first line is not a limit entry, it is treated as an expense line instead
-`. Each subsequent line is passed to `processExpenseLine()` which splits by `|` and validates the format and amount before adding to the list
-5. Corrupted or malformed lines are logged and skipped without crashing the application
+   `. Each subsequent line is passed to `processExpenseLine()` which splits by `|` and validates the format and amount
+   before adding to the list
+4. Corrupted or malformed lines are logged and skipped without crashing the application
 
 #### Save Operation
 
@@ -384,17 +407,94 @@ LIMIT | 1000.00
 #### Design Considerations
 
 Corruption handling
+
 - Malformed lines are skipped rather than throwing an exception
 - Ensures a single corrupted entry does not affect the rest of the data
 - All skipped lines are logged at WARNING or SEVERE level for debugging
 
 Limit stored as first line
+
 - Separating the limit from expense entries allows it to be read and applied before any expenses are processed
 - Falls back gracefully if no limit line is found
 
 Flat file over a database
+
 - Keeps the application lightweight with no external dependencies
 - Sufficient for the scale of data this application handles
+
+---
+
+## Currency Exchange Feature
+
+The `currency` command allows users to convert an existing expense amount from one currency to another. It follows an
+interactive workflow where users specify the source currency, target currency, and the expense entry to convert.
+
+This feature operates entirely offline using predefined exchange rates stored in the system.
+
+```
+currency
+```
+
+---
+
+### Implementation Overview
+
+The `CurrencyCommand` class manages the full workflow of currency conversion. It interacts with the following
+components:
+
+| Component               | Responsibility                                                |
+|-------------------------|---------------------------------------------------------------|
+| **`CurrencyCommand`**   | Handles user interaction, validation, and conversion workflow |
+| **`CurrencyRateTable`** | Stores exchange rates and performs conversion logic           |
+| **`ExpenseList`**       | Provides access to stored expenses                            |
+| **`Ui`**                | Handles user input and output display                         |
+
+---
+
+### Currency Conversion Logic
+
+The `CurrencyRateTable` uses **SGD as the base currency**. All exchange rates are defined relative to SGD.
+
+Conversion follows these rules:
+
+| Case             | Logic                  |
+|------------------|------------------------|
+| Same currency    | Return original amount |
+| From SGD         | `amount × rate`        |
+| To SGD           | `amount ÷ rate`        |
+| Other currencies | Convert via SGD        |
+
+---
+
+### Sequence Diagram
+
+The following diagram illustrates the interaction between system components when executing the `currency` command.
+![CurrencyCommand Sequence Diagram](UML_diagrams/images/CurrencyCommand.png)
+
+---
+
+### Design Considerations
+
+| Principle                  | Benefits                                                 |
+|----------------------------|----------------------------------------------------------|
+| **Interactive workflow**   | Easier for users; no need to memorise command syntax     |
+| **Separation of concerns** | Conversion logic isolated in `CurrencyRateTable`         |
+| **Base currency approach** | Reduces complexity and avoids storing all currency pairs |
+| **Offline capability**     | No dependency on APIs or internet                        |
+| **Logging support**        | Improves debugging and traceability                      |
+
+---
+
+### Error Handling
+
+The system validates multiple error conditions:
+
+| Error Case            | Behaviour                        |
+|-----------------------|----------------------------------|
+| No expenses available | Throws `FinbroException`         |
+| Unsupported currency  | Displays supported currency list |
+| Invalid entry number  | Throws `FinbroException`         |
+| Entry out of range    | Throws `FinbroException`         |
 
 ---
 
@@ -403,6 +503,7 @@ Flat file over a database
 ### Target User Profile
 
 This application is optimized for users who:
+
 - Prefer fast keyboard input over graphical interfaces
 - Want to track personal expenses efficiently
 - Need quick access to spending patterns and limits
@@ -411,22 +512,23 @@ This application is optimized for users who:
 
 ### Value Proposition
 
-This application helps users keep track of their spending and provides frequent reminders to prevent unnecessary expenditures.
+This application helps users keep track of their spending and provides frequent reminders to prevent unnecessary
+expenditures.
 
 ---
 
 ## User Stories
 
-| Version | As a...      | I want to...                                              | So that I can...                                            |
-|---------|--------------|-----------------------------------------------------------|-------------------------------------------------------------|
-| v1.0    | new user     | see usage instructions                                    | refer to them when I forget how to use the application      |
-| v1.0    | new user     | record an expense by providing only amount and category   | start tracking my spending without learning many details    |
-| v1.0    | new user     | see clear error messages when I enter invalid inputs      | correct mistakes without frustration                        |
-| v1.0    | new user     | view a short help guide explaining available commands     | understand how to use the application                       |
-| v1.0    | regular user | record expenses with a description and a date             | have an accurate and meaningful spending history            |
-| v1.0    | regular user | be able to delete my expenses                             | remove unnecessary expenses                                 |
-| v1.0    | regular user | view total spending by category                           | understand where my money is going                          |
-| v1.0    | regular user | set spending limits for a week/month and receive warnings | avoid overspending                                          |
+| Version | As a...      | I want to...                                              | So that I can...                                         |
+|---------|--------------|-----------------------------------------------------------|----------------------------------------------------------|
+| v1.0    | new user     | see usage instructions                                    | refer to them when I forget how to use the application   |
+| v1.0    | new user     | record an expense by providing only amount and category   | start tracking my spending without learning many details |
+| v1.0    | new user     | see clear error messages when I enter invalid inputs      | correct mistakes without frustration                     |
+| v1.0    | new user     | view a short help guide explaining available commands     | understand how to use the application                    |
+| v1.0    | regular user | record expenses with a description and a date             | have an accurate and meaningful spending history         |
+| v1.0    | regular user | be able to delete my expenses                             | remove unnecessary expenses                              |
+| v1.0    | regular user | view total spending by category                           | understand where my money is going                       |
+| v1.0    | regular user | set spending limits for a week/month and receive warnings | avoid overspending                                       |
 
 ---
 
@@ -468,16 +570,19 @@ This application helps users keep track of their spending and provides frequent 
 ### Testing Core Features
 
 **Adding Expenses:**
+
 - Test direct mode: `add 25.00 Groceries 2026-01-20`
 - Test walkthrough mode: `add` (then follow prompts)
 - Test invalid inputs (negative amounts, invalid dates)
 
 **Managing Limits:**
+
 - Set a new limit: `limit 1000`
 - Edit the existing limit: `edit limit`
 - Test confirmation flows (accept/decline)
 
 **Viewing Data:**
+
 - List all expenses
 - View expenses by category
 - Check budget status against limit

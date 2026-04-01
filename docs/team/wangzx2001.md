@@ -15,8 +15,8 @@ and view expenses across different currencies.
 
 ### Code Contributed
 
-**RepoSense Link:
-** [View detailed code contributions](https://nus-cs2113-ay2526-s2.github.io/tp-dashboard/?search=WangZX2001&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2026-02-20T00%3A00%3A00&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&filteredFileName=)
+**RepoSense Link:** 
+[View detailed code contributions](https://nus-cs2113-ay2526-s2.github.io/tp-dashboard/?search=WangZX2001&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2026-02-20T00%3A00%3A00&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&filteredFileName=)
 
 ---
 
@@ -64,7 +64,7 @@ and view expenses across different currencies.
 Added documentation for:
 
 * **Edit Limit Command**
-    - Detailed behaviour and workflow
+    - Detailed behavior and workflow
     - Example interactions with confirmation step
     - Error handling explanations
 
@@ -93,18 +93,3 @@ Added documentation for:
 * Participated in testing and debugging features across modules
 
 ---
-
-## Reflection
-
-This project strengthened my understanding of:
-
-* Object-Oriented Programming (OOP) design in Java
-* Command pattern implementation
-* Input validation and error handling
-* Designing user-friendly CLI interactions
-
-I also improved my ability to:
-
-* Write clear technical documentation
-* Work collaboratively using Git and pull requests
-* Debug and structure medium-scale software systems

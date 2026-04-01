@@ -1,0 +1,51 @@
+@startuml
+hide footbox
+
+->":Ui"++: "currency"
+":Ui" -> ":Finbro"++: input
+
+":Finbro" -> ":Parser"++: parse(input)
+create "c:CurrencyCommand"
+":Parser" -> "c:CurrencyCommand": new CurrencyCommand()
+return
+
+":Finbro" -> "c:CurrencyCommand"++: execute()
+
+"c:CurrencyCommand" -> ":ExpenseList": isEmpty()
+
+alt no expenses
+    "c:CurrencyCommand" -> ":Ui": show error
+    return
+end
+
+"c:CurrencyCommand" -> ":Ui": prompt source currency
+":Ui" -> "c:CurrencyCommand": fromCurrency
+
+"c:CurrencyCommand" -> ":Ui": prompt target currency
+":Ui" -> "c:CurrencyCommand": toCurrency
+
+"c:CurrencyCommand" -> ":CurrencyRateTable": isUnsupportedCurrency()
+
+alt unsupported currency
+    "c:CurrencyCommand" -> ":Ui": show error
+    return
+end
+
+"c:CurrencyCommand" -> ":ExpenseList": getAll()
+"c:CurrencyCommand" -> ":Ui": showAllExpenses()
+
+"c:CurrencyCommand" -> ":Ui": prompt entry number
+":Ui" -> "c:CurrencyCommand": index
+
+alt invalid index
+    "c:CurrencyCommand" -> ":Ui": show error
+    return
+end
+
+"c:CurrencyCommand" -> ":ExpenseList": get(index)
+"c:CurrencyCommand" -> ":CurrencyRateTable": convert(amount, from, to)
+
+"c:CurrencyCommand" -> ":Ui": show conversion result
+
+return
+@enduml
