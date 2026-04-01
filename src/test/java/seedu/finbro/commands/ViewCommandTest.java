@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ViewCommandTest {
 
+    //@@author AK47ofCode
     @Test
     public void execute_viewAll_showsAllExpenses() throws FinbroException {
         ExpenseList expenses = createSampleExpenses();
@@ -24,6 +25,7 @@ public class ViewCommandTest {
         assertEquals(expenses.getAll(), ui.lastShownExpenses);
     }
 
+    //@@author AK47ofCode
     @Test
     public void execute_viewCategory_showsOnlyCategoryExpenses() throws FinbroException {
         ExpenseList expenses = createSampleExpenses();
@@ -38,6 +40,7 @@ public class ViewCommandTest {
         ), ui.lastShownExpenses);
     }
 
+    //@@author AK47ofCode
     @Test
     public void execute_viewAllFilterAmount_sortedByHighestAmount() throws FinbroException {
         ExpenseList expenses = createSampleExpenses();
@@ -53,6 +56,7 @@ public class ViewCommandTest {
         ), ui.lastShownExpenses);
     }
 
+    //@@author AK47ofCode
     @Test
     public void execute_viewAllFilterMonth_sortedChronologically() throws FinbroException {
         ExpenseList expenses = createSampleExpenses();
@@ -68,6 +72,7 @@ public class ViewCommandTest {
         ), ui.lastShownExpenses);
     }
 
+    //@@author AK47ofCode
     @Test
     public void execute_viewAllFilterCategory_sortedAlphabeticallyByCategory() throws FinbroException {
         ExpenseList expenses = createSampleExpenses();
@@ -83,6 +88,7 @@ public class ViewCommandTest {
         ), ui.lastShownExpenses);
     }
 
+    //@@author AK47ofCode
     @Test
     public void execute_viewCategoryFilterMonth_sortedChronologically() throws FinbroException {
         ExpenseList expenses = createSampleExpenses();
@@ -96,6 +102,7 @@ public class ViewCommandTest {
         ), ui.lastShownExpenses);
     }
 
+    //@@author AK47ofCode
     @Test
     public void execute_viewCategoryFilterCategory_throwsException() {
         ExpenseList expenses = createSampleExpenses();
@@ -107,6 +114,7 @@ public class ViewCommandTest {
         assertEquals("Category filter is only supported with \"view all\".", exception.getMessage());
     }
 
+    //@@author AK47ofCode
     @Test
     public void execute_viewAllInvalidFilter_throwsException() {
         ExpenseList expenses = createSampleExpenses();
@@ -118,6 +126,7 @@ public class ViewCommandTest {
         assertEquals("Invalid filter type: year\nSupported filters: month, category, amount", exception.getMessage());
     }
 
+    //@@author AK47ofCode
     @Test
     public void execute_viewWithMultipleFilterTags_throwsException() {
         ExpenseList expenses = createSampleExpenses();
@@ -129,6 +138,7 @@ public class ViewCommandTest {
         assertEquals("Invalid format: use at most one -filter tag.", exception.getMessage());
     }
 
+    //@@author AK47ofCode
     private ExpenseList createSampleExpenses() {
         ExpenseList expenses = new ExpenseList();
         expenses.add(new Expense(12.0, "transport", "3 February 2026"));
@@ -138,10 +148,12 @@ public class ViewCommandTest {
         return expenses;
     }
 
+    //@@author AK47ofCode
     private static class CaptureUi extends Ui {
         private List<Expense> lastShownExpenses = List.of();
         private int showAllExpensesCallCount = 0;
 
+        //@@author AK47ofCode
         @Override
         public void showAllExpenses(List<Expense> expenses) {
             showAllExpensesCallCount++;
