@@ -2,7 +2,6 @@ package seedu.finbro.utils;
 
 import seedu.finbro.exception.FinbroException;
 import seedu.finbro.finances.Expense;
-import seedu.finbro.finances.ExpenseList;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -72,58 +71,4 @@ public class FilterService {
 					+ "\nUse full month name, e.g. January.");
 		}
 	}
-    //@@author AK47ofCode
-    /**
-     * Sorts expenses by category in alphabetical order.
-     *
-     * @param expenses The list of expenses to sort.
-     * @return A list of expenses sorted by category.
-     */
-    private static List<Expense> sortByCategory(List<Expense> expenses) {
-        logger.log(Level.INFO, "Sorting expenses by category");
-        List<Expense> sorted = new ArrayList<>(expenses);
-        sorted.sort(Comparator.comparing(Expense::category).thenComparingDouble(Expense::amount));
-        logger.log(Level.INFO, "Expenses successfully sorted by category");
-        return sorted;
-    }
-
-    //@@author AK47ofCode
-    /**
-     * Sorts expenses by amount in descending order (highest to lowest).
-     *
-     * @param expenses The list of expenses to sort.
-     * @return A list of expenses sorted by amount.
-     */
-    private static List<Expense> sortByAmount(List<Expense> expenses) {
-        logger.log(Level.INFO, "Sorting expenses by amount");
-        List<Expense> sorted = new ArrayList<>(expenses);
-        sorted.sort(Comparator.comparingDouble(Expense::amount).reversed());
-        logger.log(Level.INFO, "Expenses successfully sorted by amount");
-        return sorted;
-    }
-
-    //@@author AK47ofCode
-    /**
-     * Parses a date string into a YearMonth object.
-     *
-     * @param expense The expense object containing the date string.
-     * @return A YearMonth object representing the month of the expense.
-     * @throws FinbroException if the date format is invalid.
-     */
-    private static YearMonth parseYearMonth(Expense expense) throws FinbroException {
-        return ExpenseList.parseYearMonth(expense);
-    }
-
-    //@@author AK47ofCode
-    /**
-     * Validates if a filter type is valid.
-     *
-     * @param filterType The filter type to validate.
-     * @return true if the filter type is valid, false otherwise.
-     */
-    public static boolean isValidFilterType(String filterType) {
-        return filterType.equalsIgnoreCase(FILTER_MONTH) ||
-               filterType.equalsIgnoreCase(FILTER_CATEGORY) ||
-               filterType.equalsIgnoreCase(FILTER_AMOUNT);
-    }
 }

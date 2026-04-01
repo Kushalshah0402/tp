@@ -1,6 +1,8 @@
 package seedu.finbro.utils;
 
 import seedu.finbro.exception.FinbroException;
+import seedu.finbro.finances.Expense;
+import seedu.finbro.finances.ExpenseList;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -104,7 +106,7 @@ public class SortService {
      * @throws FinbroException if the date format is invalid.
      */
     private static YearMonth parseYearMonth(Expense expense) throws FinbroException {
-        return ExpenseList.getYearMonth(expense);
+        return ExpenseList.parseYearMonth(expense);
     }
 
     //@@author AK47ofCode

@@ -2,6 +2,7 @@ package seedu.finbro.utils;
 
 import org.junit.jupiter.api.Test;
 import seedu.finbro.exception.FinbroException;
+import seedu.finbro.finances.Expense;
 
 import java.util.ArrayList;
 import java.util.List;
