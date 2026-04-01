@@ -81,7 +81,7 @@ class SortServiceTest {
     }
 
     @Test
-    void isValidSortType_knownTypes_trueUnknown_false() {
+    void isValidSortType_knownTypesTrue_unknownFalse() {
         assertTrue(SortService.isValidSortType("month"));
         assertTrue(SortService.isValidSortType("category"));
         assertTrue(SortService.isValidSortType("amount"));
@@ -110,4 +110,3 @@ class SortServiceTest {
         ));
     }
 }
-

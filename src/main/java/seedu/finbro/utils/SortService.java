@@ -122,4 +122,3 @@ public class SortService {
                sortType.equalsIgnoreCase(SORT_AMOUNT);
     }
 }
-
