@@ -1,0 +1,14 @@
+@startuml
+
+
+participant "c:VisualCommand" as c
+participant "expenses:ExpenseList" as e
+
+-> c++: execute(...)
+
+c -> e++: getMonthlyExpenses()
+return
+
+return bar graph
+
+@enduml

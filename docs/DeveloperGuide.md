@@ -515,6 +515,36 @@ The system validates multiple error conditions:
 
 ---
 
+### Visualisation Feature
+
+The `visual` command creates a bar graph of the user's spendings arranged by month. 
+
+#### Sequence of operations 
+
+![VisualCommandUML](UML_diagrams/images/VisualCommand.png)
+
+Flow:
+
+| Step | Action | 
+| ---- | ------ | 
+| 1 | `Finbro` calls execute on `VisualCommand` object | 
+| 2 | The command object gets the monthly expenses and sorts them by month | 
+| 3 | Assembles the bar chart and assembles into an output string | 
+| 4 | Passes the output to `Ui` which shows it to the user | 
+
+#### Implementation overview 
+
+Sorting: 
+
+- `getMonthlyExpenses()` returns a `Map` with the year and month as the key, and the amount as the value
+- `VisualCommand` places the output in a `TreeMap` which will sort the expenses by key (year and month)
+
+Bar graph construction: 
+
+- Bar graph is constructed using the full block Unicode character - █
+- The month with the largest expense is set to have `MAX_BAR_LENGTH` number of bars 
+- Other months will have a number of bars roughly equal to its proportion of the largest monthly expense
+
 ## Product Scope
 
 ### Target User Profile
