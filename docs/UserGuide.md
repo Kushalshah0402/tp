@@ -32,7 +32,7 @@ for better financial awareness.
 2. Download the latest version of `Finbro` from the provided release link.
 3. Open a terminal in the folder containing the `.jar` file. Run the application using:
 
-   `java -jar finbro.jar`
+   `java -jar Finbro.jar`
 
 4. Start entering commands to manage your expenses.
 
