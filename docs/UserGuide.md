@@ -8,9 +8,11 @@
   - [Add Expense Command](#add-expense-command)
   - [Delete Expense Command](#delete-expense-command)
   - [View Expenses](#view-expenses)
-  - [Editing the spending limit: `edit limit`](#editing-the-spending-limit-edit-limit)
+  - [Setting the spending limit](#setting-the-spending-limit-limit)
+  - [Editing the spending limit](#editing-the-spending-limit-edit-limit)
   - [Budget Reminder System](#budget-reminder-system)
-  - [Converting expense currency: `currency`](#converting-expense-currency-currency)
+  - [Converting expense currency](#converting-expense-currency-currency)
+  - [Visualization](#visualization-visual)
 - [FAQ](#faq)
 - [Command Summary](#command-summary)
 
@@ -30,7 +32,7 @@ for better financial awareness.
 2. Download the latest version of `Finbro` from the provided release link.
 3. Open a terminal in the folder containing the `.jar` file. Run the application using:
 
-   `java -jar finbro.jar`
+   `java -jar Finbro.jar`
 
 4. Start entering commands to manage your expenses.
 
@@ -85,11 +87,11 @@ add <amount> <category> <date>
 |--------------|------------------|-------------------------------------------------------------|
 | **Amount**   | Positive number  | `50.00` or `25`                                             |
 | **Category** | Text (no spaces) | `Groceries`                                                 |
-| **Date**     | YYYY-MM-DD       | `202`-01-20` or `today, last week, 2 days ago, last monday` |
+| **Date**     | YYYY-MM-DD       | `2026-01-20` or `today, last week, 2 days ago, last monday` |
 
 **Example:**
 ```
-add 50.00 Groceries 202`-01-20
+add 50.00 Groceries 2026-01-20
 ```
 - Type `yes` to confirm or `no` to cancel
 

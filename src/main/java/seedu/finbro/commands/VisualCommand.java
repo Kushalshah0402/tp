@@ -37,6 +37,13 @@ public class VisualCommand extends Command {
             throw new  FinbroException("Error: No expenses found");
         }
 
+        createBarGraph(monthlyTotals);
+
+        logger.log(Level.INFO, "Visualisation created");
+        ui.showVisual(output);
+    }
+
+    private void createBarGraph(Map<YearMonth, Double> monthlyTotals) throws FinbroException {
         double max = Collections.max(monthlyTotals.values());
         for (YearMonth month: monthlyTotals.keySet()) {
             double amount =  monthlyTotals.get(month);
@@ -47,9 +54,6 @@ public class VisualCommand extends Command {
             String label = createLabel(month);
             createRow(label, bar, amount);
         }
-
-        logger.log(Level.INFO, "Visualisation created");
-        ui.showVisual(output);
     }
 
     public static String createBar(int barLength) {
