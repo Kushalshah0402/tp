@@ -125,6 +125,7 @@ public class AddCommand extends Command {
         }
 
         // CONFIRMATION
+        category = category.toLowerCase();
         Expense expense = new Expense(amount, category, formattedDate);
         assert expense != null : "Expense should not be null";
         ui.showConfirmExpense(expense);
