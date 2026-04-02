@@ -672,6 +672,11 @@ Bar graph construction:
 - The month with the largest expense is set to have `MAX_BAR_LENGTH` number of bars 
 - Other months will have a number of bars roughly equal to its proportion of the largest monthly expense
 
+[Proposed] Filter date range
+- Allow user to input a start and/or end year and month to narrow the date range of the bar graph 
+- Read additional optional arguments headed by `/by` and `/to` for start and end dates 
+- Only add expenses to the `TreeMap` if they are within the date range 
+
 ## Product Scope
 
 ### Target User Profile
@@ -693,16 +698,22 @@ expenditures.
 
 ## User Stories
 
-| Version | As a...      | I want to...                                              | So that I can...                                         |
-|---------|--------------|-----------------------------------------------------------|----------------------------------------------------------|
-| v1.0    | new user     | see usage instructions                                    | refer to them when I forget how to use the application   |
-| v1.0    | new user     | record an expense by providing only amount and category   | start tracking my spending without learning many details |
-| v1.0    | new user     | see clear error messages when I enter invalid inputs      | correct mistakes without frustration                     |
-| v1.0    | new user     | view a short help guide explaining available commands     | understand how to use the application                    |
-| v1.0    | regular user | record expenses with a description and a date             | have an accurate and meaningful spending history         |
-| v1.0    | regular user | be able to delete my expenses                             | remove unnecessary expenses                              |
-| v1.0    | regular user | view total spending by category                           | understand where my money is going                       |
-| v1.0    | regular user | set spending limits for a week/month and receive warnings | avoid overspending                                       |
+| Version | As a...          | I want to...                                              | So that I can...                                         |
+|---------|------------------|-----------------------------------------------------------|----------------------------------------------------------|
+| v1.0    | new user         | see usage instructions                                    | refer to them when I forget how to use the application   |
+| v1.0    | new user         | record an expense by providing only amount and category   | start tracking my spending without learning many details |
+| v1.0    | new user         | see clear error messages when I enter invalid inputs      | correct mistakes without frustration                     |
+| v1.0    | new user         | view a short help guide explaining available commands     | understand how to use the application                    |
+| v1.0    | regular user     | record expenses with a description and a date             | have an accurate and meaningful spending history         |
+| v1.0    | regular user     | be able to delete my expenses                             | remove unnecessary expenses                              |
+| v1.0    | regular user     | view total spending by category                           | understand where my money is going                       |
+| v1.0    | regular user     | set spending limits for a week/month and receive warnings | avoid overspending                                       |
+| v2.0    | new user         | go through a walkthrough when adding expenses             | navigate the system without dealing with many errors     |
+| v2.0    | new user         | go through a walkthrough when deleting expenses           | navigate the system without dealing with many errors     |
+| v2.0    | regular user     | view expenses filtered by month                           | narrow expenses within a time range                      | 
+| v2.0    | regular user     | view expenses that are sorted by amount                   | keep track of my largest expenses                        | 
+| v2.0    | regular user     | view a bar chart showing my monthly expenses              | better visualize my spendings over different months      |
+| v2.0    | exchange student | convert my existing expenses from SGD to another currency | keep track of expenses using my own local currency       | 
 
 ---
 
@@ -758,7 +769,8 @@ expenditures.
 **Viewing Data:**
 
 - List all expenses
-- View expenses by category
+- View expenses by category/date
 - Check budget status against limit
+- View visualization: `visual`
 
 ---
