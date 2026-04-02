@@ -5,10 +5,6 @@
 **Finbro** is a command-line personal finance tracker designed to help users manage their expenses efficiently. It
 allows users to record expenses, monitor spending habits, set financial limits, and perform currency conversions.
 
-Given below are my contributions to the project. 
-
----
-## Summary of Contributions
 
 **Code Contributed**: [RepoSense link](https://nus-cs2113-ay2526-s2.github.io/tp-dashboard/?search=natmloclam&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2026-02-20T00%3A00%3A00&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&filteredFileName=)
 
@@ -16,48 +12,35 @@ Given below are my contributions to the project.
 ## Core Features Implemented
 ### Set limit feature 
 
-What it does: 
-- Implement the monthly spending limit feature 
-- Added confirmation step where the user has to enter "yes" to change their spending limit 
+What it does: Allows user to set a monthly spending limit, after an additional confirmation step 
 
-Justification: 
-- Enables to better watch their spendings as they receive reminders as they are about to approach/exceed their monthly 
-limit 
+Justification: Enables users to better watch their spendings as they receive reminders as they are about to 
+approach/exceed their monthly limit 
 
-Highlights:
-- Monthly limit is stored on disk, and is saved across Finbro sessions
+Highlights: Monthly limit is stored on disk, and is saved across Finbro sessions
 
-### Visualization feature 
+### Visualization feature
+What it does: Creates a bar graph that shows the user's spendings across different months 
 
-What it does: 
-- Creates a bar graph that shows the user's spendings across different months 
-
-Justification: 
-- Allows user to easily compare how much they are spending over time
+Justification: Allows user to easily compare how much they are spending over time
 
 ### Logging
-What it does: 
-- All logs are saved into `logs/finbro.log`
+What it does: All logs are saved into `logs/finbro.log`
 
 Justification: 
 - Logging constantly keeps track of what the app does, making it easier for developers/users to identify the source of 
 an error
 - Storing the logs into a log file ensures the user's experience remains seamless
 
-Highlights: 
-- Log messages follow the format: `[date, time] [log level] [Java class] [log details]`
+Highlights: Log messages follow the format: `[date, time] [log level] [Java class] [log details]`
 
 ---
 ## Enhancements Implemented
 ### Detailed Help Command 
 
-What is does: 
-- Entering `help <command>` gives a more detailed help message on how to use the corresponding command 
-- If user inputs an invalid command, it prints the list of available commands and what they do 
+What it does: Entering `help <command>` gives a more detailed help message on how to use the corresponding command 
 
-Justification: 
-- Keeps the help messages short and easy to understand 
-- Only provides the user with information that they currently need 
+Justification: Keeps the help messages short and easy to understand by providing only necessary information
 
 ### More robust storage loading
 
