@@ -8,7 +8,10 @@
     - [Limit Feature](#limit-feature)
     - [Add Expense Feature](#add-expense-feature)
     - [View Expense Feature](#view-expense-feature)
+    - [Filter and Sort Expense Features](#filter-and-sort-expense-features)
     - [Delete Expense Feature](#delete-expense-feature)
+    - [Budget Warning Feature](#budget-warning-feature)
+    - [Storage Component](#storage-component)
     - [Currency Exchange Feature](#currency-exchange-feature)
     - [Visualisation Feature](#visualisation-feature)
 - [Product Scope](#product-scope)
@@ -290,6 +293,90 @@ Separation of concerns
 
 ---
 
+### Filter and Sort Expense Features
+
+The `view` command supports optional filtering and sorting to help users inspect expenses with more control.
+This section documents the currently implemented behavior.
+
+#### Command Format
+
+Supported command forms:
+
+- `view all [-sort <month|category|amount>]`
+- `view <category> [-filter <month>] [-sort <month|amount>]`
+
+Notes:
+
+- `-filter` is only supported for `view <category>`.
+- `-sort category` is only supported for `view all`.
+- `-filter <month>` accepts full month names and is case-insensitive (e.g., `January`, `january`).
+
+#### Implementation Overview
+
+`ViewCommand` parses the target (`all` or category), then reads optional `-filter` and `-sort` tags.
+Execution rules:
+
+- For `view all`, expenses are retrieved with `ExpenseList.getAll()`, then optionally sorted with `SortService`.
+- For `view <category>`, expenses are retrieved with `ExpenseList.getCategoryExpenses(category)`.
+- If `-filter` is present, `FilterService.filterExpensesByMonth(...)` is applied first.
+- If `-sort` is present, sorting is applied after filtering.
+
+Sort behavior:
+
+- `month`: chronological order
+- `category`: alphabetical order (available only for `view all`)
+- `amount`: descending order (highest to lowest)
+
+Error handling is done through `FinbroException` for invalid formats, unsupported tag combinations, invalid sort types,
+invalid month values, or unknown categories.
+
+#### Sequence of Operations
+
+The following diagram shows how the command is parsed, validated, optionally filtered/sorted, and displayed:
+
+![View Command with Filter and Sort Sequence Diagram](UML_diagrams/images/ViewCommand_Advanced.png)
+
+#### Behavior by Mode
+
+For `view <category> -filter <month>`:
+
+1. Parse the month input and validate it
+2. Filter the expenses in the specified category by the given month
+3. Optionally apply `-sort <month|amount>` if provided
+4. Display the resulting list via `Ui.showAllExpenses(...)`
+5. Throw an error if the month is invalid (must be full month name)
+
+For `view all -sort <type>`:
+
+1. Retrieve all expenses
+2. Sort by `month`, `category`, or `amount`
+3. Display the sorted list
+4. Throw an error if `type` is invalid
+
+For `view <category> [-filter <month>] -sort <type>`:
+
+1. Retrieve category expenses
+2. Optionally apply month filter
+3. Sort by `month` or `amount`
+4. Throw an error if `type` is `category`
+
+#### Design Considerations
+
+| Principle                                                | Benefits                                                             |
+|----------------------------------------------------------|----------------------------------------------------------------------|
+| **Single command with optional tags**                    | Keeps usage compact while allowing advanced query behavior.          |
+| **Service-based logic (`FilterService`, `SortService`)** | Improves separation of concerns and testability.                     |
+| **Validation before execution**                          | Fails fast on invalid formats/types and prevents ambiguous behavior. |
+
+#### Limitations
+
+| Limitation                                | Impact                                                |
+|-------------------------------------------|-------------------------------------------------------|
+| Optional tags increase command complexity | Users must remember valid tag combinations.           |
+| Category matching remains exact           | Typos or non-matching category names return an error. |
+
+---
+
 ### Delete Expense Feature
 
 The `delete` command removes an existing expense from the system. It supports two modes of operation:
@@ -381,6 +468,60 @@ direct and walkthrough modes.
 | Walkthrough mode requires multiple user inputs                             | May be slower for experienced users                                          |
 | Direct mode requires users to know the correct category and expense number | Potential for input errors if users do not remember the exact item to remove |
 | Direct mode does not include a confirmation step                           | Incorrect input may lead to immediate deletion                               |
+
+---
+
+### Budget Warning Feature
+
+`BudgetWarningService` checks the current budget state and shows warnings when spending is close to, or above, the
+configured monthly limit.
+
+#### Warning Levels
+
+Warnings are evaluated only when both conditions are true:
+
+- `Limit.getLimit() > 0`
+- `ExpenseList` is not empty
+
+If either condition is false, no warning is shown.
+
+| Warning Level   | Threshold Condition (`remaining = limit - totalExpenses`) | User Feedback                            |
+|-----------------|-----------------------------------------------------------|------------------------------------------|
+| **Safe**        | `remaining > 20`                                          | No warning is displayed.                 |
+| **Approaching** | `0 <= remaining <= 20`                                    | `Ui.showBudgetReminder(limit)` is shown. |
+| **Exceeded**    | `remaining < 0`                                           | `Ui.showBudgetExceeded(limit)` is shown. |
+
+#### Implementation Overview
+
+`Finbro.run()` invokes `budgetWarningService.checkAndShowWarnings(expenses, ui)` in each loop iteration, before reading
+the next command.
+
+Inside `checkAndShowWarnings(...)`, the service:
+
+1. Reads `remaining` from `ExpenseList.getRemainingExpenditure()`
+2. Reads `limit` from `Limit.getLimit()`
+3. Applies threshold checks and triggers the corresponding `Ui` warning method when needed
+
+#### Sequence of Operations
+
+The following diagram illustrates the interaction between system components when the budget warning is evaluated.
+![Budget Warning Service Sequence Diagram](UML_diagrams/images/BudgetWarningService.png)
+
+#### Design Considerations
+
+| Principle                  | Benefits                                                                                                                      |
+|----------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| **Continuous feedback**    | Budget status is checked every run-loop iteration, so users are reminded regularly while the app is running.                  |
+| **Clear thresholds**       | Distinct warning levels help users understand how close they are to their limit and encourage proactive financial management. |
+| **Separation of concerns** | The warning logic is encapsulated in a dedicated service, keeping it separate from the core expense management logic.         |
+| **User-friendly messages** | Feedback is designed to be informative and actionable, guiding users to review their spending habits.                         |
+
+#### Limitations
+
+| Limitation                                                                  | Impact                                                                                                          |
+|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| Warnings are shown at loop time, not only after specific mutating commands  | The same warning may be repeated across multiple prompts until expenses or limit change.                        |
+| Thresholds are fixed (`20` buffer and strict `remaining < 0` exceeded rule) | Users cannot customize sensitivity, and exact-limit (`remaining == 0`) is treated as approaching, not exceeded. |
 
 ---
 
@@ -511,12 +652,12 @@ The `visual` command creates a bar graph of the user's spendings arranged by mon
 
 Flow:
 
-| Step | Action | 
-| ---- | ------ | 
-| 1 | `Finbro` calls execute on `VisualCommand` object | 
-| 2 | The command object gets the monthly expenses and sorts them by month | 
-| 3 | Assembles the bar chart and assembles into an output string | 
-| 4 | Passes the output to `Ui` which shows it to the user | 
+| Step | Action                                                               | 
+|------|----------------------------------------------------------------------| 
+| 1    | `Finbro` calls execute on `VisualCommand` object                     | 
+| 2    | The command object gets the monthly expenses and sorts them by month | 
+| 3    | Assembles the bar chart and assembles into an output string          | 
+| 4    | Passes the output to `Ui` which shows it to the user                 | 
 
 #### Implementation overview 
 

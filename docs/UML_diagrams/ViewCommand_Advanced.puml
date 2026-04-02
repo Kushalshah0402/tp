@@ -1,0 +1,95 @@
+@startuml ViewCommand_Advanced
+'https://plantuml.com/sequence-diagram
+actor User
+
+box "ViewCommand" #LightBlue
+participant ":Ui"
+participant ":Finbro"
+participant ":Parser"
+participant "c:ViewCommand"
+participant ":ExpenseList"
+participant ":SortService"
+participant ":FilterService"
+end box
+
+autonumber
+
+User -> ":Ui" : view all -sort <type>
+activate ":Ui"
+
+":Ui" -> ":Finbro" : input = "view ..."
+activate ":Finbro"
+
+":Finbro" -> ":Parser" : parse(input)
+activate ":Parser"
+
+create "c:ViewCommand"
+":Parser" -> "c:ViewCommand" : new ViewCommand(argument)
+activate "c:ViewCommand"
+return c
+return c
+
+":Finbro" -> "c:ViewCommand" : execute(expenses, ui, storage)
+activate "c:ViewCommand"
+
+alt [invalid sort type]
+	"c:ViewCommand" -> ":Finbro" : throw FinbroException
+	":Finbro" -> ":Ui" : showError(...)
+	":Ui" -> User : error message
+
+else [view all]
+	note right of "c:ViewCommand"
+	  Supported: view all -sort month|category|amount
+	  -filter is not supported for view all
+	end note
+
+	opt [with -sort]
+		"c:ViewCommand" -> ":SortService" : sortExpenses(expenses.getAll(), sortType)
+		activate ":SortService"
+		return sortedExpenses
+	end
+
+	"c:ViewCommand" -> ":Ui" : showAllExpenses(sortedExpenses / expenses.getAll())
+	activate ":Ui"
+	":Ui" -> User : display expenses
+
+else [view <category>]
+	note right of "c:ViewCommand"
+	  Supported: view <category> [-filter <month>] [-sort <month|amount>]
+	  -filter month matching is case-insensitive
+	  -sort category is not supported for category views
+	end note
+
+	"c:ViewCommand" -> ":ExpenseList" : getCategoryExpenses(category)
+	activate ":ExpenseList"
+	return categoryExpenses
+
+	alt [category not found]
+		"c:ViewCommand" -> ":Finbro" : throw FinbroException
+		":Finbro" -> ":Ui" : showError(...)
+		":Ui" -> User : error message
+
+	else [category found]
+		opt [with -filter]
+			"c:ViewCommand" -> ":FilterService" : filterExpensesByMonth(categoryExpenses, month)
+			activate ":FilterService"
+			return filteredExpenses
+		end
+
+		opt [with -sort]
+			"c:ViewCommand" -> ":SortService" : sortExpenses(displayedExpenses, sortType)
+			activate ":SortService"
+			return sortedExpenses
+		end
+
+		"c:ViewCommand" -> ":Ui" : showAllExpenses(displayedExpenses)
+		activate ":Ui"
+		":Ui" -> User : display expenses
+	end
+end
+
+deactivate "c:ViewCommand"
+deactivate ":Finbro"
+deactivate ":Ui"
+
+@enduml

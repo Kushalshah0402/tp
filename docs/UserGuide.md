@@ -1,5 +1,21 @@
 # User Guide
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Quick Start](#quick-start)
+- [Features](#features)
+  - [Help Command](#help-command)
+  - [Add Expense Command](#add-expense-command)
+  - [Delete Expense Command](#delete-expense-command)
+  - [View Expenses](#view-expenses)
+  - [Editing the spending limit: `edit limit`](#editing-the-spending-limit-edit-limit)
+  - [Budget Reminder System](#budget-reminder-system)
+  - [Converting expense currency: `currency`](#converting-expense-currency-currency)
+- [FAQ](#faq)
+- [Command Summary](#command-summary)
+
+---
+
 ## Introduction
 
 **Finbro** is a simple and efficient personal finance tracker that helps users record, manage, and monitor their
@@ -12,12 +28,16 @@ for better financial awareness.
 
 1. Ensure that you have Java 17 or above installed.
 2. Download the latest version of `Finbro` from the provided release link.
-3. Open a terminal in the folder containing the `.jar` file.
-`. Run the application using:
+3. Open a terminal in the folder containing the `.jar` file. Run the application using:
 
    `java -jar finbro.jar`
 
 4. Start entering commands to manage your expenses.
+<<<<<<< HEAD
+=======
+
+---
+>>>>>>> 6a6d00475af45d2e99b384d9a548ef8455a45262
 
 ---
 
@@ -242,20 +262,43 @@ y
 ---
 ## View Expenses
 
-The `view` command allows you to display your recorded expenses. You can either view all expenses at once or filter by a specific category.
+The `view` command lets you display your recorded expenses in different ways.
+You can view all expenses, view a specific category, or optionally sort and filter the results with `-sort` and `-filter`.
 
 ### Command Format
 
 `view all` — displays all recorded expenses
 
+`view all -sort <month|category|amount>` — displays all expenses sorted by the chosen option
+
 `view <category>` — displays expenses under a specific category
 
+`view <category> -filter <month>` — displays only the expenses in that category for the given month
+
+`view <category> -sort <month|amount>` — displays that category sorted by the chosen option
+
+`view <category> -filter <month> -sort <month|amount>` — filters the category by month first, then sorts the result
+
+### How it works
+
+- `view all` shows every recorded expense.
+- `view all` can be sorted with `-sort month`, `-sort category`, or `-sort amount`.
+- `view <category>` shows only expenses that match the category name.
+- `view <category>` can be filtered by month with `-filter <month>`.
+- `-filter` is case-insensitive, so `january`, `January`, and `JANUARY` are treated the same.
+- `view <category>` can also be sorted with `-sort month` or `-sort amount`.
+- You can use `-filter` and `-sort` together, and the order of the flags does not matter.
+- `-sort category` is only supported with `view all`.
+- `-filter` only works with `view <category>`.
+
 ### Examples
+
+**Example 1: Viewing all expenses**
 
 `view all`
 
 Expected output:
-
+```
 Here are your expenses:
 
 1.  Amount: $50.00
@@ -267,11 +310,14 @@ Here are your expenses:
     Date: 2026-03-02
 
 Total expenditure: $70.00
+```
 
-`view food`
+**Example 2: Viewing expenses under the `food` category**
+
+`view food`:
 
 Expected output:
-
+```
 Here are your expenses:
 
 1.  Amount: $50.00
@@ -279,11 +325,71 @@ Here are your expenses:
     Date: 2026-03-01
 
 Total expenditure: $50.00
+```
+
+**Example 3: Viewing all expenses sorted by amount**
+
+`view all -sort amount`
+
+Expected output:
+
+```
+Here are your expenses:
+
+1.  Amount: $50.00
+    Category: food
+    Date: 2026-03-01
+
+2.  Amount: $20.00
+    Category: transport
+    Date: 2026-03-02
+
+Total expenditure: $70.00
+```
+
+
+**Example 4: Viewing expenses by category and filtering by month**
+
+`view transport -filter march`
+
+Expected output:
+
+```
+Here are your expenses:
+
+1.  Amount: $50.00
+    Category: transport
+    Date: 2026-03-01
+
+Total expenditure: $50.00
+```
+
+**Example 5: Viewing expenses by category, filtering by month, and sorting by amount**
+
+`view transport -filter march -sort amount`
+
+Expected output:
+```
+Here are your expenses:
+
+1.  Amount: $50.00
+    Category: transport
+    Date: 2026-03-01
+
+2.  Amount: $20.00
+    Category: transport
+    Date: 2026-03-12
+
+Total expenditure: $70.00
+```
 
 ### Notes
-- The categories are NOT case sensitive so you can write `view Food` or `view food` to get the same output
-- If no expenses exist under the specified category, an error message will be shown
+- The categories are NOT case-sensitive so you can write `view Food` or `view food` to get the same output.
+- The month used with `-filter` is also case-insensitive, so `view transport -filter JANUARY` works.
+- `-filter` only accepts a month name, such as `January`.
+- If no expenses exist under the specified category, an error message will be shown.
 - Running `view` without any argument will display an error message prompting the correct format
+- Each flag may appear at most once.
 
 ---
 
@@ -317,7 +423,7 @@ Allows you to modify your current monthly spending limit by increasing, decreasi
 
 **Format:** `edit limit`
 
-#### Description
+### Description
 
 When this command is executed, the system will display your current spending limit and prompt you to choose one of the
 following options by keying in the option number:
@@ -329,7 +435,7 @@ following options by keying in the option number:
 After selecting an option, you will be prompted to enter the amount for the chosen operation.  
 You will then be asked to confirm the change before the new limit is applied.
 
-#### Behaviour
+### Behaviour
 
 * **Increase limit**
     * Adds the entered amount to the current limit.
@@ -340,6 +446,34 @@ You will then be asked to confirm the change before the new limit is applied.
     * Sets the current limit to a new value.
 * All inputs must be **valid non-negative numbers**.
 * The system will reject invalid menu selections or invalid numeric inputs.
+
+---
+## Budget Reminder System
+
+Finbro includes a budget reminder system that alerts you when your total expenses exceed your set monthly limit, 
+or is close to exceeding the limit.  
+When you add a new expense, the system will check if the total expenditure for the current month differs by $20 
+or below with the limit, or exceeds the limit.
+If it does, a warning message will be displayed to inform you that you are close to exceeding your monthly budget,
+or have exceeded your budget for the month.
+
+### Examples
+
+**Example 1: Close to limit warning**
+Suppose your monthly spending limit is set to \$100.00, and your total expenses for the current month have reached 
+\$85.00. The system will check the total expenditure (\$85.00) against the limit (\$100.00), and constantly prompt you
+with the following warning message until you add more expenses or edit your limit:
+```
+Warning: You are close to your monthly spending limit of $100.00!
+```
+
+**Example 2: Exceeded limit warning**
+Suppose your monthly spending limit is set to \$100.00, and your total expenses for the current month have reached 
+\$120.00. The system will check the total expenditure (\$120.00) against the limit (\$100.00), and constantly prompt 
+you with the following warning message until you add more expenses or edit your limit:
+```
+Warning: You have exceeded your monthly spending limit of $100.00!
+```
 
 ---
 
@@ -415,15 +549,17 @@ current limit unchanged.
 
 ## Command Summary
 
-| Command    | Format                           | Description                                |
-|------------|----------------------------------|--------------------------------------------|
-| Add        | `add <amount> <category> <date>` | Adds a new expense (direct input)          |
-| Add        | `add`                            | Adds a new expense (guided input)          |
-| View       | `view`                           | Displays all expenses                      |
-| Delete     | `delete <category> <index>`      | Deletes an expense (direct input)          |
-| Delete     | `delete`                         | Deletes an expense (guided input)          |
-| Set Limit  | `limit`                          | Sets a monthly spending limit              |
-| Edit Limit | `edit limit`                     | Edits the current spending limit           |
-| Currency   | `currency`                       | Converts expense currency                  |
-| Help       | `help`                           | Shows help information                     |
-| Help       | `help <command>`                 | Shows detailed help for a specific command |
+| Command    | Format                                            | Description                                                     |
+|------------|---------------------------------------------------|-----------------------------------------------------------------|
+| Add        | `add <amount> <category> <date>`                  | Adds a new expense (direct input)                               |
+| Add        | `add`                                             | Adds a new expense (guided input)                               |
+| View       | `view all` with optional `-sort`                  | Displays all expenses with optional sorting                     |
+| View       | `view <category>` with optional `-sort`/`-filter` | Displays a category of expenses with optional sorting/filtering |
+| Delete     | `delete <category> <index>`                       | Deletes an expense (direct input)                               |
+| Delete     | `delete`                                          | Deletes an expense (guided input)                               |
+| Set Limit  | `limit`                                           | Sets a monthly spending limit                                   |
+| Edit Limit | `edit limit`                                      | Edits the current spending limit                                |
+| Currency   | `currency`                                        | Converts expense currency                                       |
+| Visualize  | `visual`                                          | Shows a bar chart of monthly expenses                           |
+| Help       | `help`                                            | Shows help information                                          |
+| Help       | `help <command>`                                  | Shows detailed help for a specific command                      |

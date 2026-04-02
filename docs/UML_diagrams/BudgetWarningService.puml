@@ -1,0 +1,70 @@
+@startuml BudgetWarningService
+'https://plantuml.com/sequence-diagram
+actor User
+
+box "Budget Warning" #LightBlue
+participant ":Ui"
+participant ":Finbro"
+participant ":BudgetWarningService"
+participant ":ExpenseList"
+participant ":Limit"
+end box
+
+autonumber
+
+loop Each run-loop iteration
+	User -> ":Ui" : enter next command
+	activate ":Ui"
+
+	":Ui" -> ":Finbro" : input received
+	activate ":Finbro"
+
+	note right of ":Finbro"
+	  Before reading/executing the next command,
+	  Finbro invokes budget warning checks.
+	end note
+
+	":Finbro" -> ":BudgetWarningService" : checkAndShowWarnings(expenses, ui)
+	activate ":BudgetWarningService"
+
+	":BudgetWarningService" -> ":ExpenseList" : getRemainingExpenditure()
+	activate ":ExpenseList"
+	return remaining
+
+	":BudgetWarningService" -> ":Limit" : getLimit()
+	activate ":Limit"
+	return limit
+
+	":BudgetWarningService" -> ":ExpenseList" : isEmpty()
+	activate ":ExpenseList"
+	return isEmpty
+
+	alt [limit <= 0 OR expenses is empty]
+		note right of ":BudgetWarningService"
+		  No warning shown.
+		end note
+
+	else [limit > 0 AND expenses not empty]
+		alt [remaining < 0]
+			":BudgetWarningService" -> ":Ui" : showBudgetExceeded(limit)
+			activate ":Ui"
+			":Ui" -> User : display exceeded warning
+
+		else [0 <= remaining <= 20]
+			":BudgetWarningService" -> ":Ui" : showBudgetReminder(limit)
+			activate ":Ui"
+			":Ui" -> User : display reminder warning
+
+		else [remaining > 20]
+			note right of ":BudgetWarningService"
+			  Budget is safe; no warning shown.
+			end note
+		end
+	end
+
+	deactivate ":BudgetWarningService"
+	deactivate ":Finbro"
+	deactivate ":Ui"
+end
+
+@enduml
