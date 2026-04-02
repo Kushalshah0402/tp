@@ -8,9 +8,11 @@
   - [Add Expense Command](#add-expense-command)
   - [Delete Expense Command](#delete-expense-command)
   - [View Expenses](#view-expenses)
-  - [Editing the spending limit: `edit limit`](#editing-the-spending-limit-edit-limit)
+  - [Setting the spending limit](#setting-the-spending-limit-limit)
+  - [Editing the spending limit](#editing-the-spending-limit-edit-limit)
   - [Budget Reminder System](#budget-reminder-system)
-  - [Converting expense currency: `currency`](#converting-expense-currency-currency)
+  - [Converting expense currency](#converting-expense-currency-currency)
+  - [Visualization](#visualization-visual)
 - [FAQ](#faq)
 - [Command Summary](#command-summary)
 
