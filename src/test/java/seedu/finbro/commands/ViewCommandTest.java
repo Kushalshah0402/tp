@@ -225,6 +225,33 @@ public class ViewCommandTest {
         expenses.add(new Expense(4.0, "transport", "20 January 2026"));
         return expenses;
     }
+    //@@author zihaoalt
+    @Test
+    public void execute_viewCategoryMixedCase_showsOnlyCategoryExpenses() throws FinbroException {
+        ExpenseList expenses = createSampleExpenses();
+        CaptureUi ui = new CaptureUi();
+
+        new ViewCommand("Transport").execute(expenses, ui, null);
+
+        assertEquals(1, ui.showAllExpensesCallCount);
+        assertEquals(List.of(
+                new Expense(12.0, "transport", "3 February 2026"),
+                new Expense(4.0, "transport", "20 January 2026")
+        ), ui.lastShownExpenses);
+    }
+
+    //@@author zihaoalt
+    @Test
+    public void execute_viewCategoryMixedCaseWithFilter_showsFilteredExpenses() throws FinbroException {
+        ExpenseList expenses = createSampleExpenses();
+        CaptureUi ui = new CaptureUi();
+
+        new ViewCommand("Transport -filter january").execute(expenses, ui, null);
+
+        assertEquals(List.of(
+                new Expense(4.0, "transport", "20 January 2026")
+        ), ui.lastShownExpenses);
+    }
 
     //@@author AK47ofCode
     private static class CaptureUi extends Ui {

@@ -101,4 +101,43 @@ public class AddCommandTest {
         command.execute(list, ui, storage);
         assertEquals(1, list.size());
     }
+    //@@author zihaoalt
+    @Test
+    void execute_strictModeMixedCaseCategory_caseInsensitiveLookupFindsExpense() throws Exception {
+        String input = "yes\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        ExpenseList list = new ExpenseList();
+        Ui ui = new Ui();
+        Storage storage = null;
+        AddCommand command = new AddCommand("20 Food 2026-01-01");
+
+        command.execute(list, ui, storage);
+
+        assertEquals(1, list.size());
+        assertEquals(1, list.getCategoryExpenses("food").size());
+        assertEquals(1, list.getCategoryExpenses("FOOD").size());
+    }
+
+    //@@author zihaoalt
+    @Test
+    void execute_walkthroughMixedCaseCategory_caseInsensitiveLookupFindsExpense() throws Exception {
+        String simulatedInput =
+                "20\n" +
+                        "Food\n" +
+                        "2026-01-01\n" +
+                        "yes\n";
+
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        Ui ui = new Ui();
+        ExpenseList list = new ExpenseList();
+        Storage storage = null;
+        AddCommand command = new AddCommand("");
+
+        command.execute(list, ui, storage);
+
+        assertEquals(1, list.size());
+        assertEquals(1, list.getCategoryExpenses("food").size());
+        assertEquals(1, list.getCategoryExpenses("FOOD").size());
+    }
 }

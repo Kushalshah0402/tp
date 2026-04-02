@@ -187,5 +187,42 @@ class ExpenseListTest {
         assertEquals(correctOutput, list.getMonthlyExpenses());
     }
 
+    //@@author zihaoalt
+    @Test
+    void getCategoryExpenses_mixedCaseQuery_returnsMatchingExpenses() {
+        ExpenseList list = new ExpenseList();
+        list.add(new Expense(10, "food", "2026-01-01"));
+        list.add(new Expense(5, "transport", "2026-01-02"));
+        list.add(new Expense(7, "food", "2026-01-03"));
 
+        List<Expense> foodExpenses = list.getCategoryExpenses("Food");
+        assertEquals(2, foodExpenses.size());
+    }
+
+    //@@author zihaoalt
+    @Test
+    void getCategoryExpenses_lowercaseQuery_matchesUppercaseStoredCategory() {
+        ExpenseList list = new ExpenseList();
+        list.add(new Expense(10, "Food", "2026-01-01"));
+        list.add(new Expense(5, "Transport", "2026-01-02"));
+        list.add(new Expense(7, "Food", "2026-01-03"));
+
+        List<Expense> foodExpenses = list.getCategoryExpenses("food");
+        assertEquals(2, foodExpenses.size());
+    }
+
+    //@@author zihaoalt
+    @Test
+    void removeByCategoryIndex_mixedCaseCategory_removesCorrectExpense() throws Exception {
+        ExpenseList list = new ExpenseList();
+        Expense e1 = new Expense(10, "food", "2026-01-03");
+        Expense e2 = new Expense(7, "food", "2026-01-04");
+        list.add(e1);
+        list.add(e2);
+
+        Expense removed = list.removeByCategoryIndex("Food", 2);
+
+        assertEquals(e2, removed);
+        assertEquals(1, list.size());
+    }
 }

@@ -60,6 +60,7 @@ public class SetLimitCommand extends Command {
         ui.showChangeLimitWarning(limit);
         logger.log(Level.INFO, "Getting confirmation for limit change");
         String confirm = ui.readCommand();
+        confirm = confirm.toLowerCase();
         if (confirm.equals("yes")) {
             logger.log(Level.INFO, "Confirmation message: \"{0}\", limit change accepted", confirm);
             assert limit >= 0;
