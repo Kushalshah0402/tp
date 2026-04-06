@@ -32,18 +32,18 @@ return c
 ":Finbro" -> "c:ViewCommand" : execute(expenses, ui, storage)
 activate "c:ViewCommand"
 
-alt [invalid sort type]
+alt invalid sort type
 	"c:ViewCommand" -> ":Finbro" : throw FinbroException
 	":Finbro" -> ":Ui" : showError(...)
 	":Ui" -> User : error message
 
-else [view all]
+else view all
 	note right of "c:ViewCommand"
 	  Supported: view all -sort month|category|amount
 	  -filter is not supported for view all
 	end note
 
-	opt [with -sort]
+	opt with -sort
 		"c:ViewCommand" -> ":SortService" : sortExpenses(expenses.getAll(), sortType)
 		activate ":SortService"
 		return sortedExpenses
@@ -53,7 +53,7 @@ else [view all]
 	activate ":Ui"
 	":Ui" -> User : display expenses
 
-else [view <category>]
+else view <category>
 	note right of "c:ViewCommand"
 	  Supported: view <category> [-filter <month>] [-sort <month|amount>]
 	  -filter month matching is case-insensitive
@@ -64,19 +64,19 @@ else [view <category>]
 	activate ":ExpenseList"
 	return categoryExpenses
 
-	alt [category not found]
+	alt category not found
 		"c:ViewCommand" -> ":Finbro" : throw FinbroException
 		":Finbro" -> ":Ui" : showError(...)
 		":Ui" -> User : error message
 
-	else [category found]
-		opt [with -filter]
+	else category found
+		opt with -filter
 			"c:ViewCommand" -> ":FilterService" : filterExpensesByMonth(categoryExpenses, month)
 			activate ":FilterService"
 			return filteredExpenses
 		end
 
-		opt [with -sort]
+		opt with -sort
 			"c:ViewCommand" -> ":SortService" : sortExpenses(displayedExpenses, sortType)
 			activate ":SortService"
 			return sortedExpenses

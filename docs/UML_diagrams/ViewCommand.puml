@@ -28,7 +28,7 @@ return c
 ":Finbro" -> "c:ViewCommand" : execute(...)
 activate "c:ViewCommand"
 
-alt [view all]
+alt view all
     "c:ViewCommand" -> ":ExpenseList" : getAll()
     activate ":ExpenseList"
     return expenses
@@ -37,7 +37,7 @@ alt [view all]
     ":Ui" -> User : display expenses
     return
 
-else [view <category>]
+else view <category>
     "c:ViewCommand" -> ":ExpenseList" : getCategoryExpenses(arg)
     activate ":ExpenseList"
     return expenses
@@ -46,7 +46,7 @@ else [view <category>]
     ":Ui" -> User : display expenses
     return
 
-else [invalid]
+else invalid
     "c:ViewCommand" -> ":Finbro" : throw FinbroException
     ":Finbro" -> ":Ui" : showError(...)
     activate ":Ui"

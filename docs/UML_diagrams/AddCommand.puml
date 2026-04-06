@@ -30,7 +30,7 @@ return c
 ":Finbro" -> "c:AddCommand" : execute(...)
 activate "c:AddCommand"
 
-alt [walkthrough mode]
+alt walkthrough mode
     loop for each field (amount,categoty,date)
         "c:AddCommand" -> ":Ui" : showPrompt(...)
         ":Ui" -> User : prompt
@@ -41,7 +41,7 @@ alt [walkthrough mode]
     ":Ui" -> User : confirm prompt
     User -> ":Ui" : confirm response
     ":Ui" -> "c:AddCommand" : readCommand()
-else [direct mode]
+else direct mode
     "c:AddCommand" -> "c:AddCommand" : parseArguments(argument)
     activate "c:AddCommand"
 end
