@@ -11,13 +11,14 @@ participant ":ExpenseList"
 participant ":Storage"
 end box
 
+activate ":Finbro"
 ":Finbro" -> ":Ui" : readCommand()
 activate ":Ui"
 User -> ":Ui" : type "delete ..."
 ":Ui" --> ":Finbro" : input
 deactivate ":Ui"
 
-activate ":Finbro"
+
 ":Finbro" -> ":Parser" : parse(input)
 activate ":Parser"
 
@@ -93,10 +94,18 @@ alt arg.isBlank()
 else strict mode
 
     "c:DeleteCommand" -> "c:DeleteCommand" : verifyInputLength(arg)
+    activate "c:DeleteCommand"
+    deactivate "c:DeleteCommand"
+
     "c:DeleteCommand" -> "c:DeleteCommand" : filterCategory(arg)
+    activate "c:DeleteCommand"
     "c:DeleteCommand" --> "c:DeleteCommand" : category
+    deactivate "c:DeleteCommand"
+
     "c:DeleteCommand" -> "c:DeleteCommand" : verifyIndex(arg)
+    activate "c:DeleteCommand"
     "c:DeleteCommand" --> "c:DeleteCommand" : index
+    deactivate "c:DeleteCommand"
 
     "c:DeleteCommand" -> ":ExpenseList" : removeByCategoryIndex(category, index)
     activate ":ExpenseList"
