@@ -84,7 +84,7 @@ The sequence diagram below illustrates the interaction within the `Limit` compon
 | 1    | **User Input** — The `Ui` receives the input and passes it to `Finbro`                                                                                                                                                          |
 | 2    | **Parsing** — `Finbro` passes the input to `Parser`, which creates a `SetLimitCommand` object                                                                                                                                   |
 | 3    | **Validation & Confirmation** — The command object verifies the user's input limit: If valid, the system requests confirmation from the user. If the user inputs `"yes"`, the limit is updated; otherwise, it remains unchanged |
-| `    | **Display** — `Ui` shows the updated limit                                                                                                                                                                                      |
+| 4    | **Display** — `Ui` shows the updated limit                                                                                                                                                                                      |
 | 5    | **Persistence** — `Finbro` updates the limit in the `Storage` file                                                                                                                                                              |
 
 #### Editing the Limit
@@ -100,7 +100,7 @@ The sequence diagram below illustrates the interaction within the `Limit` compon
 | 1    | **User Input** — The `Ui` receives the input and passes it to `Finbro`                                                                                                                 |
 | 2    | **Parsing** — `Finbro` passes the input to `Parser`, which creates an `EditLimitCommand` object                                                                                        |
 | 3    | **Retrieve Current Limit** — The command object retrieves the current limit from `Limit`                                                                                               |
-| `    | **Edit Menu** — `Ui` displays an edit menu with three options: Increase, Decrease, or Replace the limit                                                                                |
+| 4    | **Edit Menu** — `Ui` displays an edit menu with three options: Increase, Decrease, or Replace the limit                                                                                |
 | 5    | **Amount Entry** — The user enters the corresponding amount                                                                                                                            |
 | 6    | **Validation** — `EditLimitCommand` validates: Must be a valid number, not negative, and if decreasing, must not result in below `$0`                                                  |
 | 7    | **Confirmation** — If valid, `EditLimitCommand` computes the new limit and calls confirmation logic. If the user inputs `"yes"`, the limit is updated; otherwise, it remains unchanged |
@@ -174,7 +174,7 @@ In direct mode, the system parses and validates the input parameters:
 1. An `Expense` object is created
 2. The expense is added to the `ExpenseList`
 3. The budget status is updated via the `Limit` component
-   `. A confirmation message is displayed
+4. A confirmation message is displayed
 
 #### Walkthrough Mode
 
@@ -722,7 +722,7 @@ expenditures.
 - **Performance** — The application should respond to user commands within 1 second under normal load
 - **Reliability** — Data should be persisted reliably without loss between sessions
 - **Usability** — Commands should be intuitive for users familiar with CLI applications
-- **Portability** — The application should run on any platform with Java #### or higher installed
+- **Portability** — The application should run on any platform with Java 17 or higher installed
 - **Maintainability** — Code should follow clean architecture principles for easy maintenance and extension
 
 ---
