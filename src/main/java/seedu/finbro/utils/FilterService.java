@@ -59,6 +59,7 @@ public class FilterService {
      * Parses a month name into a Month enum value.
      */
     private static Month parseMonthFilter(String monthText) throws FinbroException {
+        assert monthText != null: "Month text should not be null";
         DateTimeFormatter monthFormatter = new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("MMMM")

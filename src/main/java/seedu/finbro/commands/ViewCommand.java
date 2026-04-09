@@ -26,6 +26,7 @@ public class ViewCommand extends Command {
     private final String arg;
 
     public ViewCommand(String arg) {
+        assert arg != null : "Argument string should not be null";
         this.arg = arg;
     }
 

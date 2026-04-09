@@ -117,6 +117,7 @@ public class SortService {
      * @return true if the sort type is valid, false otherwise.
      */
     public static boolean isValidSortType(String sortType) {
+        assert sortType != null: "Sort type should not be null";
         return sortType.equalsIgnoreCase(SORT_MONTH) ||
                sortType.equalsIgnoreCase(SORT_CATEGORY) ||
                sortType.equalsIgnoreCase(SORT_AMOUNT);
