@@ -78,7 +78,11 @@ public class Storage {
         expenses.add(new Expense(amount, category, date));
     }
 
-    private String verifyDateFormat(String dateInput) throws FinbroException {
+    public String verifyDateFormat(String dateInput) throws FinbroException {
+        if (dateInput == null) {
+            throw  new FinbroException("Null string");
+        }
+
         String formattedDate = "";
         logger.log(Level.INFO, "Verifying date format: {0}", dateInput);
 
@@ -117,7 +121,12 @@ public class Storage {
     }
 
     //@@author natmloclam
-    private double parseAmount(String input) {
+    public double parseAmount(String input) {
+        if (input == null) {
+            logger.log(Level.WARNING, "Null string");
+            return 0;
+        }
+
         double limit;
         try {
             limit = Double.parseDouble(input.strip());
