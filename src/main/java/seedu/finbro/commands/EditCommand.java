@@ -26,9 +26,12 @@ public class EditCommand extends Command{
     //@@author natmloclam
     @Override
     public String getHelpMessage() {
-        return """
-                Edit your spending limit/existing expense (maybe TODO)
-                Format: edit <item>
-                Use: Starts the process to update the current budget limit.""";
+        String helpMessage = """
+                Valid arguments for edit:
+                - limit""";
+        if (arg.equals(COMMAND_SET_LIMIT)) {
+            helpMessage = new EditLimitCommand().getHelpMessage();
+        }
+        return helpMessage;
     }
 }
