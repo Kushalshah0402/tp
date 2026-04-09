@@ -1,7 +1,5 @@
 package seedu.finbro.storage;
 
-import seedu.finbro.Finbro;
-import seedu.finbro.commands.AddCommand;
 import seedu.finbro.finances.Expense;
 import seedu.finbro.finances.Limit;
 import seedu.finbro.exception.FinbroException;
