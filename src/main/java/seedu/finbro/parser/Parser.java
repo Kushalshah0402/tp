@@ -27,24 +27,35 @@ public class Parser {
         String argument = filterArg(input);
 
         return switch (commandWord) {
-        case COMMAND_HELP -> new HelpCommand(argument);
-        case COMMAND_ADD -> new AddCommand(argument);
-        case COMMAND_VIEW -> new ViewCommand(argument);
-        case COMMAND_DELETE -> new DeleteCommand(argument);
-        case COMMAND_SET_LIMIT -> new SetLimitCommand(argument);
-        case COMMAND_EDIT -> new EditCommand(argument);
-        case COMMAND_VISUAL -> new VisualCommand(argument);
-        case COMMAND_CURRENCY -> new CurrencyCommand();
-
-        default -> throw new FinbroException("Invalid command.");
+            case COMMAND_HELP -> new HelpCommand(argument);
+            case COMMAND_ADD -> new AddCommand(argument);
+            case COMMAND_VIEW -> new ViewCommand(argument);
+            case COMMAND_DELETE -> new DeleteCommand(argument);
+            case COMMAND_SET_LIMIT -> new SetLimitCommand(argument);
+            case COMMAND_EDIT -> new EditCommand(argument);
+            case COMMAND_VISUAL -> {
+                if (!argument.isEmpty()) {
+                    throw new FinbroException("Invalid command.");
+                }
+                yield new VisualCommand();
+            }
+            case COMMAND_CURRENCY -> {
+                if (!argument.isEmpty()) {
+                    throw new FinbroException("Invalid command.");
+                }
+                yield new CurrencyCommand();
+            }
+            default -> throw new FinbroException("Invalid command.");
         };
     }
+
     //@@author zihaoalt natmloclam
     public static String filterCommand(String input) {
         String[] words = input.split(" ", 2);
         // command is case-insensitive
         return words[0].strip().toLowerCase();
     }
+
     //@@author zihaoalt natmloclam
     public static String filterArg(String input) {
         String[] splitSentence = input.split(" ");
