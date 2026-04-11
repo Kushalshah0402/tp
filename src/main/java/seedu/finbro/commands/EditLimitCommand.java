@@ -80,6 +80,7 @@ public class EditLimitCommand extends Command {
 
         ui.showLimit();
     }
+
     //@@author WangZX2001
     public static double parsePositiveAmount(String input) throws FinbroException {
         double amount;
@@ -95,12 +96,14 @@ public class EditLimitCommand extends Command {
 
         return amount;
     }
+
     //@@author WangZX2001
     @Override
     public String getHelpMessage() {
         return """
-                Edits the existing monthly spending limit.
+                Edits the monthly spending limit.
                 Format: edit limit
-                Use: Starts the process to update the current budget limit.""";
+                Use: Simply enter 'edit limit' and follow the prompts to increase, decrease, or replace the limit.
+                Note: Do not include any parameters after entering 'edit limit'""";
     }
 }
