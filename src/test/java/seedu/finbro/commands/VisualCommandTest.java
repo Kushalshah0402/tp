@@ -28,7 +28,7 @@ class VisualCommandTest {
         String label = "Jan 2026";
         String bar = "████";
         double amount = 20.1;
-        VisualCommand c = new VisualCommand("");
+        VisualCommand c = new VisualCommand();
         c.createRow(label, bar, amount);
 
         String correctOutput = String.format("%-8s | %-20s $%.2f", label, bar, amount);
@@ -41,7 +41,7 @@ class VisualCommandTest {
         String label = null;
         String bar = "████";
         double amount = 20.1;
-        VisualCommand c = new VisualCommand("");
+        VisualCommand c = new VisualCommand();
 
         assertThrows(FinbroException.class, () -> {
             c.createRow(label, bar, amount);
@@ -61,7 +61,7 @@ class VisualCommandTest {
         Ui ui = new Ui();
         Storage storage = new Storage("");
         assertDoesNotThrow(() -> {
-            new VisualCommand("").execute(expenses,ui,storage);
+            new VisualCommand().execute(expenses, ui, storage);
         });
     }
 
@@ -74,7 +74,7 @@ class VisualCommandTest {
         Ui ui = new Ui();
         Storage storage = new Storage("");
         Exception e = assertThrows(FinbroException.class, () -> {
-            new VisualCommand("").execute(expenses,ui,storage);
+            new VisualCommand().execute(expenses, ui, storage);
         });
 
         String expectedMessage = "Error: No expenses found";

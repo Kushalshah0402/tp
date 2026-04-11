@@ -142,9 +142,10 @@ public class EditLimitCommandTest {
         EditLimitCommand command = new EditLimitCommand();
         String helpMessage = command.getHelpMessage();
 
-        assertTrue(helpMessage.contains("Edits the existing monthly spending limit."));
+        assertTrue(helpMessage.contains("Edits the monthly spending limit."));
         assertTrue(helpMessage.contains("Format: edit limit"));
-        assertTrue(helpMessage.contains("update the current budget limit"));
+        assertTrue(helpMessage.contains("follow the prompts to increase, decrease, or replace the limit"));
+        assertTrue(helpMessage.contains("Do not include any parameters after entering 'edit limit'"));
     }
     //@@author WangZX2001
     private static class TestUi extends Ui {

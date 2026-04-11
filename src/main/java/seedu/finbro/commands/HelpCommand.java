@@ -6,11 +6,16 @@ import seedu.finbro.storage.Storage;
 import seedu.finbro.ui.Ui;
 import seedu.finbro.exception.FinbroException;
 
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HelpCommand extends Command {
     private static final Logger logger = Logger.getLogger(HelpCommand.class.getName());
+    private static final Set<String> VALID_HELP_TARGETS = Set.of(
+            "help", "add", "delete", "view", "limit", "edit limit", "currency", "visual"
+    );
+    private static final String INVALID_HELP_USAGE = "Usage: help OR help <command> with no extra arguments.";
     private final String arg;
 
     public HelpCommand(String arg) {
@@ -22,16 +27,20 @@ public class HelpCommand extends Command {
     public void execute(ExpenseList expenseList, Ui ui, Storage storage) throws FinbroException {
         logger.log(Level.INFO, "Help command invoked");
 
-        Command command;
-        try {
-            command = Parser.parse(arg);
-        } catch (FinbroException e) {
+        if (arg.isBlank()) {
             ui.showHelpMessage(getHelpMessage());
-            logger.log(Level.WARNING, "Invalid command \"{0}\", showing default help message", arg);
+            logger.log(Level.INFO, "Displayed general help message");
             return;
         }
 
-        logger.log(Level.INFO, "Displayed help for {0} commands", command.getClass().getSimpleName());
+        String normalizedArg = arg.trim().replaceAll("\\s+", " ").toLowerCase();
+        if (!VALID_HELP_TARGETS.contains(normalizedArg)) {
+            logger.log(Level.WARNING, "Invalid help target: {0}", arg);
+            throw new FinbroException(INVALID_HELP_USAGE);
+        }
+
+        Command command = Parser.parse(normalizedArg);
+        logger.log(Level.INFO, "Displayed help for {0} command", command.getClass().getSimpleName());
         ui.showCommandHelpMessage(command);
     }
     //@@author zihaoalt natmloclam WangZX2001

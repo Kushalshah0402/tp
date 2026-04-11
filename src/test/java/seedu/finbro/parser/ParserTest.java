@@ -102,6 +102,22 @@ public class ParserTest {
         assertEquals("Invalid command.", exception.getMessage());
     }
 
+    //@@author Codex
+    @Test
+    public void parse_visualWithArguments_exceptionThrown() {
+        FinbroException exception = assertThrows(FinbroException.class, () -> Parser.parse("visual extra"));
+
+        assertEquals("Invalid command.", exception.getMessage());
+    }
+
+    //@@author Codex
+    @Test
+    public void parse_currencyWithArguments_exceptionThrown() {
+        FinbroException exception = assertThrows(FinbroException.class, () -> Parser.parse("currency extra"));
+
+        assertEquals("Invalid command.", exception.getMessage());
+    }
+
     //@@author WangZX2001
     private static class TestUi extends Ui {
         private String[] inputs;

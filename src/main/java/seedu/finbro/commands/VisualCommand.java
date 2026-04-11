@@ -18,12 +18,7 @@ public class VisualCommand extends Command {
 
     private static final Logger logger = Logger.getLogger(VisualCommand.class.getName());
 
-    String arg;
     String output = "";
-
-    public VisualCommand(String arg) {
-        this.arg = arg;
-    }
 
     @Override
     public void execute(ExpenseList expenses, Ui ui, Storage storage) throws FinbroException {

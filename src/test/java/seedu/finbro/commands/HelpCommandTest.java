@@ -1,6 +1,7 @@
 package seedu.finbro.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -58,11 +59,11 @@ public class HelpCommandTest {
         TestUi ui = new TestUi();
 
         HelpCommand command = new HelpCommand("unknown");
-        command.execute(expenses, ui, null);
+        FinbroException exception = assertThrows(FinbroException.class, () -> command.execute(expenses, ui, null));
 
-        assertEquals(1, ui.helpMessageCount);
+        assertEquals("Usage: help OR help <command> with no extra arguments.", exception.getMessage());
+        assertEquals(0, ui.helpMessageCount);
         assertEquals(0, ui.commandHelpMessageCount);
-        assertEquals(new HelpCommand("unknown").getHelpMessage(), ui.lastHelpMessage);
     }
     //@@author zihaoalt
     @Test
@@ -76,6 +77,32 @@ public class HelpCommandTest {
         assertEquals(1, ui.helpMessageCount);
         assertEquals(0, ui.commandHelpMessageCount);
         assertEquals(new HelpCommand("").getHelpMessage(), ui.lastHelpMessage);
+    }
+    //@@author Codex
+    @Test
+    public void execute_commandWithExtraArguments_throwsException() {
+        ExpenseList expenses = new ExpenseList();
+        TestUi ui = new TestUi();
+
+        HelpCommand command = new HelpCommand("add adasdsa");
+        FinbroException exception = assertThrows(FinbroException.class, () -> command.execute(expenses, ui, null));
+
+        assertEquals("Usage: help OR help <command> with no extra arguments.", exception.getMessage());
+        assertEquals(0, ui.helpMessageCount);
+        assertEquals(0, ui.commandHelpMessageCount);
+    }
+    //@@author Codex
+    @Test
+    public void execute_multiWordCommandWithExtraArguments_throwsException() {
+        ExpenseList expenses = new ExpenseList();
+        TestUi ui = new TestUi();
+
+        HelpCommand command = new HelpCommand("edit limit wqdqdd");
+        FinbroException exception = assertThrows(FinbroException.class, () -> command.execute(expenses, ui, null));
+
+        assertEquals("Usage: help OR help <command> with no extra arguments.", exception.getMessage());
+        assertEquals(0, ui.helpMessageCount);
+        assertEquals(0, ui.commandHelpMessageCount);
     }
     //@@author zihaoalt
     private static class TestUi extends Ui {
