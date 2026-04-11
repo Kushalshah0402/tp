@@ -64,7 +64,7 @@ public class EditLimitCommandTest {
 
     //@@author WangZX2001
     @Test
-    public void execute_invalidMenuChoice_secondChance_success() throws FinbroException {
+    public void execute_invalidChoice_retriesSuccessfully() throws FinbroException {
         ExpenseList expenses = new ExpenseList();
         TestUi ui = new TestUi();
         Storage storage = new Storage(TEST_FILE_PATH);
