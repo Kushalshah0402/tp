@@ -672,7 +672,7 @@ Exits the Finbro application. Your expenses and settings are saved automatically
 **Format:** `exit`
 
 **Example Output:**
-```aiignore
+```
 --------------------------------------------------
 Bye! See you again.
 --------------------------------------------------
