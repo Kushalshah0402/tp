@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  */
 public class SortService {
     private static final Logger logger = Logger.getLogger(SortService.class.getName());
+    private static final String SORT_YEAR = "year";
     private static final String SORT_MONTH = "month";
     private static final String SORT_CATEGORY = "category";
     private static final String SORT_AMOUNT = "amount";
@@ -30,7 +31,7 @@ public class SortService {
      * Sorts a list of expenses based on the specified sort type.
      *
      * @param expenses The list of expenses to sort.
-     * @param sortType The type of sort to apply (month, category, or amount).
+     * @param sortType The type of sort to apply (year, month, category, or amount).
      * @return A sorted list of expenses.
      * @throws FinbroException if the sort type is invalid.
      */
@@ -38,10 +39,11 @@ public class SortService {
         logger.log(Level.INFO, "Sorting expenses by: {0}", sortType);
 
         return switch (sortType.toLowerCase()) {
+        case SORT_YEAR -> sortByYear(expenses);
         case SORT_MONTH -> sortByMonth(expenses);
         case SORT_CATEGORY -> sortByCategory(expenses);
         case SORT_AMOUNT -> sortByAmount(expenses);
-        default -> throw new FinbroException("Invalid sort type. Supported sorts: month, category, amount");
+        default -> throw new FinbroException("Invalid sort type. Supported sorts: year, month, category, amount");
         };
     }
 
@@ -87,21 +89,16 @@ public class SortService {
      * Sorts expenses by year, i.e. in true chronological order, in this case.
      *
      * @param expenses The list of expenses to sort.
-     * @return A list of expenses sorted by month.
+     * @return A list of expenses sorted by year (in proper chronological order).
      */
     private static List<Expense> sortByYear(List<Expense> expenses) {
         logger.log(Level.INFO, "Sorting expenses by year");
         List<Expense> sorted = new ArrayList<>(expenses);
 
         sorted.sort((expense1, expense2) -> {
-            try {
-                YearMonth month1 = parseYearMonth(expense1);
-                YearMonth month2 = parseYearMonth(expense2);
-                return month1.compareTo(month2);
-            } catch (FinbroException e) {
-                logger.log(Level.WARNING, "Unable to parse date for expense: {0}", expense1.date());
-                return 0;
-            }
+            LocalDate month1 = LocalDate.parse(expense1.date(), DATE_FORMATTER);
+            LocalDate month2 = LocalDate.parse(expense2.date(), DATE_FORMATTER);
+            return month1.compareTo(month2);
         });
 
         logger.log(Level.INFO, "Expenses successfully sorted by year");
@@ -167,7 +164,8 @@ public class SortService {
      */
     public static boolean isValidSortType(String sortType) {
         assert sortType != null: "Sort type should not be null";
-        return sortType.equalsIgnoreCase(SORT_MONTH) ||
+        return sortType.equalsIgnoreCase(SORT_YEAR) ||
+               sortType.equalsIgnoreCase(SORT_MONTH) ||
                sortType.equalsIgnoreCase(SORT_CATEGORY) ||
                sortType.equalsIgnoreCase(SORT_AMOUNT);
     }

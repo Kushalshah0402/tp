@@ -19,8 +19,8 @@ public class ViewCommand extends Command {
     private static final String CATEGORY = "category";
     private static final String SORT_FLAG = "-sort";
     private static final String FILTER_FLAG = "-filter";
-    private static final String VIEW_USAGE = "Usage: view all [-sort <month|category|amount>] OR "
-            + "view <category> [-filter <month>] [-sort <month|amount>]";
+    private static final String VIEW_USAGE = "Usage: view all [-sort <year|month|category|amount>] OR "
+            + "view <category> [-filter <month>] [-sort <year|month|amount>]";
 
     private static final Logger logger = Logger.getLogger(ViewCommand.class.getName());
     private final String arg;
@@ -34,7 +34,7 @@ public class ViewCommand extends Command {
     /**
      * Executes the view command to display expenses based on the provided argument.
      * The argument can specify either "all" to view all expenses, a specific category to view expenses under that
-     * category, or include a sort option to sort the expenses by month, category, or amount.
+     * category, or include a sort option to sort the expenses by year, month, category, or amount.
      * The method validates the argument format and handles different cases accordingly,
      * throwing exceptions for invalid formats or categories.
      *
@@ -54,7 +54,7 @@ public class ViewCommand extends Command {
 
         if (parsedArg.sortType() != null && !SortService.isValidSortType(parsedArg.sortType())) {
             throw new FinbroException("Invalid sort type: " + parsedArg.sortType()
-                    + "\nSupported sorts: month, category, amount");
+                    + "\nSupported sorts: year, month, category, amount");
         }
 
         if (ALL.equals(parsedArg.target())) {
@@ -169,7 +169,7 @@ public class ViewCommand extends Command {
     //@@author Kushalshah0402 zihaoalt
     /**
      * Provides a help message describing the usage of the view command, including how to view all expenses,
-     * view expenses by category, and how to apply filters for sorting expenses by month, category, or amount.
+     * view expenses by category, and how to apply filters for sorting expenses by year, month, category, or amount.
      * The message also includes examples of valid command formats.
      * @return A help message describing the usage of the view command.
      */
@@ -188,14 +188,16 @@ public class ViewCommand extends Command {
                 Shows all expenses sorted by a specific criterion.
                 Format: view all -sort <type>
                 Types:
-                  month - Sort by month in chronological order
+                  year - Sort primarily by year, i.e. in proper chronological order
+                  month - Sort primarily by month in chronological order
                   category - Sort by category in alphabetical order
                   amount - Sort by amount spent (highest to lowest)
 
                 Shows one category filtered by month and optionally sorted.
                 Format: view <category> [-filter <month>] [-sort <type>]
                 Types:
-                  month - Sort by month in chronological order
+                  year - Sort primarily by year, i.e. in proper chronological order
+                  month - Sort primarily by month in chronological order
                   amount - Sort by amount spent (highest to lowest)
                 Example: view transport -filter january -sort amount""";
     }
