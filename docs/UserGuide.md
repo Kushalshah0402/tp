@@ -119,11 +119,10 @@ The system will ask you for:
    - When did you spend this?
    - Use format: Date format shown above
 
-`. **Confirmation**
+4. **Confirmation**
    - Review your entry
    - Type `yes` to confirm or `no` to cancel
 
-### Examples
 
 ### Examples
 
@@ -296,8 +295,7 @@ The system will guide you through the deletion process step by step:
     - Type `yes` or `y` to confirm deletion
     - Any other input cancels the deletion
 
-
-### Examples
+    
 
 ### Examples
 
@@ -333,26 +331,29 @@ yes
 
 Output:
 ```
-------------------------------------------------------------
+--------------------------------------------------
 delete
-------------------------------------------------------------
-Enter category name, or -l to list all categories:
+--------------------------------------------------
+Enter the category, or type -l to list all categories or -exit to cancel.
 Food
-Enter the expense index to delete, or type -l to list expenses in this category.
+--------------------------------------------------
+Enter the expense index to delete, type -l to list expenses, -back to return to category selection, or -exit to cancel.
 2
+--------------------------------------------------
 You entered:
-    Amount: $12.50
-    Category: food
-    Date: 12 March 2026
+   Amount: $5.00
+   Category: food
+   Date: 11 April 2026
 Confirm? [yes/no]
 yes
-------------------------------------------------------------
+--------------------------------------------------
 Got it. I've removed this expense:
-    Amount: $12.50
-    Category: food
-    Date: 12 March 2026
+   Amount: $5.00
+   Category: food
+   Date: 11 April 2026
 Now you have 1 expenses.
-------------------------------------------------------------
+--------------------------------------------------
+
 ```
 
 **Example 3: Listing categories and expenses in walkthrough mode**

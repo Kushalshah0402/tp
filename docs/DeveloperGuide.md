@@ -24,7 +24,6 @@
 
 ---
 
-## Acknowledgements
 
 ## Acknowledgements
 
@@ -456,7 +455,7 @@ In direct mode, the system parses and validates the input parameters:
 1. The category is extracted from the command
 2. The expense number is parsed and validated
 3. The corresponding expense is removed from the `ExpenseList`
-   `. A confirmation message is displayed
+   . A confirmation message is displayed
 
 #### Walkthrough Mode
 
@@ -591,8 +590,8 @@ When the application starts, `Storage.load()` is called:
 1. If the file does not exist, an empty list is returned and a new file will be created on the next save
 2. The first line is passed to `readLimit()` which checks for the `LIMIT | <value>` format and sets the budget limit via
    `Limit.setLimit()`
-3. If the first line is not a limit entry, it is treated as an expense line instead
-   `. Each subsequent line is passed to `processExpenseLine()` which splits by `|` and validates the format and amount
+3. If the first line is not a limit entry, it is treated as an expense line instead.
+   Each subsequent line is passed to `processExpenseLine()` which splits by `|` and validates the format and amount
    before adding to the list
 4. Corrupted or malformed lines are logged and skipped without crashing the application
 
