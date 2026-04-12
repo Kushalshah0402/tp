@@ -9,14 +9,15 @@ import seedu.finbro.utils.NaturalDateParser;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AddCommand extends Command {
     private static final Logger logger = Logger.getLogger(AddCommand.class.getName());
-    private final String arg;
     private static final double HIGH_VALUE_THRESHOLD = 10000;
-
+    private final String arg;
+    
     //@@author natmloclam
     public AddCommand(String arg) {
         assert arg != null : "Argument string should not be null";
@@ -222,9 +223,8 @@ public class AddCommand extends Command {
             throw new FinbroException("Missing Attributes.");
         }
 
-        String startWord = parts[2];
-        int startIndex = input.indexOf(startWord);
-        String dateInput = input.substring(startIndex);
+        // Date is everything after "<amount> <category>".
+        String dateInput = String.join(" ", Arrays.copyOfRange(parts, 2, parts.length));
         logger.log(Level.INFO, "Extracted date input: " + dateInput);
 
         try {

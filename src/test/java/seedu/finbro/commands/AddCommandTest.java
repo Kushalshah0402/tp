@@ -95,6 +95,20 @@ public class AddCommandTest {
     }
 
     @Test
+    void execute_strictModeNaturalDateLeadingDigitMatchesAmount_expenseAdded() throws Exception {
+        String input = "yes\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        ExpenseList list = new ExpenseList();
+        Ui ui = new Ui();
+
+        AddCommand command = new AddCommand("200.01 shopping 2 days ago");
+        command.execute(list, ui, null);
+
+        assertEquals(1, list.size());
+    }
+
+    @Test
     void execute_strictModeMixedCaseCategory_caseInsensitiveLookupFindsExpense() throws Exception {
         String input = "yes\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
