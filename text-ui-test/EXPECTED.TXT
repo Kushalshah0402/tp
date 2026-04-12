@@ -16,7 +16,7 @@ Type help to see all available commands.
 You entered:
    Amount: $20.00
    Category: transport
-   Date: 15 June 2026
+   Date: 15 June 2020
 Confirm? [yes/no]
 --------------------------------------------------
 Expense not added.

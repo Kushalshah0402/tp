@@ -3,3 +3,13 @@
 2026-03-26 14:--:04 [INFO] seedu.finbro.commands.AddCommand - Attempting to add expense amount 20, category transport, date 15 June 2026
 2026-03-26 14:--:04 [INFO] seedu.finbro.commands.AddCommand - Successfully added expense in category transport $20.0
 2026-03-26 14:--:04 [INFO] seedu.finbro.commands.ViewCommand - Displaying all expenses
+2026-04-12 09:46:08 [INFO] seedu.finbro.storage.Storage - Loading expenses...
+2026-04-12 09:46:08 [INFO] seedu.finbro.storage.Storage - data/finbro.txt does not exist, creating new file
+2026-04-12 09:46:08 [INFO] seedu.finbro.commands.AddCommand - Verifying input length for: 20 transport 2020-06-15
+2026-04-12 09:46:08 [INFO] seedu.finbro.commands.AddCommand - Input length verification passed
+2026-04-12 09:46:08 [INFO] seedu.finbro.commands.AddCommand - Verifying date from input: 20 transport 2020-06-15
+2026-04-12 09:46:08 [INFO] seedu.finbro.commands.AddCommand - Extracted date input: 2020-06-15
+2026-04-12 09:46:08 [INFO] seedu.finbro.commands.AddCommand - Parsed date successfully: 2020-06-15
+2026-04-12 09:46:08 [INFO] seedu.finbro.commands.AddCommand - Formatted date: 15 June 2020
+2026-04-12 09:46:08 [INFO] seedu.finbro.commands.AddCommand - Attempting to add expense amount 20, category transport, date 15 June 2020
+2026-04-12 09:46:08 [INFO] seedu.finbro.commands.AddCommand - Expense addition cancelled by user
