@@ -97,6 +97,7 @@ public class ExpenseList {
         Expense targetExpense = getTargetExpense(category, number);
 
         expenses.remove(targetExpense);
+        total -= targetExpense.amount();
         return targetExpense;
     }
 
