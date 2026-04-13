@@ -75,7 +75,7 @@ Given below are my contributions to the project.
 
 ### 2) Add Expense Enhancement
 
-**Justification:** Previously, users were able to add negative years for the date as well as only special characters for the category. However, this did not make much sense in our context. So I made sure these were not allowed and also added a double confirmation for expense amounts that were very large in case it was accidental
+**Justification:** Previously, users were able to add negative years for the date as well as only special characters for the category. However, this did not make much sense in our context. So I made sure these were not allowed and also added a double confirmation for expense amounts that were very large in case it was accidental.
 
 **PR:** [#195](https://github.com/AY2526S2-CS2113-T10-4/tp/pull/195), [#206](https://github.com/AY2526S2-CS2113-T10-4/tp/pull/206), [#193](https://github.com/AY2526S2-CS2113-T10-4/tp/pull/193)
 
