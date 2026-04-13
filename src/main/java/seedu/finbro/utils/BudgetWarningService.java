@@ -24,16 +24,19 @@ public class BudgetWarningService {
      */
     public void checkAndShowWarnings(ExpenseList expenses, Ui ui) {
         double monthlyTotal = expenses.getCurrentMonthTotalExpenditure();
+        double limit = Limit.getLimit();
         logger.log(Level.INFO, "Monthly Total Expenditure: " + monthlyTotal);
 
-        if (monthlyTotal - Limit.getLimit() > 0) {
-            logger.log(Level.INFO, "Exceeded monthly budget limit: " + Limit.getLimit());
-            ui.showBudgetExceeded(Limit.getLimit());
-        } else if (Limit.getLimit() - monthlyTotal <= 20) {
-            logger.log(Level.INFO, "Approaching monthly budget limit: " + Limit.getLimit());
-            ui.showBudgetReminder(Limit.getLimit());
+        if (monthlyTotal > limit) {
+            logger.log(Level.INFO, "Exceeded monthly budget limit: " + limit);
+            ui.showBudgetExceeded(limit);
+        } else if (limit - monthlyTotal <= 20) {
+            assert monthlyTotal <= limit;
+            logger.log(Level.INFO, "Approaching monthly budget limit: " + limit);
+            ui.showBudgetReminder(limit);
         } else {
-            logger.log(Level.INFO, "Within monthly budget limit: " + Limit.getLimit());
+            assert monthlyTotal <= limit - 20;
+            logger.log(Level.INFO, "Within monthly budget limit: " + limit);
         }
     }
 }
