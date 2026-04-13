@@ -286,7 +286,6 @@ public class Ui {
 
     //@@author WangZX2001
     public void showChooseExpenseEntryPrompt() {
-        showLine();
         System.out.println("Which expense entry would you like to convert?");
         showLine();
     }
