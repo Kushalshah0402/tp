@@ -94,7 +94,7 @@ public class AddCommandTest {
 
     @Test
     void execute_strictModeNaturalDate_expenseAdded() throws Exception {
-        String input = "yes\n";
+        String input = "Y\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         ExpenseList list = new ExpenseList();

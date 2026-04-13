@@ -37,7 +37,7 @@ public class EditLimitCommandTest {
         TestUi ui = new TestUi();
         Storage storage = new Storage(TEST_FILE_PATH);
 
-        ui.setInputs("1", "100", "yes");
+        ui.setInputs("1", "100", "Y");
         Limit.setLimit(500.0);
 
         EditLimitCommand command = new EditLimitCommand();

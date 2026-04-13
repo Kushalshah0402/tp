@@ -142,7 +142,7 @@ public class AddCommand extends Command {
     private static boolean confirmExpense(Ui ui, Expense expense) {
         ui.showConfirmExpense(expense);
         String confirm = ui.readCommand().trim();
-        return confirm.equalsIgnoreCase("yes");
+        return confirm.equalsIgnoreCase("yes") || confirm.equalsIgnoreCase("y");
     }
 
     private static boolean confirmHighValue(Ui ui, double amount) {
@@ -152,7 +152,7 @@ public class AddCommand extends Command {
         );
         System.out.println("Do you still want to proceed? [yes/no]");
         String finalConfirm = ui.readCommand().trim();
-        return finalConfirm.equalsIgnoreCase("yes");
+        return finalConfirm.equalsIgnoreCase("yes") || finalConfirm.equalsIgnoreCase("y");
     }
 
     private record ParsedAddInput(double amount, String category, String formattedDate) { }

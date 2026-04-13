@@ -76,11 +76,11 @@ public class SetLimitCommand extends Command {
         logger.log(Level.INFO, "Getting confirmation for limit change");
 
         String confirm = ui.readCommand().toLowerCase();
-        if (confirm.equals("yes")) {
+        if (confirm.equals("yes") || confirm.equals("y")) {
             logger.log(Level.INFO, "Confirmation message: \"{0}\", limit change accepted", confirm);
             assert limit > 0;
             Limit.setLimit(limit);
-        } else if (confirm.equals("no")) {
+        } else if (confirm.equals("no") || confirm.equals("n")) {
             logger.log(Level.INFO, "Confirmation message: \"{0}\", limit change rejected", confirm);
             ui.showCancelChangeLimitMessage();
         } else {
