@@ -504,7 +504,7 @@ The walkthrough branch of `runWalkthrough(...)` is illustrated separately below.
 interactive loops (CATEGORY LOOP and INDEX LOOP) and the escape keywords (`-l`, `-back`, `-exit`) that let the
 user list, navigate between, or abort prompts without deleting anything.
 
-![Delete Walkthrough Sequence Diagram](UML_diagrams/images/DeleteCommand_Walkthrough.png)
+![Delete Walkthrough Sequence Diagram](UML_diagrams/images/DeleteCommand_WalkThrough.png)
 
 
 #### Design Considerations

@@ -49,59 +49,112 @@ public class AddCommand extends Command {
         String category;
         String formattedDate;
 
-        // AMOUNT LOOP
         while (true) {
-            ui.showEnterAmountPrompt();
-            String input = ui.readCommand();
-            try {
-                amount = Double.parseDouble(input);
-                if (amount <= 0) {
-                    logger.log(Level.WARNING, "Invalid amount entered: non-positive");
-                    ui.showInlineError("Amount must be a positive number.");
+
+            // AMOUNT LOOP
+            while (true) {
+                ui.showEnterAmountPrompt();
+                String input = ui.readCommand();
+
+                if (input == null) {
+                    logger.log(Level.WARNING, "UI returned null while reading amount input");
+                    return;
+                }
+
+                input = input.trim();
+
+                if (input.equalsIgnoreCase("-exit")) {
+                    logger.log(Level.INFO, "User exited add walkthrough");
+                    ui.showExitAddMessage();
+                    return;
+                }
+
+                try {
+                    amount = Double.parseDouble(input);
+                    if (amount <= 0) {
+                        logger.log(Level.WARNING, "Invalid amount entered: non-positive");
+                        ui.showInlineError("Amount must be a positive number.");
+                        continue;
+                    }
+                    logger.log(Level.INFO, "Valid amount entered: " + amount);
+                    break;
+                } catch (NumberFormatException e) {
+                    logger.log(Level.WARNING, "Invalid amount entered: not a number");
+                    ui.showInlineError("Please enter numbers only.");
+                }
+            }
+
+            // CATEGORY LOOP
+            while (true) {
+                ui.showEnterCategoryPrompt();
+                category = ui.readCommand();
+
+                if (category == null) {
+                    logger.log(Level.WARNING, "UI returned null while reading category input");
+                    return;
+                }
+
+                category = category.trim();
+
+                if (category.equalsIgnoreCase("-exit")) {
+                    logger.log(Level.INFO, "User exited add walkthrough");
+                    ui.showExitAddMessage();
+                    return;
+                }
+
+                if (category.equalsIgnoreCase("-back")) {
+                    logger.log(Level.INFO, "User returned to amount input");
+                    break; // breaks CATEGORY LOOP → outer while → re-prompts amount
+                }
+
+                try {
+                    verifyCategory(category);
+                    logger.log(Level.INFO, "Valid category entered: " + category);
+                } catch (FinbroException e) {
+                    logger.log(Level.WARNING, "Invalid category entered: " + category);
+                    ui.showInlineError(e.getMessage());
                     continue;
                 }
-                logger.log(Level.INFO, "Valid amount entered: " + amount);
-                break;
-            } catch (NumberFormatException e) {
-                logger.log(Level.WARNING, "Invalid amount entered: not a number");
-                ui.showInlineError("Please enter numbers only.");
+
+                // DATE LOOP
+                while (true) {
+                    ui.showEnterDatePrompt();
+                    String dateInput = ui.readCommand();
+
+                    if (dateInput == null) {
+                        logger.log(Level.WARNING, "UI returned null while reading date input");
+                        return;
+                    }
+
+                    dateInput = dateInput.trim();
+
+                    if (dateInput.equalsIgnoreCase("-exit")) {
+                        logger.log(Level.INFO, "User exited add walkthrough");
+                        ui.showExitAddMessage();
+                        return;
+                    }
+
+                    if (dateInput.equalsIgnoreCase("-back")) {
+                        logger.log(Level.INFO, "User returned to category input");
+                        break;
+                    }
+
+                    try {
+                        LocalDate parsedDate = NaturalDateParser.parse(dateInput);
+                        validateDateRange(parsedDate);
+                        formattedDate = parsedDate.format(
+                                DateTimeFormatter.ofPattern("d MMMM yyyy")
+                        );
+                        logger.log(Level.INFO, "Valid date entered: " + formattedDate);
+                        confirmAndAdd(expenses, ui, amount, category, formattedDate);
+                        return;
+                    } catch (FinbroException e) {
+                        logger.log(Level.WARNING, "Invalid date entered: " + dateInput);
+                        ui.showInlineError(e.getMessage());
+                    }
+                }
             }
         }
-
-        // CATEGORY LOOP
-        while (true) {
-            ui.showEnterCategoryPrompt();
-            category = ui.readCommand();
-
-            try {
-                verifyCategory(category);
-                logger.log(Level.INFO, "Valid category entered: " + category);
-                break;
-            } catch (FinbroException e) {
-                logger.log(Level.WARNING, "Invalid category entered: " + category);
-                ui.showInlineError(e.getMessage());
-            }
-        }
-
-        // DATE LOOP
-        while (true) {
-            ui.showEnterDatePrompt();
-            String dateInput = ui.readCommand();
-            try {
-                LocalDate parsedDate = NaturalDateParser.parse(dateInput);
-                validateDateRange(parsedDate);
-                formattedDate = parsedDate.format(
-                        DateTimeFormatter.ofPattern("d MMMM yyyy")
-                );
-                logger.log(Level.INFO, "Valid date entered: " + formattedDate);
-                break;
-            } catch (FinbroException e) {
-                logger.log(Level.WARNING, "Invalid date entered: " + dateInput);
-                ui.showInlineError(e.getMessage());
-            }
-        }
-
-        confirmAndAdd(expenses, ui, amount, category, formattedDate);
     }
 
     //@@author Kushalshah0402

@@ -62,6 +62,11 @@ public class Ui {
         System.out.println("Successfully exit the delete command.");
         showLine();
     }
+    public void showExitAddMessage() {
+        showLine();
+        System.out.println("Successfully exit the add command.");
+        showLine();
+    }
     //@@author zihaoalt
     public void showCategoryExpenses(String category, List<Expense> expenses) {
         for (int i = 0; i < expenses.size(); i++) {
@@ -229,13 +234,6 @@ public class Ui {
         showLine();
         System.out.println("Warning: You have exceeded your monthly spending limit of $"
                 + String.format("%.2f", limit) + "!");
-        showLine();
-    }
-
-    //@@author natmloclam
-    public void showUninitializedLimit() {
-        showLine();
-        System.out.println("Warning: Monthly spending limit not initialized");
         showLine();
     }
 
