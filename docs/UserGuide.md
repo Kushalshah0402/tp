@@ -130,7 +130,7 @@ The system will ask you for:
 2. **Expense Category**
    - The application will prompt: `Enter the category:`
    - Enter the expense category.
-   - The category name may contain multiple words but must not be purely numeric.
+   - The category name should be a single word.
    - Examples: `Food`, `Transport`, `Entertainment`, `Shopping`
    - Enter `-exit` to cancel adding an expense in walkthrough mode.
    - Enter `-back` to re-enter the amount.
