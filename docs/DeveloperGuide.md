@@ -542,27 +542,35 @@ configured monthly limit.
 
 Warnings are evaluated only when both conditions are true:
 
-- `Limit.getLimit() > 0`
-- `ExpenseList` is not empty
+- The calling `Command` indicates budget checks should run (`checksBudget == true`)
+- `Limit.getLimit() != 0`
 
 If either condition is false, no warning is shown.
 
-| Warning Level   | Threshold Condition (`remaining = limit - totalExpenses`) | User Feedback                            |
-|-----------------|-----------------------------------------------------------|------------------------------------------|
-| **Safe**        | `remaining > 20`                                          | No warning is displayed.                 |
-| **Approaching** | `0 <= remaining <= 20`                                    | `Ui.showBudgetReminder(limit)` is shown. |
-| **Exceeded**    | `remaining < 0`                                           | `Ui.showBudgetExceeded(limit)` is shown. |
+Warnings are computed based on the **current month** total expenditure:
+
+- `monthlyTotal = ExpenseList.getCurrentMonthTotalExpenditure()`
+- `remaining = limit - monthlyTotal`
+
+| Warning Level   | Threshold Condition | User Feedback                            |
+|-----------------|---------------------|------------------------------------------|
+| **Safe**        | `remaining > 20`    | No warning is displayed.                 |
+| **Approaching** | `remaining <= 20`   | `Ui.showBudgetReminder(limit)` is shown. |
+| **Exceeded**    | `monthlyTotal > limit` | `Ui.showBudgetExceeded(limit)` is shown. |
 
 #### Implementation Overview
 
-`Finbro.run()` invokes `budgetWarningService.checkAndShowWarnings(expenses, ui)` in each loop iteration, before reading
-the next command.
+`Finbro.run()` invokes `budgetWarningService.checkAndShowWarnings(expenses, ui, checksBudget)`:
+
+- Once on startup with `checksBudget == true`
+- After each successful command execution with `checksBudget == command.checksBudget()`
 
 Inside `checkAndShowWarnings(...)`, the service:
 
-1. Reads `remaining` from `ExpenseList.getRemainingExpenditure()`
+1. Reads `monthlyTotal` from `ExpenseList.getCurrentMonthTotalExpenditure()`
 2. Reads `limit` from `Limit.getLimit()`
-3. Applies threshold checks and triggers the corresponding `Ui` warning method when needed
+3. Applies threshold checks (`monthlyTotal > limit`, else `limit - monthlyTotal <= 20`) and triggers the corresponding
+   `Ui` warning method when needed
 
 #### Sequence of Operations
 
@@ -642,8 +650,8 @@ Flat file over a database
 
 ### Currency Exchange Feature
 
-The `currency` command allows users to convert an existing expense amount from one currency to another. It follows an
-interactive workflow where users specify the source currency, target currency, and the expense entry to convert.
+The `currency` command allows users to convert the amount of a selected expense from one currency to another. It follows
+an interactive workflow where users specify the source currency, target currency, and the expense entry to convert.
 
 This feature operates entirely offline using predefined exchange rates stored in the system.
 
@@ -672,9 +680,12 @@ Conversion follows these rules:
 | Case             | Logic                  |
 |------------------|------------------------|
 | Same currency    | Return original amount |
-| From SGD         | `amount × rate`        |
-| To SGD           | `amount ÷ rate`        |
+| From SGD         | `amount * rate`        |
+| To SGD           | `amount / rate`        |
 | Other currencies | Convert via SGD        |
+
+Note that currency conversion in the current implementation is **non-destructive**: it displays the converted amount
+but does not modify the stored expense entry or persist a currency value to storage.
 
 #### Sequence Diagram
 
