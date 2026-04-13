@@ -32,6 +32,12 @@ public class CurrencyCommand extends Command {
         String toCurrency = ui.readCommand().trim().toUpperCase();
         logger.info("User entered target currency: " + toCurrency);
 
+        if (fromCurrency.equals(toCurrency)) {
+            logger.info("No conversion needed: source and target currencies are the same (" + fromCurrency + ").");
+            ui.showNoConversionNeeded(fromCurrency);
+            return;
+        }
+
         if (CurrencyRateTable.isUnsupportedCurrency(fromCurrency)
                 || CurrencyRateTable.isUnsupportedCurrency(toCurrency)) {
             logger.warning("Unsupported currency entered: " + fromCurrency + " or " + toCurrency);

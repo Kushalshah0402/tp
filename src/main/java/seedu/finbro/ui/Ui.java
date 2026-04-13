@@ -302,4 +302,10 @@ public class Ui {
                 originalAmount, fromCurrency, convertedAmount, toCurrency);
         showLine();
     }
+
+    public void showNoConversionNeeded(String currency) {
+        showLine();
+        System.out.println("Source and target currencies are both " + currency + ". No conversion needed.");
+        showLine();
+    }
 }
