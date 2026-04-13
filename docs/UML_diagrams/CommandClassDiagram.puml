@@ -1,4 +1,4 @@
-@startuml
+@startuml CommandClassDiagram
 top to bottom direction
 skinparam classAttributeIconSize 0
 skinparam ranksep 35

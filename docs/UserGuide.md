@@ -153,6 +153,7 @@ The system will ask you for:
 4. **Confirmation**
    - Review your entry
    - Type `yes` to confirm or `no` to cancel (shortcuts `y` and `n` are also accepted)
+   - Enter `-back` to re-enter the date.
 
 ### Examples
 

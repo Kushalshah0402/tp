@@ -151,7 +151,14 @@ public class AddCommand extends Command {
                         String result = confirmExpenseWithBack(ui, expense);
 
                         if (result.equals("yes")) {
-                            confirmAndAdd(expenses, ui, amount, category, formattedDate);
+                            String normalizedCategory = category.toLowerCase();
+                            Expense confirmedExpense = new Expense(amount, normalizedCategory, formattedDate);
+                            if (amount > HIGH_VALUE_THRESHOLD && !confirmHighValue(ui, amount)) {
+                                ui.showCancelAddMessage();
+                                return;
+                            }
+                            expenses.add(confirmedExpense);
+                            ui.showExpenseAdded(confirmedExpense, expenses.size());
                             return;
                         } else if (result.equals("no")) {
                             ui.showCancelAddMessage();
