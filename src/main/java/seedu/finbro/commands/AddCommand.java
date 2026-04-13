@@ -211,8 +211,10 @@ public class AddCommand extends Command {
         if (category == null || category.isBlank()) {
             throw new FinbroException("Category cannot be empty.");
         }
-        if (isNumericOnly(category)) {
-            throw new FinbroException("Category cannot be a number.");
+
+        // Must contain at least one letter
+        if (!category.matches(".*[a-zA-Z].*")) {
+            throw new FinbroException("Category must contain at least one letter.");
         }
     }
 

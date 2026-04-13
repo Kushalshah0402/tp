@@ -87,7 +87,7 @@ add <amount> <category> <date>
 | Field        | Format           | Example                                                     |
 |--------------|------------------|-------------------------------------------------------------|
 | **Amount**   | Positive number  | `50.00` or `25`                                             |
-| **Category** | Text (no spaces) | `Groceries`                                                 |
+| **Category** | Text | `Groceries`                                                 |
 | **Date**     | YYYY-MM-DD       | `2026-01-20` or `today, last week, 2 days ago, last monday` |
 
 **Example:**
@@ -237,7 +237,7 @@ Now you have 3 expenses.
 
 **❌ Error: "Amount must be a positive number"**
 - Make sure you entered a valid number
-- Negative numbers are not allowed
+- Amount less than and equal to 0 are not allowed
 - Decimal numbers are okay (e.g., `12.50`)
 
 **❌ Error: "Invalid date format"**
@@ -246,8 +246,8 @@ Now you have 3 expenses.
 - Valid Examples: `2026-04-12`,`2025-12-31`
 
 **❌ Error: "Category cannot be empty"**
-- Enter a category name (no purely numeric entry)
-- Valid Examples: `Food`, `Transport`, `Rent`, `Entertainment`
+- Enter a category name (no purely numeric or purely special character entry)
+- Valid Examples: `Food & Drinks`, `Transport`, `Rent`, `Entertainment`
 
 **❌ "I made a mistake"**
 - type `no` when asked to confirm
@@ -272,7 +272,7 @@ delete <category> <index>
 
 | Field        | Format           | Example                                                     |
 |--------------|------------------|-------------------------------------------------------------|
-| **category** | Text (no spaces) | `Groceries`                                                 |
+| **category** | Text | `Groceries`                                                 |
 | **Index**    | Positive Number  | 1                                                           |
 
 
