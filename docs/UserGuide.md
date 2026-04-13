@@ -71,6 +71,7 @@ Supported examples:
 ## Add Expense Command
 
 The `add` command lets you record a new expense. Whether you're in a hurry or want to take your time, we've got you covered.
+It supports two modes: **Direct Mode** (enter all details in one command) and **Walkthrough Mode** (answer guided prompts).
 
 
 ### Direct Mode
@@ -107,18 +108,31 @@ add
 The system will ask you for:
 
 1. **Expense Amount**
-   - Enter how much you spent
-   - Must be a positive number
-   - Example: `50.00` or `25`
-   - reconfirmation will be asked for if expense amount exceeds `10,000`
-
+   - The application will prompt: `What is the expense amount?`
+   - Enter the amount you spent.
+   - The amount must be a positive number greater than 0.
+   - The value will be rounded to 2 decimal places.
+   - A confirmation will be required if the amount exceeds `10,000`.
+   - Examples: `50.00`, `25`
+   
 2. **Expense Category**
-   - What did you spend on?
+   - The application will prompt: `Enter the category:`
+   - Enter the expense category.
+   - The category name may contain multiple words but must not be purely numeric.
    - Examples: `Food`, `Transport`, `Entertainment`, `Shopping`
 
 3. **Expense Date**
-   - When did you spend this?
-   - Use format: Date format shown above
+   - The application will prompt: `Enter the date (yyyy-MM-dd or today):`
+   - Enter the date of the expense.
+   - The date must be in the past between year 2000 and current (future dates are not allowed).
+   - You can enter either a full date (e.g., `2026-04-12`) or one of these natural language formats:
+     - `today`, `yesterday`
+     - `last week`
+     - `<N> day(s) ago` (e.g., `2 days ago`)
+     - `<N> week(s) ago` (e.g., `3 weeks ago`)
+     - `last <day-of-week>` (e.g., `last monday`)
+   - Note: inputs like `tomorrow`, `next week`, `next monday`, and `<N> days later` may be understood, but will be rejected for `add` because future dates are not allowed.
+   - Use the format shown above.
 
 4. **Confirmation**
    - Review your entry
@@ -228,12 +242,12 @@ Now you have 3 expenses.
 
 **❌ Error: "Invalid date format"**
 - Use the format: `YYYY-MM-DD`
-- Examples: `2026-01-20`, `2025-12-31`
 - Make sure the date is valid
+- Valid Examples: `2026-04-12`,`2025-12-31`
 
 **❌ Error: "Category cannot be empty"**
-- Enter a category name (no numbers or special characters)
-- Examples: `Food`, `Transport`, `Rent`, `Entertainment`
+- Enter a category name (no purely numeric entry)
+- Valid Examples: `Food`, `Transport`, `Rent`, `Entertainment`
 
 **❌ "I made a mistake"**
 - type `no` when asked to confirm
