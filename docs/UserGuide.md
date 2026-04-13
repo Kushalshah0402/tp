@@ -94,7 +94,7 @@ add <amount> <category> <date>
 ```
 add 50.00 Groceries 2026-01-20
 ```
-- Type `yes` to confirm or `no` to cancel
+- Type `yes` to confirm or `no` to cancel (shortcuts `y` and `n` are also accepted)
 
 ### Walkthrough Mode
 
@@ -136,7 +136,7 @@ The system will ask you for:
 
 4. **Confirmation**
    - Review your entry
-   - Type `yes` to confirm or `no` to cancel
+   - Type `yes` to confirm or `no` to cancel (shortcuts `y` and `n` are also accepted)
 
 
 ### Examples
