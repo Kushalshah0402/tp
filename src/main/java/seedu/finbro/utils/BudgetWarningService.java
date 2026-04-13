@@ -19,7 +19,6 @@ public class BudgetWarningService {
      */
     public void checkAndShowWarnings(ExpenseList expenses, Ui ui) {
         double monthlyTotal = expenses.getCurrentMonthTotalExpenditure();
-        System.out.println("Monthly Total: " + monthlyTotal);
 
         if (monthlyTotal - Limit.getLimit() > 0) {
             ui.showBudgetExceeded(Limit.getLimit());
