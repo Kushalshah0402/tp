@@ -1,10 +1,10 @@
 package seedu.finbro.parser;
 
 import seedu.finbro.commands.CurrencyCommand;
-import seedu.finbro.commands.EditCommand;
 import seedu.finbro.commands.AddCommand;
 import seedu.finbro.commands.Command;
 import seedu.finbro.commands.DeleteCommand;
+import seedu.finbro.commands.EditLimitCommand;
 import seedu.finbro.commands.HelpCommand;
 import seedu.finbro.commands.SetLimitCommand;
 import seedu.finbro.commands.ViewCommand;
@@ -19,7 +19,7 @@ public class Parser {
     private static final String COMMAND_VIEW = "view";
     private static final String COMMAND_DELETE = "delete";
     private static final String COMMAND_SET_LIMIT = "limit";
-    private static final String COMMAND_EDIT = "edit";
+    private static final String COMMAND_EDIT_LIMIT = "edit limit";
     private static final String COMMAND_HELP = "help";
     private static final String COMMAND_VISUAL = "visual";
     private static final String COMMAND_CURRENCY = "currency";
@@ -42,12 +42,17 @@ public class Parser {
         case COMMAND_VIEW -> new ViewCommand(argument);
         case COMMAND_DELETE -> new DeleteCommand(argument);
         case COMMAND_SET_LIMIT -> new SetLimitCommand(argument);
-        case COMMAND_EDIT -> new EditCommand(argument);
+        case COMMAND_EDIT_LIMIT -> parseEditLimitCommand(argument);
         case COMMAND_VISUAL -> parseVisualCommand(argument);
         case COMMAND_CURRENCY -> parseCurrencyCommand(argument);
         
         default -> throw new FinbroException("Invalid command.");
         };
+    }
+
+    private static Command parseEditLimitCommand(String argument) throws FinbroException {
+        verifyNoArguments(argument);
+        return new EditLimitCommand();
     }
 
     //@@author WangZX2001
@@ -77,8 +82,17 @@ public class Parser {
      */
     //@@author zihaoalt natmloclam
     public static String filterCommand(String input) {
-        String[] words = input.split(" ", 2);
-        // command is case-insensitive
+        String trimmed = input.strip();
+        String lower = trimmed.toLowerCase();
+
+        // Support multi-word commands by matching the longest known prefix first.
+        if (lower.startsWith(COMMAND_EDIT_LIMIT)
+                && (lower.length() == COMMAND_EDIT_LIMIT.length()
+                || Character.isWhitespace(lower.charAt(COMMAND_EDIT_LIMIT.length())))) {
+            return COMMAND_EDIT_LIMIT;
+        }
+
+        String[] words = trimmed.split(" ", 2);
         return words[0].strip().toLowerCase();
     }
 
@@ -90,12 +104,24 @@ public class Parser {
      */
     //@@author zihaoalt natmloclam
     public static String filterArg(String input) {
-        String[] splitSentence = input.split(" ");
+        String trimmed = input.strip();
+        if (trimmed.isEmpty()) {
+            return "";
+        }
+
+        String lower = trimmed.toLowerCase();
+        if (lower.startsWith(COMMAND_EDIT_LIMIT)
+                && (lower.length() == COMMAND_EDIT_LIMIT.length()
+                || Character.isWhitespace(lower.charAt(COMMAND_EDIT_LIMIT.length())))) {
+            String rest = trimmed.substring(COMMAND_EDIT_LIMIT.length()).strip();
+            return rest.toLowerCase();
+        }
+
+        String[] splitSentence = trimmed.split(" ");
         if (splitSentence.length < 2) {
             return "";
         }
-        String[] words = input.split(" ", 2);
-        // argument is case-insensitive
+        String[] words = trimmed.split(" ", 2);
         return words[1].strip().toLowerCase();
     }
 }

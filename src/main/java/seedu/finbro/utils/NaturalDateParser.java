@@ -64,7 +64,7 @@ public class NaturalDateParser {
             return LocalDate.parse(inputDate);
         } catch (DateTimeParseException e) {
             throw new FinbroException(
-                    "Invalid date! Try: today, last week, 2 days ago, last monday, yyyy-MM-dd"
+                    "Invalid date! Try: today, last week, 2 days ago, last Monday, yyyy-MM-dd"
             );
         }
     }

@@ -4,7 +4,6 @@ import seedu.finbro.commands.Command;
 import seedu.finbro.finances.Expense;
 import seedu.finbro.finances.Limit;
 
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -47,7 +46,7 @@ public class Ui {
         showLine();
         System.out.println("Enter the expense index to delete, type -l to list expenses, "
                 + "-back to return to category selection, or -exit to cancel.");
-
+        showLine();
     }
     //@@author zihaoalt
     public void showAllCategoryNames(List<String> categoryNames) {
@@ -80,6 +79,7 @@ public class Ui {
     }
     //@@author WangZX2001
     public void showEnterAmountPrompt(String action) {
+        showLine();
         switch (action) {
         case "increase":
             System.out.println("Enter the amount to increase by:");
@@ -94,11 +94,14 @@ public class Ui {
             System.out.println("Enter amount:");
             break;
         }
+        showLine();
     }
 
     //@@author Kushalshah0402
     public void showEnterCategoryPrompt() {
+        showLine();
         System.out.println("Enter the category:");
+        showLine();
     }
     //@@author zihaoalt
     public void showEnterCategoryOptionPrompt() {
@@ -107,7 +110,9 @@ public class Ui {
     }
     //@@author Kushalshah0402
     public void showEnterDatePrompt() {
+        showLine();
         System.out.println("Enter the date (yyyy-MM-dd or today):");
+        showLine();
     }
 
     //@@author Kushalshah0402
@@ -139,6 +144,7 @@ public class Ui {
     public void showDeleteError(String message) {
         showLine();
         System.out.println("Error: " + message);
+        showLine();
     }
 
     //@@author Kushalshah0402
@@ -187,13 +193,17 @@ public class Ui {
 
     //@@author natmloclam
     public void showChangeLimitWarning(double limit) {
+        showLine();
         System.out.println("Are you sure you want to change your monthly budget limit to "
                 + String.format("$%.2f", limit) + "? [yes/no]");
+        showLine();
     }
 
     //@@author natmloclam
     public void showCancelChangeLimitMessage() {
+        showLine();
         System.out.println("Monthly budget limit was not changed");
+        showLine();
     }
 
     //@@author WangZX2001
@@ -284,7 +294,9 @@ public class Ui {
 
     //@@author WangZX2001
     public void showChooseExpenseEntryPrompt() {
+        showLine();
         System.out.println("Which expense entry would you like to convert?");
+        showLine();
     }
 
     //@@author WangZX2001
@@ -295,6 +307,12 @@ public class Ui {
         System.out.println("Expense #" + index);
         System.out.printf("%.2f %s = %.2f %s%n",
                 originalAmount, fromCurrency, convertedAmount, toCurrency);
+        showLine();
+    }
+
+    public void showNoConversionNeeded(String currency) {
+        showLine();
+        System.out.println("Source and target currencies are both " + currency + ". No conversion needed.");
         showLine();
     }
 }

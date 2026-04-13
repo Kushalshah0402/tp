@@ -35,8 +35,8 @@ public class HelpCommandTest {
 
         assertEquals(0, ui.helpMessageCount);
         assertEquals(1, ui.commandHelpMessageCount);
-        assertEquals(EditCommand.class, ui.lastCommand.getClass());
-        assertEquals(new EditCommand("limit").getHelpMessage(), ui.lastHelpMessage);
+        assertEquals(EditLimitCommand.class, ui.lastCommand.getClass());
+        assertEquals(new EditLimitCommand().getHelpMessage(), ui.lastHelpMessage);
     }
     //@@author zihaoalt
     @Test

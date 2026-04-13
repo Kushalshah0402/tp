@@ -62,6 +62,16 @@ public class AddCommandTest {
     }
 
     @Test
+    void execute_strictModeZeroAmount_throwsException() {
+        ExpenseList list = new ExpenseList();
+        Ui ui = new Ui();
+        AddCommand command = new AddCommand("0 food today");
+
+        Exception exception = assertThrows(Exception.class, () -> command.execute(list, ui, null));
+        assertEquals("Amount must be a positive number.", exception.getMessage());
+    }
+
+    @Test
     void execute_strictModeMissingField_throwsException() {
         ExpenseList list = new ExpenseList();
         Ui ui = new Ui();

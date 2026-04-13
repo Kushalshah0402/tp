@@ -37,47 +37,8 @@ public class AddCommand extends Command {
         }
 
         //Strict mode (existing behavior)
-        verifyInputLength(arg);
         ParsedAddInput parsed = parseStrictInput(arg);
-        double amount = parsed.amount();
-        String category = parsed.category();
-        String formattedDate = parsed.formattedDate();
-        logger.log(Level.INFO,
-                "Attempting to add expense amount {0}, category {1}, date {2}",
-                new Object[]{amount, category, formattedDate});
-        category = category.toLowerCase();
-        Expense expense = new Expense(amount, category, formattedDate);
-        assert expense != null : "Expense should not be null";
-
-        ui.showConfirmExpense(expense);
-        String confirm = ui.readCommand().trim();
-
-        if (!confirm.equalsIgnoreCase("yes")) {
-            logger.log(Level.INFO, "Expense addition cancelled by user");
-            ui.showCancelAddMessage();
-            return;
-        }
-
-        // HIGH VALUE CHECK (NEW)
-        if (amount > HIGH_VALUE_THRESHOLD) {
-            logger.log(Level.WARNING, "High value expense detected: " + amount);
-            System.out.println(
-                    "Since the expense amount is huge, we would like to double confirm an expense for $"
-                    + String.format("%.2f", amount)
-            );
-            System.out.println("Do you still want to proceed? [yes/no]");
-            String finalConfirm = ui.readCommand().trim();
-            if (!finalConfirm.equalsIgnoreCase("yes")) {
-                logger.log(Level.INFO, "High value expense rejected at second confirmation");
-                ui.showCancelAddMessage();
-                return;
-            }
-        }
-
-        // ADD EXPENSE
-        expenses.add(expense);
-        logger.log(Level.INFO, "Expense confirmed and added: " + expense);
-        ui.showExpenseAdded(expense, expenses.size());
+        confirmAndAdd(expenses, ui, parsed.amount(), parsed.category(), parsed.formattedDate());
     }
 
     //@@author Kushalshah0402
@@ -146,66 +107,52 @@ public class AddCommand extends Command {
             }
         }
 
-        // CONFIRMATION
-        category = category.toLowerCase();
-        Expense expense = new Expense(amount, category, formattedDate);
+        confirmAndAdd(expenses, ui, amount, category, formattedDate);
+    }
+
+    private void confirmAndAdd(ExpenseList expenses, Ui ui, double amount, String category, String formattedDate) {
+        logger.log(Level.INFO,
+                "Attempting to add expense amount {0}, category {1}, date {2}",
+                new Object[]{amount, category, formattedDate});
+
+        String normalizedCategory = category.toLowerCase();
+        Expense expense = new Expense(amount, normalizedCategory, formattedDate);
         assert expense != null : "Expense should not be null";
-        ui.showConfirmExpense(expense);
-        String confirm = ui.readCommand().trim();
-        if (!confirm.equalsIgnoreCase("yes")) {
+
+        if (!confirmExpense(ui, expense)) {
             logger.log(Level.INFO, "Expense addition cancelled by user");
             ui.showCancelAddMessage();
             return;
         }
 
-        // HIGH VALUE CHECK
         if (amount > HIGH_VALUE_THRESHOLD) {
             logger.log(Level.WARNING, "High value expense detected: " + amount);
-            System.out.println(
-                    "Since the expense amount is huge, we would like to double confirm an expense for $"
-                    + String.format("%.2f", amount)
-            );
-            System.out.println("Do you still want to proceed? [yes/no]");
-            String finalConfirm = ui.readCommand().trim();
-            if (!finalConfirm.equalsIgnoreCase("yes")) {
+            if (!confirmHighValue(ui, amount)) {
                 logger.log(Level.INFO, "High value expense rejected at second confirmation");
                 ui.showCancelAddMessage();
                 return;
             }
         }
+
         expenses.add(expense);
         logger.log(Level.INFO, "Expense confirmed and added: " + expense);
         ui.showExpenseAdded(expense, expenses.size());
     }
 
-    //@@author Kushalshah0402 WangZX2001
-    private void verifyInputLength(String input) throws FinbroException {
-        logger.log(Level.INFO, "Verifying input length for: " + input);
-        String[] parts = input.trim().split("\\s+");
-        logger.log(Level.FINE, "Split input into " + parts.length + " parts");
-
-        if (parts.length < 3) {
-            logger.log(Level.WARNING, "Invalid input length: expected >= 3 but got " + parts.length);
-            throw new FinbroException("Usage: add <amount> <category> <date>");
-        }
-        logger.log(Level.INFO, "Input length verification passed");
+    private static boolean confirmExpense(Ui ui, Expense expense) {
+        ui.showConfirmExpense(expense);
+        String confirm = ui.readCommand().trim();
+        return confirm.equalsIgnoreCase("yes");
     }
 
-    //@@author Kushalshah0402
-    private double verifyAmount(String input) throws FinbroException {
-        String[] parts = input.split(" ");
-        double amount = 0;
-        try {
-            amount = Double.parseDouble(parts[0]);
-            if (amount < 0) {
-                logger.log(Level.WARNING, "Invalid amount (amount is negative)");
-                throw new FinbroException("Amount must be a positive number.");
-            }
-        } catch (NumberFormatException e) {
-            logger.log(Level.WARNING, "Invalid number in expense amount");
-            throw new FinbroException("Amount must be a number.");
-        }
-        return amount;
+    private static boolean confirmHighValue(Ui ui, double amount) {
+        System.out.println(
+                "Since the expense amount is huge, we would like to double confirm an expense for $"
+                        + String.format("%.2f", amount)
+        );
+        System.out.println("Do you still want to proceed? [yes/no]");
+        String finalConfirm = ui.readCommand().trim();
+        return finalConfirm.equalsIgnoreCase("yes");
     }
 
     private record ParsedAddInput(double amount, String category, String formattedDate) { }
@@ -251,7 +198,7 @@ public class AddCommand extends Command {
     private static double parseAmountToken(String token) throws FinbroException {
         try {
             double amount = Double.parseDouble(token);
-            if (amount < 0) {
+            if (amount <= 0) {
                 throw new FinbroException("Amount must be a positive number.");
             }
             return amount;
