@@ -2,7 +2,6 @@
 'https://plantuml.com/sequence-diagram
 actor User
 
-box "ViewCommand" #LightBlue
 participant ":Ui"
 participant ":Finbro"
 participant ":Parser"
@@ -10,7 +9,6 @@ participant "c:ViewCommand"
 participant ":ExpenseList"
 participant ":SortService"
 participant ":FilterService"
-end box
 
 autonumber
 

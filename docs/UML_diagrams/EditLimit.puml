@@ -12,7 +12,6 @@ participant ":Limit" as Limit
 participant "SetLimitCommand" as SetLimitCommand
 participant "storage:Storage" as Storage
 
-[-> Finbro
 activate Finbro
 
 Finbro -> Ui : readCommand()

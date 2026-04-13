@@ -2,13 +2,11 @@
 'https://plantuml.com/sequence-diagram
 actor User
 
-box "Budget Warning" #LightBlue
 participant ":Ui"
 participant ":Finbro"
 participant ":BudgetWarningService"
 participant ":ExpenseList"
 participant ":Limit"
-end box
 
 autonumber
 

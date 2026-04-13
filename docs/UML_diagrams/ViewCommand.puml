@@ -2,8 +2,8 @@
 'https://plantuml.com/sequence-diagram
 actor User
 
-participant ":Ui"
 participant ":Finbro"
+participant ":Ui"
 participant ":Parser"
 participant "c:ViewCommand"
 participant ":ExpenseList"
@@ -11,7 +11,7 @@ participant ":ExpenseList"
 
 activate ":Finbro"
 ":Finbro" -> ":Ui" ++ : readCommand()
-User -> ":Ui" : type "view ..."
+User -> ":Ui" : "view (argument)"
 ":Ui" --> ":Finbro" : input
 deactivate ":Ui"
 

@@ -103,11 +103,12 @@ type while letting each concrete command implement its own execution logic.
 
 #### Overview
 
-| Component                   | Responsibility                                                                                                                                                                                             |
-|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **`Limit.java`**            | Stores the limit as a static variable accessible across the application. Using a static variable prevents inconsistent limit values and eliminates the need to pass a `Limit` object across class methods. |
-| **`SetLimitCommand.java`**  | Handles validation and user confirmation logic, improving separation of concerns.                                                                                                                          |
-| **`EditLimitCommand.java`** | Handles the interactive process of modifying an existing monthly spending limit.                                                                                                                           |
+| Component                     | Responsibility                                                                                                                                                                                             |
+|-------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`Limit.java`**              | Stores the limit as a static variable accessible across the application. Using a static variable prevents inconsistent limit values and eliminates the need to pass a `Limit` object across class methods. |
+| **`SetLimitCommand.java`**    | Handles validation and user confirmation logic, improving separation of concerns.                                                                                                                          |
+| **`EditLimitCommand.java`**   | Handles the interactive process of modifying an existing monthly spending limit.                                                                                                                           |
+| **BudgetWarningService.java** | Reminds user if they are approaching/exceeded their monthly spending limit                                                                                                                                 |
 
 #### Setting the Limit
 

@@ -14,7 +14,7 @@ finbro -> storage++: load()
 storage -> limit++: setLimit(limit)
 return
 
-return loadedExpenses:ArrayList<Expense>
+return loadedExpenses:List<Expense>
 
 create "expenses:ExpenseList" as expenses
 finbro -> expenses++: new ExpenseList(loadedExpenses)

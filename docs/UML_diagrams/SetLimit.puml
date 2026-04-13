@@ -1,10 +1,23 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
+actor User
+participant ":Finbro" as finbro
 participant ":Ui" as ui
-participant "c:SetLimitCommand" as c
+participant ":Parser" as parser
 
--> c++: execute(...)
+activate finbro
+finbro -> ui++: readCommand()
+User --> ui: "limit 100"
+return input
+
+finbro -> parser++: parse(input)
+create "c:SetLimitCommand" as c
+parser -> c++: new SetLimitCommand(100)
+return c
+return c
+
+finbro -> c++: execute(...)
 
 c -> c++: verify user input
 return
@@ -12,7 +25,7 @@ c -> c++: confirmLimitChange(limit)
 c ->ui++: readCommand()
 return confirmMessage
 
-alt confirmMessage == "yes"
+alt confirmMessage == "yes" or "y"
     c -> ":Limit"++: setLimit(limit)
     return
 else confirmMessage == "no"
