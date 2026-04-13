@@ -17,11 +17,10 @@ together {
     class VisualCommand
     class SetLimitCommand
     class CurrencyCommand
-    class EditCommand
+    class EditLimitCommand
     class HelpCommand
 }
 
-class EditLimitCommand
 
 together {
     class ExpenseList
@@ -36,14 +35,13 @@ Command <|-- ViewCommand
 Command <|-- VisualCommand
 Command <|-- SetLimitCommand
 Command <|-- CurrencyCommand
-Command <|-- EditCommand
+Command <|-- EditLimitCommand
 Command <|-- HelpCommand
 
 Command ..> ExpenseList
 Command ..> Ui
 Command ..> Storage
 
-EditCommand ..> EditLimitCommand
 HelpCommand ..> Parser
 
 ExpenseList -[hidden]-> Ui
