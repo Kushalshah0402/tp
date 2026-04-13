@@ -28,6 +28,11 @@ return c
 ":Finbro" -> "c:ViewCommand" : execute(...)
 activate "c:ViewCommand"
 
+"c:ViewCommand" -> "c:ViewCommand" : parseViewArgument(arg)
+activate "c:ViewCommand"
+"c:ViewCommand" --> "c:ViewCommand" : parsedArg
+deactivate "c:ViewCommand"
+
 alt view all
     "c:ViewCommand" -> ":ExpenseList" : getAll()
     activate ":ExpenseList"
@@ -48,6 +53,7 @@ else view <category>
 
 else invalid
     "c:ViewCommand" -> ":Finbro" : throw FinbroException
+    deactivate "c:ViewCommand"
     ":Finbro" -> ":Ui" : showError(...)
     activate ":Ui"
     ":Ui" -> User : error message

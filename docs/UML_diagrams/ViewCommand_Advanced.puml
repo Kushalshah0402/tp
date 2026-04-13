@@ -10,13 +10,14 @@ participant ":ExpenseList"
 participant ":SortService"
 participant ":FilterService"
 
-autonumber
-
-User -> ":Ui" : view all -sort <type>
-activate ":Ui"
-
-":Ui" -> ":Finbro" : input = "view ..."
 activate ":Finbro"
+":Finbro" -> ":Ui" : readCommand()
+activate ":Ui"
+User -> ":Ui" : type "view all -sort <type>"
+":Ui" --> ":Finbro" : input
+deactivate ":Ui"
+
+
 
 ":Finbro" -> ":Parser" : parse(input)
 activate ":Parser"
@@ -33,7 +34,10 @@ activate "c:ViewCommand"
 alt invalid sort type
 	"c:ViewCommand" -> ":Finbro" : throw FinbroException
 	":Finbro" -> ":Ui" : showError(...)
+	activate ":Ui"
 	":Ui" -> User : error message
+	return
+	deactivate ":Ui"
 
 else view all
 	note right of "c:ViewCommand"
@@ -50,6 +54,8 @@ else view all
 	"c:ViewCommand" -> ":Ui" : showAllExpenses(sortedExpenses / expenses.getAll())
 	activate ":Ui"
 	":Ui" -> User : display expenses
+	return
+	deactivate ":Ui"
 
 else view <category>
 	note right of "c:ViewCommand"
@@ -65,7 +71,10 @@ else view <category>
 	alt category not found
 		"c:ViewCommand" -> ":Finbro" : throw FinbroException
 		":Finbro" -> ":Ui" : showError(...)
+		activate ":Ui"
 		":Ui" -> User : error message
+		return
+		deactivate ":Ui"
 
 	else category found
 		opt with -filter
@@ -81,8 +90,10 @@ else view <category>
 		end
 
 		"c:ViewCommand" -> ":Ui" : showAllExpenses(displayedExpenses)
+		deactivate "c:ViewCommand"
 		activate ":Ui"
 		":Ui" -> User : display expenses
+		deactivate ":Ui"
 	end
 end
 
