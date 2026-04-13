@@ -31,7 +31,7 @@ class VisualCommandTest {
         VisualCommand c = new VisualCommand();
         c.createRow(label, bar, amount);
 
-        String correctOutput = String.format("%-8s | %-20s $%.2f", label, bar, amount);
+        String correctOutput = String.format("%-8s | %-30s $%.2f", label, bar, amount);
 
         assertEquals(correctOutput, c.output);
     }

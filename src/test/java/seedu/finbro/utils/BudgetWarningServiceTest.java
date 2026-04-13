@@ -29,7 +29,7 @@ class BudgetWarningServiceTest {
         Limit.setLimit(100);
         TestUi ui = new TestUi();
 
-        service.checkAndShowWarnings(expenses, ui);
+        service.checkAndShowWarnings(expenses, ui, true);
 
         assertTrue(ui.wasExceededShown);
         assertFalse(ui.wasReminderShown);
@@ -43,7 +43,7 @@ class BudgetWarningServiceTest {
         Limit.setLimit(100);
         TestUi ui = new TestUi();
 
-        service.checkAndShowWarnings(expenses, ui);
+        service.checkAndShowWarnings(expenses, ui, true);
 
         assertFalse(ui.wasExceededShown);
         assertTrue(ui.wasReminderShown);
@@ -57,7 +57,7 @@ class BudgetWarningServiceTest {
         Limit.setLimit(100);
         TestUi ui = new TestUi();
 
-        service.checkAndShowWarnings(expenses, ui);
+        service.checkAndShowWarnings(expenses, ui, true);
 
         assertFalse(ui.wasExceededShown);
         assertFalse(ui.wasReminderShown);
@@ -70,7 +70,7 @@ class BudgetWarningServiceTest {
         Limit.setLimit(100);
         TestUi ui = new TestUi();
 
-        service.checkAndShowWarnings(expenses, ui);
+        service.checkAndShowWarnings(expenses, ui, true);
 
         assertFalse(ui.wasExceededShown);
         assertFalse(ui.wasReminderShown);
