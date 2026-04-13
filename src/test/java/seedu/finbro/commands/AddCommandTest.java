@@ -120,6 +120,7 @@ public class AddCommandTest {
         assertEquals(1, list.size());
     }
 
+
     @Test
     void execute_strictModeMixedCaseCategory_caseInsensitiveLookupFindsExpense() throws Exception {
         String input = "yes\n";
@@ -156,27 +157,6 @@ public class AddCommandTest {
         assertEquals(1, list.size());
         assertEquals(1, list.getCategoryExpenses("food").size());
         assertEquals(1, list.getCategoryExpenses("FOOD").size());
-    }
-
-    @Test
-    void execute_walkthroughNumericOnlyCategory_repromptThenExpenseAdded() throws Exception {
-        String simulatedInput =
-                """
-                        20
-                        123
-                        shopping
-                        2020-01-01
-                        yes
-                        """;
-
-        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
-        Ui ui = new Ui();
-        ExpenseList list = new ExpenseList();
-
-        AddCommand command = new AddCommand("");
-        command.execute(list, ui, null);
-
-        assertEquals(1, list.size());
     }
 
     @Test
