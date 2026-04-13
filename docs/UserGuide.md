@@ -733,6 +733,41 @@ Monthly budget limit: $100.00
 --------------------------------------------------
 ```
 
+**Example 3: Decrease your limit**
+
+Input:
+```
+edit limit
+2
+20
+yes
+```
+
+Output:
+```
+--------------------------------------------------
+edit limit
+--------------------------------------------------
+Current monthly budget limit: $100.00
+Choose an action:
+1. Increase limit
+2. Decrease limit
+3. Replace limit
+--------------------------------------------------
+2
+--------------------------------------------------
+Enter the amount to decrease by:
+--------------------------------------------------
+20
+--------------------------------------------------
+Are you sure you want to change your monthly budget limit to $80.00? [yes/no]
+--------------------------------------------------
+yes
+--------------------------------------------------
+Monthly budget limit: $80.00
+--------------------------------------------------
+```
+
 ### Common Issues
 
 **Issue: Entering an invalid option (not 1, 2, or 3)**
@@ -777,31 +812,120 @@ Warning: You have exceeded your monthly spending limit of $100.00!
 
 ---
 
-## Converting expense currency: `currency`
+## Converting expense currency
 
 Allows you to convert an existing expense into another currency using predefined exchange rates.
 
-**Format:** `currency`
+**Use this when you want the system to guide you through a currency conversion:**
 
-### Description
+Simply type:
+```
+currency
+```
 
-When this command is executed, the system will prompt you to enter:
+The system will ask you for:
 
-1. Source currency (e.g. SGD, USD, EUR, GBP, JPY, CNY, AUD, CAD, MYR, HKD, KRW)
-2. Target currency (e.g. SGD, USD, EUR, GBP, JPY, CNY, AUD, CAD, MYR, HKD, KRW)
+1. **Source Currency**
+   - The application will prompt: `Enter source currency:`
+   - Enter the original currency of the selected expense amount.
+   - Currency codes are case-insensitive and will be converted to uppercase internally.
+   - Examples: `SGD`, `usd`, `EUR`
 
-After entering both currencies, a list of recorded expenses will be displayed.  
-You will then select the expense you wish to convert by entering its index.
+2. **Target Currency**
+   - The application will prompt: `Enter target currency:`
+   - Enter the currency you want to convert the expense into.
+   - The source and target currencies must be supported by Finbro.
+   - Examples: `USD`, `JPY`, `MYR`
 
-The system will convert the selected expense amount into the target currency and display the result.
+3. **Expense Entry**
+   - Finbro will display your recorded expenses after both currencies are entered.
+   - The application will prompt: `Which expense entry would you like to convert?`
+   - Enter the index number of the expense you want to convert.
+   - The index must be a valid number within the displayed list.
 
 ### Behaviour
 
 * Uses a **local currency rate table** (no internet connection required).
-* Supports conversion between multiple currencies via SGD as a base.
-* Only valid and supported currency codes are accepted.
-* The selected expense must exist in the list.
+* Supports the following currencies: `SGD`, `USD`, `EUR`, `GBP`, `JPY`, `CNY`, `AUD`, `CAD`, `MYR`, `HKD`, `KRW`.
+* The selected expense must exist in the displayed list.
 * The converted value is displayed but does not modify the original expense.
+* If the source and target currencies are the same, Finbro will tell you that no conversion is needed.
+
+### Examples
+
+**Example 1: Convert an expense from SGD to USD**
+
+Input:
+```
+currency
+SGD
+USD
+1
+```
+
+Output:
+```
+--------------------------------------------------
+currency
+--------------------------------------------------
+Enter source currency:
+SGD
+Enter target currency:
+USD
+--------------------------------------------------
+Here are your expenses:
+
+1. Amount: $10.00
+   Category: food
+   Date: 1 January 2026
+
+2. Amount: $20.00
+   Category: transport
+   Date: 2 January 2026
+
+Total expenditure: $30.00
+--------------------------------------------------
+Which expense entry would you like to convert?
+--------------------------------------------------
+1
+--------------------------------------------------
+Expense #1
+10.00 SGD = 7.40 USD
+--------------------------------------------------
+```
+
+**Example 2: Source and target currencies are the same**
+
+Input:
+```
+currency
+USD
+USD
+```
+
+Output:
+```
+--------------------------------------------------
+currency
+--------------------------------------------------
+Enter source currency:
+USD
+Enter target currency:
+USD
+--------------------------------------------------
+Source and target currencies are both USD. No conversion needed.
+--------------------------------------------------
+```
+
+### Common Issues
+
+**Issue: Entering an unsupported currency**
+
+If you enter a currency code that Finbro does not support, Finbro will show an error message with the list of supported currencies.
+
+**Issue: Entering an invalid expense index**
+
+If you enter a non-numeric index or a number outside the displayed list, Finbro will show an error and the conversion will not proceed.
 
 ---
 
