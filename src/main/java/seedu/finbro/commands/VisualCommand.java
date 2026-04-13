@@ -29,7 +29,7 @@ public class VisualCommand extends Command {
 
         if (monthlyTotals.isEmpty()) {
             logger.log(Level.WARNING, "Visualisation cancelled: no monthly expenses found");
-            throw new  FinbroException("Error: No expenses found");
+            throw new  FinbroException("No expenses found");
         }
 
         createBarGraph(monthlyTotals);
