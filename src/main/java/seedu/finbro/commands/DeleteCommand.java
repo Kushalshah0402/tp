@@ -30,7 +30,7 @@ public class DeleteCommand extends Command {
             return;
         }
 
-        //Strict mode (existing behavior)
+        //Strict mode (existing behaviour)
         logger.log(Level.INFO, "Entering delete strict mode");
         verifyInputLength(arg);
         String category = filterCategory(arg);
@@ -74,7 +74,7 @@ public class DeleteCommand extends Command {
         return index;
     }
     //@@author zihaoalt
-    private String filterCategory(String input) throws FinbroException {
+    private String filterCategory(String input) {
         String[] parts = input.trim().split("\\s+");
         return parts[0];
     }
@@ -198,7 +198,7 @@ public class DeleteCommand extends Command {
         return """
                 Deletes a specific expense from a category.
                 Format: delete <category> <number> OR delete
-                Use 1: Permanently removes the numbered expense in that category. 
+                Use 1: Permanently removes the numbered expense in that category.
                 Use 2: Type delete only will walk through the deletion process.
                 Note: use the displayed index number, such as 2.""";
     }
