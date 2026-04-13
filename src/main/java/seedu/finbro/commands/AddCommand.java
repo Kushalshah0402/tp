@@ -346,6 +346,11 @@ public class AddCommand extends Command {
         if (!category.matches(".*[a-zA-Z].*")) {
             throw new FinbroException("Category must contain at least one letter.");
         }
+
+        // Must be a single word (no spaces)
+        if (category.contains(" ")) {
+            throw new FinbroException("Category must be a single word (e.g. food, food&drinks). No spaces allowed.");
+        }
     }
 
     //@author Kushalshah0402
@@ -372,7 +377,7 @@ public class AddCommand extends Command {
                 Format: add <amount> <category> <date> or 'add' for us to walk you through the process step-by-step.
                 Use: Records an expense under the given category on the given date.
                 Note: amount must be positive.
-                      Category can be multiple words but cannot be only numbers.
+                      Category must be a single word with no spaces (e.g. food, food&drinks).
                       Date supports natural language (e.g. today, 2 days ago).""";
     }
 
