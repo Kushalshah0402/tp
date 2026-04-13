@@ -56,9 +56,6 @@ loop After each successful command (and once at startup)
 
     BudgetWarningService --> Finbro--
 end
-<<<<<<< HEAD
-@enduml
-=======
 
 @enduml
->>>>>>> master
+
