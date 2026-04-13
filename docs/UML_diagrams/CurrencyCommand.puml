@@ -1,52 +1,167 @@
 @startuml CurrencyCommand
 hide footbox
+
 actor User
 
-User->":Ui"++: "currency"
-":Ui" -> ":Finbro"++: input
+participant ":Finbro" as Finbro
+participant ":Ui" as Ui
+participant ":Parser" as Parser
+participant "c:CurrencyCommand" as CurrencyCommand
+participant ":ExpenseList" as ExpenseList
+participant "CurrencyRateTable" as CurrencyRateTable
 
-":Finbro" -> ":Parser"++: parse(input)
-create "c:CurrencyCommand"
-":Parser" -> "c:CurrencyCommand": new CurrencyCommand()
-return
+activate Finbro
+Finbro -> Ui : readCommand()
+activate Ui
+User -> Ui : type "currency ..."
+Ui --> Finbro : input
+deactivate Ui
 
-":Finbro" -> "c:CurrencyCommand"++: execute()
 
-"c:CurrencyCommand" -> ":ExpenseList": isEmpty()
+Finbro -> Parser : parse(input)
+activate Parser
 
-alt no expenses
-    "c:CurrencyCommand" -> ":Ui": show error
-    return
+create CurrencyCommand
+Parser -> CurrencyCommand : new CurrencyCommand()
+activate CurrencyCommand
+CurrencyCommand --> Parser : c
+deactivate CurrencyCommand
+
+Parser --> Finbro : c
+deactivate Parser
+
+Finbro -> CurrencyCommand : execute(expenseList, ui, storage)
+activate CurrencyCommand
+
+CurrencyCommand -> ExpenseList : isEmpty()
+activate ExpenseList
+ExpenseList --> CurrencyCommand : isEmpty
+deactivate ExpenseList
+
+alt expense list is empty
+    CurrencyCommand --> Finbro : throw FinbroException("No expenses available.")
+    deactivate CurrencyCommand
+
+    Finbro -> Ui : showError("No expenses available.")
+    activate Ui
+    Ui --> Finbro
+    deactivate Ui
+
+else expense list is not empty
+    CurrencyCommand -> Ui : showEnterSourceCurrencyPrompt()
+    activate Ui
+    Ui --> CurrencyCommand
+    deactivate Ui
+
+    CurrencyCommand -> Ui : readCommand()
+    activate Ui
+    User -> Ui : enter source currency
+    Ui --> CurrencyCommand : fromCurrency
+    deactivate Ui
+
+    CurrencyCommand -> Ui : showEnterTargetCurrencyPrompt()
+    activate Ui
+    Ui --> CurrencyCommand
+    deactivate Ui
+
+    CurrencyCommand -> Ui : readCommand()
+    activate Ui
+    User -> Ui : enter target currency
+    Ui --> CurrencyCommand : toCurrency
+    deactivate Ui
+
+    alt fromCurrency equals toCurrency
+        CurrencyCommand -> Ui : showNoConversionNeeded(fromCurrency)
+        activate Ui
+        Ui --> CurrencyCommand
+        deactivate Ui
+
+        CurrencyCommand --> Finbro : return
+        deactivate CurrencyCommand
+
+    else different currencies
+        CurrencyCommand -> CurrencyRateTable : isUnsupportedCurrency(fromCurrency)
+        activate CurrencyRateTable
+        CurrencyRateTable --> CurrencyCommand : boolean
+        deactivate CurrencyRateTable
+
+        CurrencyCommand -> CurrencyRateTable : isUnsupportedCurrency(toCurrency)
+        activate CurrencyRateTable
+        CurrencyRateTable --> CurrencyCommand : boolean
+        deactivate CurrencyRateTable
+
+        alt either currency unsupported
+            CurrencyCommand -> CurrencyRateTable : getSupportedCurrencies()
+            activate CurrencyRateTable
+            CurrencyRateTable --> CurrencyCommand : supportedCurrencies
+            deactivate CurrencyRateTable
+
+            CurrencyCommand --> Finbro : throw FinbroException("Unsupported currency. Supported currencies: ...")
+            deactivate CurrencyCommand
+
+            Finbro -> Ui : showError(...)
+            activate Ui
+            Ui --> Finbro
+            deactivate Ui
+
+        else both currencies supported
+            CurrencyCommand -> ExpenseList : getAll()
+            activate ExpenseList
+            ExpenseList --> CurrencyCommand : expenses
+            deactivate ExpenseList
+
+            CurrencyCommand -> Ui : showAllExpenses(expenses)
+            activate Ui
+            Ui --> CurrencyCommand
+            deactivate Ui
+
+            CurrencyCommand -> Ui : showChooseExpenseEntryPrompt()
+            activate Ui
+            Ui --> CurrencyCommand
+            deactivate Ui
+
+            CurrencyCommand -> Ui : readCommand()
+            activate Ui
+            User -> Ui : enter expense index
+            Ui --> CurrencyCommand : input
+            deactivate Ui
+
+            CurrencyCommand -> ExpenseList : size()
+            activate ExpenseList
+            ExpenseList --> CurrencyCommand : size
+            deactivate ExpenseList
+
+            alt invalid number format or index out of range
+                CurrencyCommand --> Finbro : throw FinbroException("Invalid entry number." / "Entry out of range.")
+                deactivate CurrencyCommand
+
+                Finbro -> Ui : showError(...)
+                activate Ui
+                Ui --> Finbro
+                deactivate Ui
+
+            else valid index
+                CurrencyCommand -> ExpenseList : get(index - 1)
+                activate ExpenseList
+                ExpenseList --> CurrencyCommand : expense
+                deactivate ExpenseList
+
+                CurrencyCommand -> CurrencyRateTable : convert(expense.amount(), fromCurrency, toCurrency)
+                activate CurrencyRateTable
+                CurrencyRateTable --> CurrencyCommand : convertedAmount
+                deactivate CurrencyRateTable
+
+                CurrencyCommand -> Ui : showCurrencyConversionResult(index, originalAmount, fromCurrency, toCurrency, convertedAmount)
+                activate Ui
+                Ui --> CurrencyCommand
+                deactivate Ui
+
+                CurrencyCommand --> Finbro : return
+                deactivate CurrencyCommand
+            end
+        end
+    end
 end
 
-"c:CurrencyCommand" -> ":Ui": prompt source currency
-":Ui" -> "c:CurrencyCommand": fromCurrency
-
-"c:CurrencyCommand" -> ":Ui": prompt target currency
-":Ui" -> "c:CurrencyCommand": toCurrency
-
-"c:CurrencyCommand" -> ":CurrencyRateTable": isUnsupportedCurrency()
-
-alt unsupported currency
-    "c:CurrencyCommand" -> ":Ui": show error
-    return
-end
-
-"c:CurrencyCommand" -> ":ExpenseList": getAll()
-"c:CurrencyCommand" -> ":Ui": showAllExpenses()
-
-"c:CurrencyCommand" -> ":Ui": prompt entry number
-":Ui" -> "c:CurrencyCommand": index
-
-alt invalid index
-    "c:CurrencyCommand" -> ":Ui": show error
-    return
-end
-
-"c:CurrencyCommand" -> ":ExpenseList": get(index)
-"c:CurrencyCommand" -> ":CurrencyRateTable": convert(amount, from, to)
-
-"c:CurrencyCommand" -> ":Ui": show conversion result
-
-return
+deactivate Finbro
 @enduml

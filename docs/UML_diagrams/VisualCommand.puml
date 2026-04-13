@@ -1,14 +1,81 @@
-@startuml
+@startuml VisualCommand
+hide footbox
+
+actor User
 
 
-participant "c:VisualCommand" as c
-participant "expenses:ExpenseList" as e
+participant ":Finbro" as Finbro
+participant ":Ui" as Ui
+participant ":Parser" as Parser
+participant "v:VisualCommand" as VisualCommand
+participant ":ExpenseList" as ExpenseList
 
--> c++: execute(...)
 
-c -> e++: getMonthlyExpenses()
-return
+activate Finbro
+Finbro -> Ui ++ : readCommand()
+User -> Ui : type "visual ..."
+Ui --> Finbro : input
+deactivate Ui
 
-return bar graph
+Finbro -> Parser : parse(input)
+activate Parser
 
+create VisualCommand
+Parser -> VisualCommand : new VisualCommand()
+activate VisualCommand
+VisualCommand --> Parser : v
+deactivate VisualCommand
+
+Parser --> Finbro : v
+deactivate Parser
+
+Finbro -> VisualCommand : execute(expenses, ui, storage)
+activate VisualCommand
+
+VisualCommand -> ExpenseList : getMonthlyExpenses()
+activate ExpenseList
+ExpenseList --> VisualCommand : monthlyExpenses
+deactivate ExpenseList
+
+alt no monthly expenses found
+    VisualCommand --> Finbro : throw FinbroException("No expenses found")
+    deactivate VisualCommand
+
+    Finbro -> Ui : showError("No expenses found")
+    activate Ui
+    Ui --> Finbro
+    deactivate Ui
+
+else monthly expenses found
+    VisualCommand -> VisualCommand : createBarGraph(monthlyTotals)
+    activate VisualCommand
+
+    loop for each month in monthlyTotals
+        VisualCommand -> VisualCommand : createBar(barLength)
+        activate VisualCommand
+        VisualCommand --> VisualCommand : bar
+        deactivate VisualCommand
+
+        VisualCommand -> VisualCommand : createLabel(month)
+        activate VisualCommand
+        VisualCommand --> VisualCommand : label
+        deactivate VisualCommand
+
+        VisualCommand -> VisualCommand : createRow(label, bar, amount)
+        activate VisualCommand
+    end
+
+    VisualCommand --> VisualCommand
+    deactivate VisualCommand
+
+    VisualCommand -> Ui : showVisual(output)
+    activate Ui
+    Ui --> VisualCommand
+    deactivate Ui
+
+    VisualCommand --> Finbro
+    deactivate VisualCommand
+end
+
+deactivate Finbro
 @enduml
