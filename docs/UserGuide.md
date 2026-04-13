@@ -110,6 +110,7 @@ The system will ask you for:
 
 1. **Expense Amount**
    - The application will prompt: `What is the expense amount?`
+   - Enter `-exit` to cancel adding an expense in walkthrough mode.
    - Enter the amount you spent.
    - The amount must be a positive number greater than 0.
    - The value will be rounded to 2 decimal places.
@@ -121,6 +122,8 @@ The system will ask you for:
    - Enter the expense category.
    - The category name may contain multiple words but must not be purely numeric.
    - Examples: `Food`, `Transport`, `Entertainment`, `Shopping`
+   - Enter `-exit` to cancel adding an expense in walkthrough mode.
+   - Enter `-back` to re-enter the amount.
 
 3. **Expense Date**
    - The application will prompt: `Enter the date (yyyy-MM-dd or today):`
@@ -134,6 +137,8 @@ The system will ask you for:
      - `last <day-of-week>` (e.g., `last monday`)
    - Note: inputs like `tomorrow`, `next week`, `next monday`, and `<N> days later` may be understood, but will be rejected for `add` because future dates are not allowed.
    - Use the format shown above.
+   - Enter `-exit` to cancel adding an expense in walkthrough mode.
+   - Enter `-back` to re-enter the category.
 
 4. **Confirmation**
    - Review your entry
