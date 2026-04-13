@@ -10,7 +10,6 @@ import seedu.finbro.ui.Ui;
  */
 public class BudgetWarningService {
 
-    //@@author AK47ofCode
     /**
      * Checks the current expenditure against the set limit and shows appropriate warnings
      * if the limit is close to being exceeded or has been exceeded.
@@ -19,14 +18,15 @@ public class BudgetWarningService {
      * @param ui The UI instance to display warnings.
      */
     public void checkAndShowWarnings(ExpenseList expenses, Ui ui) {
-        double remaining = expenses.getRemainingExpenditure();
-        double limit = Limit.getLimit();
-        if (limit > 0 && !expenses.isEmpty()) {
-            if (remaining < 0) {
-                ui.showBudgetExceeded(limit);
-            } else if (remaining <= 20) {
-                ui.showBudgetReminder(limit);
-            }
+        double monthlyTotal = expenses.getCurrentMonthTotalExpenditure();
+        System.out.println("Monthly Total: " + monthlyTotal);
+
+        if (monthlyTotal - Limit.getLimit() > 0) {
+            ui.showBudgetExceeded(Limit.getLimit());
+        } else if (Limit.getLimit() - monthlyTotal <= 20) {
+            ui.showBudgetReminder(Limit.getLimit());
+        } else {
+            return;
         }
     }
 }

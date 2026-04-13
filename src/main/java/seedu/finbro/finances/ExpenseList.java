@@ -69,6 +69,24 @@ public class ExpenseList {
         return Limit.getLimit() - total;
     }
 
+    //@@author natmloclam
+    public double getCurrentMonthTotalExpenditure() {
+        YearMonth currentMonth = YearMonth.now();
+        double currentMonthTotal = 0;
+
+        for (Expense expense : expenses) {
+            try {
+                YearMonth expenseMonth = parseYearMonth(expense);
+                if (expenseMonth.equals(currentMonth)) {
+                    currentMonthTotal += expense.amount();
+                }
+            } catch (FinbroException e) {
+                continue;
+            }
+        }
+        return currentMonthTotal;
+    }
+
     //@@author zihaoalt
     public List<Expense> getCategoryExpenses(String category) {
         List<Expense> results = new ArrayList<>();
