@@ -12,18 +12,16 @@ their spending habits.
 
 ---
 
-## Summary of Contributions
-
-### Code Contributed
+## Code Contributions
 
 **RepoSense Link:**  
 [View detailed code contributions](https://nus-cs2113-ay2526-s2.github.io/tp-dashboard/?search=AK47ofCode&breakdown=true&sort=groupTitle%20dsc&sortWithin=title&since=2026-02-20T00%3A00%3A00&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&filteredFileName=&tabOpen=true&tabType=authorship&tabAuthor=AK47ofCode&tabRepo=AY2526S2-CS2113-T10-4%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
 
 ---
 
-### Core Features Implemented
+## Core Features Implemented
 
-#### 1. Budget Reminder System
+### 1. Budget Reminder System
 
 * Implemented a **Budget Reminder System** that monitors user expenses against a predefined monthly budget limit.
 * The system checks the total expenses after each addition and sends reminders when certain thresholds are reached:
@@ -44,10 +42,19 @@ their spending habits.
 * Enhances the overall user experience by providing timely feedback on their expenses.
 * Promotes better financial management and awareness among users.
 
----
-### Enhancements Implemented
+**Key files:**
+* `src/main/java/seedu/finbro/FinBro.java` (where the budget limit is defined and monitored)
+* `src/main/java/seedu/finbro/commands/AddCommand.java` (where the reminder system is integrated to check expenses after each addition)
+* `src/main/java/seedu/finbro/utils/BudgetWarningService.java` (new class to handle the logic for monitoring expenses and sending reminders)
+* `src/test/java/seedu/finbro/utils/BudgetWarningServiceTest.java` (unit tests for the Budget Reminder System)
 
-#### 2. Filter Expense by Month
+**Diagram:** ![Budget Reminder Sequence Diagram](../UML_diagrams/images/BudgetWarningService.png)
+
+---
+
+## Enhancements Implemented
+
+### 2. Filter Expense by Month
 
 * Implemented the ability to filter expenses by month, allowing users to view their spending habits on a monthly basis.
 * This feature can only be used in conjunction with the `view <category>` command to provide more granular insights into 
@@ -76,16 +83,20 @@ their spending habits.
   decisions.
 * Enhances the overall functionality of the application by offering more flexible viewing options for users.
 
----
+**Key files:**
+* `src/main/java/seedu/finbro/commands/ViewCommand.java` (where the month filter is integrated into the view command)
+* `src/test/java/seedu/finbro/commands/ViewCommandTest.java` (unit tests for the month filtering feature)
+* `src/main/java/seedu/finbro/utils/FilterService.java` (new class to handle the logic for filtering expenses based on month)
+* `src/test/java/seedu/finbro/utils/FilterServiceTest.java` (unit tests for the Filter Service)
 
-#### 3. Sort Expenses
+### 3. Sort Expenses
 
 * Implemented sorting options for the `view all` and `view <category>` commands, allowing users to sort their expenses 
   by month, amount, or category.
-* For the `view all` command, users can sort their expenses by month, amount, or category to gain insights into their 
-  spending habits across different dimensions.
-* For the `view <category>` command, users can sort their expenses by month or amount to analyze their spending patterns
-  within a specific category.
+* For the `view all` command, users can sort their expenses by year, month, amount, or category to gain insights into 
+  their spending habits across different dimensions.
+* For the `view <category>` command, users can sort their expenses by year, month or amount to analyze their spending 
+  patterns within a specific category.
 * The sorting options are designed to be intuitive and easy to use, with clear instructions provided in the user guide.
 
 **Implementation details:**
@@ -110,19 +121,29 @@ their spending habits.
 * Helps users make informed financial decisions by providing insights into their spending habits based on different 
   sorting criteria.
 
+**Key files:**
+* `src/main/java/seedu/finbro/commands/ViewCommand.java` (where the sorting options are integrated into the view command)
+* `src/test/java/seedu/finbro/commands/ViewCommandTest.java` (unit tests for the sorting feature)
+* `src/main/java/seedu/finbro/utils/SortService.java` (new class to handle the logic for sorting expenses based on different criteria)
+* `src/test/java/seedu/finbro/utils/SortServiceTest.java` (unit tests for the Sort Service)
+
+**Diagram:** ![View Command Advanced Sequence Diagram](../UML_diagrams/images/ViewCommand_Advanced.png)
+
 ---
 
-### Contributions to User Guide
+## Documentation Contributions
+
+### User Guide
 
 Added documentation for:
 
-* **`view all` Command with Month, Amount and Category Sorting Options**
+* **`view all` Command with Year, Month, Amount and Category Sorting Options**
     * Explained the new sorting options and how to use them
-    * Provided examples for sorting by month, amount, and category
+    * Provided examples for sorting by year, month, amount, and category
 
-* **`view <category>` Command with Month and Amount Sorting Options**
+* **`view <category>` Command with Year, Month and Amount Sorting Options**
     * Explained the new sorting options for category-specific viewing
-    * Provided examples for sorting by month and amount within a category
+    * Provided examples for sorting by year, month and amount within a category
 
 * **`view <category>` Command with Month Filters**
     * Explained how to filter expenses by month within a category
@@ -138,9 +159,7 @@ Added documentation for:
     * Updated the table of contents to include the new features and enhancements
     * Ensured that all new sections are properly linked for easy navigation
 
----
-
-### Contributions to Developer Guide
+### Developer Guide
 
 * Documented the design and implementation of the **Budget Reminder System**, including the logic for monitoring 
   expenses against the budget limit and triggering reminders at specified thresholds.
@@ -155,7 +174,7 @@ Added documentation for:
 
 ---
 
-### Contributions to Team-Based Tasks
+## Team-Based Contributions
 
 * Helped maintain the overall OOP structure of the codebase while new features were being added.
 * Contributed to testing across modules, including unit tests for relevant command behavior.
@@ -163,5 +182,15 @@ Added documentation for:
   smoothly into the existing codebase.
 * Reviewed team code and expressed feedback related to correctness, consistency, and feature integration, particularly 
   in relation to the new features I implemented.
+
+---
+
+## Community-Based Contributions
+
+**Product Testing:** During the Practical Exam Dry Run (PE-D), I tested another group's project and reported as many 
+bugs as I could find to enable them to fix the bugs before the final submission.
+
+![PE-D bugs reported](../UML_diagrams/images/KuanYi_PE-D_reported_bugs.png)
+![PE-D contribution](../UML_diagrams/images/KuanYi_PE-D_contribution.png)
 
 ---
