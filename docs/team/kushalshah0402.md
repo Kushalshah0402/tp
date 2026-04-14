@@ -66,6 +66,8 @@ It is built using Java and follows a modular, command-based architecture, where 
 - Total expenditure is computed dynamically by iterating through the expense list, so it is always accurate and up to date
 - Display logic is fully handled by `Ui` keeping `ViewCommand` focused solely on retrieving the data, which follows the separation of concerns principle
 
+<div style="page-break-after: always;"></div>
+
 ---
 
 ### Storage Component
@@ -84,7 +86,6 @@ It is built using Java and follows a modular, command-based architecture, where 
 - If the data file does not exist on first launch, the app gracefully creates a new one instead of throwing an error
 - Amount validation is enforced during loading to prevent negative or zero values from being loaded into the system
 
-<div style="page-break-after: always;"></div>
 
 ---
 
@@ -95,7 +96,6 @@ It is built using Java and follows a modular, command-based architecture, where 
 - Added JUnit tests for `AddCommand`
 - Added logging and asserts for `AddCommand` and `Storage`
 
-<div style="page-break-after: always;"></div>
 
 ---
 
@@ -132,8 +132,6 @@ It is built using Java and follows a modular, command-based architecture, where 
 - If amount is greater than $10,000, a second confirmation message is sent after you confirm the expense the first time, asking user to double check the amount they keyed in since it is very large
 - For categories, ONLY special characters are not allowed as Category: `#%$@(&)` does not make much sense to the users
 - Years before 2000 and dates after the present date are no more allowed since it is not applicable to our context
-
-<div style="page-break-after: always;"></div>
 
 ---
 
@@ -221,7 +219,6 @@ LIMIT | 1000.00
 | **Limit Stored as First Line** | Separating the limit from expense entries allows it to be read and applied before any expenses are processed. Falls back gracefully if no limit line is found. |
 | **Flat File Over Database** | Keeps the application lightweight with no external dependencies. Sufficient for the scale of data this application handles. |
 
-<div style="page-break-after: always;"></div>
 
 ---
 
@@ -251,7 +248,6 @@ The following diagram shows the sequence of operations for the walkthrough metho
 
 ![Add Expense Walkthrough Sequence Diagram](../UML_diagrams/images/AddCommand_WalkThrough.png)
 
-<div style="page-break-after: always;"></div>
 
 ---
 
