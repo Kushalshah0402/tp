@@ -13,6 +13,7 @@ activate "c:AddCommand"
 loop until valid amount chosen or "-exit"
     "c:AddCommand" -> ":Ui" : showEnterAmountPrompt()
     activate ":Ui"
+    ":Ui" --> "c:AddCommand"
     deactivate ":Ui"
 
     "c:AddCommand" -> ":Ui" : readCommand()
@@ -24,10 +25,12 @@ loop until valid amount chosen or "-exit"
     alt input == "-exit"
         "c:AddCommand" -> ":Ui" : showExitAddMessage()
         activate ":Ui"
+        ":Ui" --> "c:AddCommand"
         deactivate ":Ui"
-    else invalid (not a number or non-positive)
+    else invalid (not a number, non-positive, or contains spaces)
         "c:AddCommand" -> ":Ui" : showInlineError(...)
         activate ":Ui"
+        ":Ui" --> "c:AddCommand"
         deactivate ":Ui"
     else valid amount
         note right of "c:AddCommand" : break AMOUNT LOOP
@@ -37,6 +40,7 @@ end
 loop until valid category chosen, "-back", or "-exit"
     "c:AddCommand" -> ":Ui" : showEnterCategoryPrompt()
     activate ":Ui"
+    ":Ui" --> "c:AddCommand"
     deactivate ":Ui"
 
     "c:AddCommand" -> ":Ui" : readCommand()
@@ -48,18 +52,21 @@ loop until valid category chosen, "-back", or "-exit"
     alt category == "-exit"
         "c:AddCommand" -> ":Ui" : showExitAddMessage()
         activate ":Ui"
+        ":Ui" --> "c:AddCommand"
         deactivate ":Ui"
     else category == "-back"
         note right of "c:AddCommand" : break CATEGORY LOOP,\nre-enter AMOUNT LOOP
-    else invalid category (blank or numbers only)
+    else invalid category (blank, numbers only, or contains spaces)
         "c:AddCommand" -> ":Ui" : showInlineError(...)
         activate ":Ui"
+        ":Ui" --> "c:AddCommand"
         deactivate ":Ui"
     else valid category
 
         loop until valid date chosen, "-back", or "-exit"
             "c:AddCommand" -> ":Ui" : showEnterDatePrompt()
             activate ":Ui"
+            ":Ui" --> "c:AddCommand"
             deactivate ":Ui"
 
             "c:AddCommand" -> ":Ui" : readCommand()
@@ -71,30 +78,34 @@ loop until valid category chosen, "-back", or "-exit"
             alt dateInput == "-exit"
                 "c:AddCommand" -> ":Ui" : showExitAddMessage()
                 activate ":Ui"
+                ":Ui" --> "c:AddCommand"
                 deactivate ":Ui"
             else dateInput == "-back"
                 note right of "c:AddCommand" : break DATE LOOP,\nre-enter CATEGORY LOOP
             else invalid date (unparseable or out of range)
                 "c:AddCommand" -> ":Ui" : showInlineError(...)
                 activate ":Ui"
+                ":Ui" --> "c:AddCommand"
                 deactivate ":Ui"
             else valid date
 
                 "c:AddCommand" -> ":Ui" : showConfirmExpense(expense)
                 activate ":Ui"
+                ":Ui" --> "c:AddCommand"
                 deactivate ":Ui"
 
                 "c:AddCommand" -> ":Ui" : readCommand()
                 activate ":Ui"
-                User -> ":Ui" : yes / no
-                ":Ui" --> "c:AddCommand" : confirm
+                User -> ":Ui" : yes / no / -back
+                ":Ui" --> "c:AddCommand" : result
                 deactivate ":Ui"
 
-                alt confirmed
+                alt result == "yes"
 
                     opt amount > 10000
                         "c:AddCommand" -> ":Ui" : showHighValueWarning(amount)
                         activate ":Ui"
+                        ":Ui" --> "c:AddCommand"
                         deactivate ":Ui"
 
                         "c:AddCommand" -> ":Ui" : readCommand()
@@ -111,18 +122,23 @@ loop until valid category chosen, "-back", or "-exit"
 
                     "c:AddCommand" -> ":Ui" : showExpenseAdded(expense, expenses.size())
                     activate ":Ui"
+                    ":Ui" --> "c:AddCommand"
                     deactivate ":Ui"
 
-                else cancelled
+                else result == "no"
                     "c:AddCommand" -> ":Ui" : showCancelAddMessage()
                     activate ":Ui"
+                    ":Ui" --> "c:AddCommand"
                     deactivate ":Ui"
+                else result == "-back"
+                    note right of "c:AddCommand" : continue DATE LOOP,\nre-prompt date
                 end
             end
         end
     end
 end
 
+[<-- "c:AddCommand"
 deactivate "c:AddCommand"
 
 @enduml

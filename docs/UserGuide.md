@@ -205,17 +205,18 @@ Output:
 ------------------------------------------------------------
 add
 ------------------------------------------------------------
-Enter amount:
+What is your expense amount? Enter a number or -exit to exit add command
 15.00
-Enter category:
+Enter the category: else enter -back to change expense amount or -exit to exit add command
 Transport
-Enter the date (yyyy-MM-dd or today):
+Enter the date (yyyy-MM-dd or today): or -back to change expense category or -exit to exit add command
 3 days ago
 You entered:
     Amount: $15.00
     Category: transport
     Date: 7 April 2026
 Confirm? [yes/no]
+Or enter '-back' to modify the date.
 yes
 ------------------------------------------------------------
 Got it. I've added this expense:
@@ -268,11 +269,12 @@ Now you have 3 expenses.
 
 - Use the format: `YYYY-MM-DD`
 - Make sure the date is valid
-- Valid Examples: `2026-04-12`,`2025-12-31`
+- Valid Examples: `2026-04-12`,`2025-12-31` or `today`, `3 days ago`
 
 **❌ Error: "Category cannot be empty"**
 
 - Enter a category name (no purely numeric or purely special character entry)
+- Category name also cannot have any spaces in it, e.g. `Food and drinks`
 - Valid Examples: `Transport`, `Rent`, `Entertainment`
 
 

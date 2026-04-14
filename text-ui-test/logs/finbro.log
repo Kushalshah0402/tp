@@ -24,3 +24,7 @@
 2026-04-12 11:08:14 [INFO] seedu.finbro.commands.AddCommand - Formatted date: 15 June 2020
 2026-04-12 11:08:14 [INFO] seedu.finbro.commands.AddCommand - Attempting to add expense amount 20, category transport, date 15 June 2020
 2026-04-12 11:08:14 [INFO] seedu.finbro.commands.AddCommand - Expense addition cancelled by user
+2026-04-14 09:12:46 [INFO] seedu.finbro.storage.Storage - Loading expenses...
+2026-04-14 09:12:46 [INFO] seedu.finbro.storage.Storage - data/finbro.txt does not exist, creating new file
+2026-04-14 09:12:46 [INFO] seedu.finbro.commands.HelpCommand - Help command invoked
+2026-04-14 09:12:46 [INFO] seedu.finbro.commands.HelpCommand - Displayed general help message
