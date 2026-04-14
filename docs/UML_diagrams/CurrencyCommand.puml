@@ -1,6 +1,5 @@
 @startuml
-title CurrencyCommand
-hide footbox
+show footbox
 
 actor User
 

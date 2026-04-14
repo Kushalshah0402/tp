@@ -1,6 +1,5 @@
 @startuml
-title BudgetWarningService
-hide footbox
+show footbox
 
 actor User
 
